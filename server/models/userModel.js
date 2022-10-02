@@ -30,7 +30,12 @@ const UserSchema = new mongoose.Schema({
   repair_orders: [RepairOrderSchema],
 });
 
-
+/**
+ * 
+ * @param {Object} userObj takes in a user object to create a new user 
+ * @param {callback} done callback returns either error or user
+ * 
+ */
 
 function createAndSaveUser(userObj, done){
    const User = mongoose.model('User', UserSchema)
