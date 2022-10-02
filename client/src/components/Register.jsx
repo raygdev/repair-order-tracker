@@ -1,16 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "../css/registerForm.css";
+import { registrationFormInit } from "../utils/registerInit";
 
 export const Register = (props) => {
-  const [newUser, setNewUser] = useState({
-    name: {
-      first: "",
-      last: "",
-    },
-    shop_name: "",
-    email: "",
-    password: "",
-  });
+  const [newUser, setNewUser] = useState(registrationFormInit);
   const [error, setError] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -37,6 +30,7 @@ export const Register = (props) => {
           console.log("came here second then block");
           setIsLoading(false);
           setIsSubmitted(true);
+          setNewUser(registrationFormInit)
         })
         .catch((e) => {
           e.then((result) => {
