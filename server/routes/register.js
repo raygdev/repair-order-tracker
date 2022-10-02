@@ -1,15 +1,24 @@
 const express = require("express");
 const router = express.Router();
+const { MongoServerError } = require('mongoose')
 
-const User = require("./models/userSchema.js");
-const UserSchema = User.UserSchema;
-const createAndUpdateUser = User.createAndUpdateUser;
+const {createAndSaveUser} = require("../models/userModel.js")
 
-router.get("/api/register/user", (req, res, next) => {
-  const user = req.body;
-  createAndUpdateUser(user, (err, newUser) => {
-    if (err) return res.send(err.error);
-    res.send(newUser);
+
+router.post("/api/register/user", (req, res, next) => {
+ return  createAndSaveUser(req.body, (err, newUser) => {
+    if (err) {
+        console.log(err.message)
+        console.log(err.message.includes('duplicate key'))
+            if(err.message.includes('duplicate key')){
+               return res.status(401).send({error: 'User Already Exists'})
+            } else {
+                return res.status(404).send({error: 'Unknow Error'})
+            }
+    } else {
+        console.log('user block')
+       return res.status(200).send({message: 'ok', you: newUser});
+    }
   });
 });
 

@@ -5,6 +5,8 @@ const path = require('path')
 const mongoose = require('mongoose')
 require('dotenv').config()
 
+const registerRoute = require('./routes/register.js')
+
 const port = process.env.PORT
 const uri = process.env.MONGO_URI
 
@@ -20,12 +22,7 @@ app.use(helmet())
 app.use(express.urlencoded({extended:false}))
 app.use(express.json())
 
-
-app.get('/api', (req,res,next) => {
-    console.log('hello from express')
-    console.log(req.ip)
-    res.json({message: 'hello'})
-})
+app.use(registerRoute)
 
 app.listen(port, () => {
     console.log(`App listening on port ${port}`)
