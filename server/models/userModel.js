@@ -31,21 +31,19 @@ const UserSchema = new mongoose.Schema({
 });
 
 /**
- * 
- * @param {Object} userObj takes in a user object to create a new user 
+ *
+ * @param {Object} userObj takes in a user object to create a new user
  * @param {callback} done callback returns either error or user
- * 
+ *
  */
 
-function createAndSaveUser(userObj, done){
-   const User = mongoose.model('User', UserSchema)
-   const user = new User(userObj)
-   user.save((err) => {
-    if(err) return done(err, null);
-    return done(null, user)
-   })
-   
+function createAndSaveUser(userObj, done) {
+  const User = mongoose.model("User", UserSchema);
+  const user = new User(userObj);
+  user.save((err) => {
+    if (err) return done(err, null);
+    return done(null, user);
+  });
 }
-exports.UserSchema = UserSchema
-exports.createAndSaveUser = createAndSaveUser
-
+exports.UserSchema = UserSchema;
+exports.createAndSaveUser = createAndSaveUser;
