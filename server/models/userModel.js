@@ -4,7 +4,7 @@ const RepairOrderSchema = require("./repairOrderModel");
 const emailValidate =
   /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
 
-const UserSchema = new Schema({
+const UserSchema = new mongoose.Schema({
   name: {
     first: String,
     last: String,
@@ -32,7 +32,7 @@ const UserSchema = new Schema({
 
 
 
-function createAndUpdateUser(userObj, done){
+function createAndSaveUser(userObj, done){
    const User = mongoose.model('User', UserSchema)
    const user = new User(userObj)
    user.save((err) => {
@@ -41,6 +41,6 @@ function createAndUpdateUser(userObj, done){
    })
    
 }
+exports.UserSchema = UserSchema
+exports.createAndSaveUser = createAndSaveUser
 
-module.exports = UserSchema = UserSchema;
-module.exports = createAndUpdateUser = createAndUpdateUser;
