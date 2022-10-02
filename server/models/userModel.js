@@ -30,4 +30,17 @@ const UserSchema = new Schema({
   repair_orders: [RepairOrderSchema],
 });
 
-module.exports = UserSchema;
+
+
+function createAndUpdateUser(userObj, done){
+   const User = mongoose.model('User', UserSchema)
+   const user = new User(userObj)
+   user.save((err) => {
+    if(err) return done(err, null);
+    return done(null, user)
+   })
+   
+}
+
+module.exports = UserSchema = UserSchema;
+module.exports = createAndUpdateUser = createAndUpdateUser;
