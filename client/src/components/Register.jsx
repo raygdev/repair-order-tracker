@@ -79,6 +79,7 @@ export const Register = (props) => {
 
   function handleSubmit(e) {
     e.preventDefault();
+    setError('')
     setIsLoading(true);
   }
 
