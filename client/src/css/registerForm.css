@@ -1,0 +1,30 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+form {
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    height: 250px;
+    justify-content: space-between;
+    background-color: #fafafa;
+    border-radius: 2px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+    padding: 1em;
+}
+
+input:focus {
+    border: yellow;
+}
+
