@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const RepairOrderSchema = new Schema({
+const RepairOrderSchema = new mongoose.Schema({
   ro_number: { type: Number, require: true },
   isWarranty: { type: Boolean, required: true },
   tech_id: { type: String, required: true },
