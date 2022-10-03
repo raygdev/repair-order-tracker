@@ -20,11 +20,16 @@ const UserSchema = new mongoose.Schema({
         return "Email is invalid";
       },
     },
-    required: [true, "Must be a valid email"],
+    required: [true, "Must be a unique and valid email"],
   },
   password: {
     type: String,
-    required: true,
+    validator: {
+        message: function(props){
+            return 'Password is Required'
+        }
+    },
+    required: [true, 'Password is required']
   },
   shop_name: { type: String },
   repair_orders: [RepairOrderSchema],
