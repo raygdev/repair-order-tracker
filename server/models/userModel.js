@@ -35,6 +35,7 @@ const UserSchema = new mongoose.Schema({
   repair_orders: [RepairOrderSchema],
 });
 
+const User = mongoose.model("User", UserSchema);
 /**
  *
  * @param {Object} userObj takes in a user object to create a new user
@@ -43,12 +44,25 @@ const UserSchema = new mongoose.Schema({
  */
 
 function createAndSaveUser(userObj, done) {
-  const User = mongoose.model("User", UserSchema);
   const user = new User(userObj);
   user.save((err) => {
     if (err) return done(err, null);
     return done(null, user);
   });
 }
+
+function findUserByEmailAndPassword(userObj, done){
+    User.findOne(userObj, function(err, user){
+        if(err){
+            return done(err)
+        } else if(!user){
+            return done(null, false)
+        } else {
+            return done(null, user)
+        }
+    })
+}
+
 exports.UserSchema = UserSchema;
 exports.createAndSaveUser = createAndSaveUser;
+
