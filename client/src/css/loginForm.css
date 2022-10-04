@@ -1,0 +1,16 @@
+form {
+    max-width: 400px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+}
+
+button {
+    border: none;
+    padding: .75em 1.5em;
+    color: black;
+    background-color: rgba(0, 255, 255, 0.8);
+}
