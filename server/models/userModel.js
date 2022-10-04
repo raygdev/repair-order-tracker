@@ -43,7 +43,7 @@ const User = mongoose.model("User", UserSchema);
  *
  */
 
-function createAndSaveUser(userObj, done) {
+exports.createAndSaveUser = function(userObj, done) {
   const user = new User(userObj);
   user.save((err) => {
     if (err) return done(err, null);
@@ -51,7 +51,7 @@ function createAndSaveUser(userObj, done) {
   });
 }
 
-function findUserByEmailAndPassword(userObj, done){
+exports.findUserByEmailAndPassword = function(userObj, done){
     User.findOne(userObj, function(err, user){
         if(err){
             return done(err)
@@ -64,5 +64,5 @@ function findUserByEmailAndPassword(userObj, done){
 }
 
 exports.UserSchema = UserSchema;
-exports.createAndSaveUser = createAndSaveUser;
+
 
