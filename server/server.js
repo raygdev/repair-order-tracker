@@ -6,6 +6,7 @@ const mongoose = require('mongoose')
 require('dotenv').config()
 
 const registerRoute = require('./routes/register.js')
+const loginRoute = require('./routes/login.js')
 
 const port = process.env.PORT
 const uri = process.env.MONGO_URI
@@ -23,6 +24,7 @@ app.use(express.urlencoded({extended:false}))
 app.use(express.json())
 
 app.use(registerRoute)
+app.use(loginRoute)
 
 app.listen(port, () => {
     console.log(`App listening on port ${port}`)
