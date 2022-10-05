@@ -1,3 +1,5 @@
+const userModel = require('../models/userModel')
+
 exports.userLoginController = (req,res,next) =>{
     userModel.findUserByEmailAndPassword(req.body,(err,user) => {
         if(err){
