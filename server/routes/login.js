@@ -15,6 +15,7 @@ router.post('/api/login',(req,res,next) => {
             res.status(404).send(`username/password combination doesn't exist`)
             return
         } else {
+            //toString() for ObjectId
             res.status(200).send(user)
             return
         }
