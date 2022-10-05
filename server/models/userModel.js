@@ -51,7 +51,7 @@ exports.createAndSaveUser = function(userObj, done) {
   });
 }
 
-exports.findUserByEmailAndPassword = function(userObj, done){
+exports.findUserByEmail = function(userObj, done){
     User.findOne(userObj, function(err, user){
         if(err){
             return done(err)
