@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react'
+import '../css/loginForm.css'
 
 export const Login = () => {
 const [userLogin, setUserLogin] = useState({
@@ -11,8 +12,9 @@ const [error, setError] = useState('')
 
 useEffect(() => {
     if(isLoading){
-        fetch('./api/lgoin',{
+        fetch('./api/login',{
             method:'POST',
+            headers:{'Content-Type':'application/json'},
             body:JSON.stringify(userLogin)
         }).then(res => {
             if(!res.ok){
@@ -23,11 +25,15 @@ useEffect(() => {
         }).then(user => {
             console.log(user)
             setIsLoading(false)
-            setIsSubmitted(false)
+            setIsSubmitted(true)
+            setError('')
             setUserLogin({email:'',password:''})
+            return
         }).catch(e => {
             console.log(e)
-            setError(e)
+            setError(`username/password combination doesn't exist`)
+            setIsLoading(false)
+            return
         })
     }
 },[isLoading])
@@ -56,13 +62,13 @@ const errorStyles = {
         <form onSubmit={handleSubmit} action="POST">
             <h3>Please log in!</h3>
             <input type="email" 
-                value=''
+                value={userLogin.email}
                 onChange={handleChange}
                 name='email'
                 placeholder='enter user email'
             />
             <input type="password" 
-                value=''
+                value={userLogin.password}
                 onChange={handleChange}
                 name='password'
                 placeholder='enter your password'
