@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import '../css/loginForm.css'
+import { useLoaderData } from 'react-router-dom'
 
 export const Login = () => {
 const [userLogin, setUserLogin] = useState({
@@ -57,9 +58,14 @@ const errorStyles = {
     fontSize:'.75rem'
 }
 
+let email = useLoaderData()
+console.log(`From login: ${email}`)
+
+
+
   return (
-    <div>
-        <form onSubmit={handleSubmit} action="POST">
+    <>
+        <form className='login-form' onSubmit={handleSubmit} action="POST">
             <h3>Please log in!</h3>
             <input type="email" 
                 value={userLogin.email}
@@ -76,6 +82,16 @@ const errorStyles = {
             <button>Login</button>
             <p style={errorStyles}>{error}</p>
         </form>
-    </div>
+    </>
   )
+}
+
+export async function loginLoader({request,params}){
+    console.log(request)
+    return 'some email'
+}
+
+export function loginLoadingData({request}){
+    console.log(`login action called ${'hello'}`)
+    return 'some email'
 }

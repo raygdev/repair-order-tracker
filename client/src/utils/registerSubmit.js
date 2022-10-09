@@ -11,7 +11,7 @@ export async function registerSubmission(newUserForm){
         body:JSON.stringify(newUserForm)
     })
        if(!res.ok){
-        throw res.json()
+        throw await res.json()
        }
     const data = res.json()
     return data 

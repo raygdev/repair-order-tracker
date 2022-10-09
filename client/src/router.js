@@ -1,5 +1,5 @@
 import { createBrowserRouter} from "react-router-dom";
-import { Login } from "./components/Login";
+import { Login, loginLoader, loginLoadingData } from "./components/Login";
 import { Register, redirectOnRegisterSuccess, handleAction } from "./components/Register";
 import  App  from './App'
 export const router = createBrowserRouter([
@@ -10,12 +10,14 @@ export const router = createBrowserRouter([
             {
                 path:'register',
                 element: <Register />,
-                loading: redirectOnRegisterSuccess,
-                action: handleAction
+                loader: redirectOnRegisterSuccess,
+                action: handleAction,
             },
             {
                 path: 'login',
-                element: <Login />
+                element: <Login />,
+                loader:loginLoader,
+                action:loginLoadingData
             }
         ]
     },

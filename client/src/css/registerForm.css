@@ -12,7 +12,7 @@
     align-items: center;
 } */
 
-form {
+.register-form {
     max-width: 400px;
     display: flex;
     flex-direction: column;
@@ -22,10 +22,10 @@ form {
     border-radius: 2px;
     box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
     padding: 1em;
-    margin: 0 auto;
+    margin:auto;
 }
 
 input:focus {
-    border: yellow;
+    border:1px solid yellow;
 }
 

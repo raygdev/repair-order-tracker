@@ -1,136 +1,72 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "../css/registerForm.css";
-import { registrationFormInit } from "../utils/registerInit";
+import { Form } from 'react-router-dom'
+import { registerSubmission } from "../utils/registerSubmit";
 
 export const Register = (props) => {
-  const [newUser, setNewUser] = useState(registrationFormInit);
-  const [error, setError] = useState("");
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    if (isLoading) {
-      fetch("/api/register/user", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newUser),
-      })
-        .then((res) => {
-          if (!res.ok) {
-            throw res.json();
-          } else {
-            return res.json();
-          }
-        })
-        .then((data) => {
-          console.log(data.message);
-          console.log(data.you)
-          console.log("came here second then block");
-          setIsLoading(false);
-          setIsSubmitted(true);
-          setNewUser(registrationFormInit)
-        })
-        .catch((e) => {
-          e.then((result) => {
-            console.log(result.error);
-            setError(result.error);
-            setIsLoading(false);
-          });
-          console.log("came here for error handling catch");
-        });
-    }
-  }, [isLoading]);
-
-  function handleChange(e) {
-    let { name, value } = e.target;
-    setNewUser((prevUser) => {
-      if (name === "name.first") {
-        return {
-          ...prevUser,
-          name: {
-            first: value,
-            last: prevUser.name.last,
-          },
-        };
-      } else if (name === "name.last") {
-        return {
-          ...prevUser,
-          name: {
-            first: prevUser.name.first,
-            last: value,
-          },
-        };
-      } else {
-        return {
-          ...prevUser,
-          [name]: value,
-        };
-      }
-    });
-  }
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    setError('')
-    setIsLoading(true);
-  }
-
-  const style = {
-    display: error ? "block" : "none",
-    color: "red",
-    fontWeight: "bold",
-  };
 
   const buttonStyle = {
-    backgroundColor: isSubmitted ? "green" : "yellow",
+    backgroundColor: "yellow",
   };
+  
+
 
   return (
-    <form onSubmit={handleSubmit}>
+    <Form className="register-form" method='post' action='../login'>
       <input
         type="text"
-        name={"name.first"}
-        value={newUser.name.first}
+        name='firstName'
         required={true}
-        onChange={handleChange}
         placeholder="First Name"
       />
       <input
         type="text"
-        name={"name.last"}
-        value={newUser.name.last}
+        name="lastName"
         required={true}
-        onChange={handleChange}
         placeholder="Last Name"
       />
       <input
         type="text"
-        name={"shop_name"}
-        value={newUser.shop_name}
-        onChange={handleChange}
+        name="shop_name"
         placeholder="Shop Name"
       />
       <input
         type="email"
-        name={"email"}
-        value={newUser.email}
+        name="email"
         required={true}
-        onChange={handleChange}
         placeholder="Enter your email"
       />
       <input
         type="password"
-        name={"password"}
-        value={newUser.password}
-        onChange={handleChange}
+        name="password"
         placeholder="Create a Password"
       />
-      <button style={buttonStyle} disabled={isSubmitted || isLoading}>
-        {isSubmitted ? "Success" : "Submit"}
+      <button style={buttonStyle}>
+         "Submit"
       </button>
-      <p style={style}>{error}</p>
-    </form>
+    </Form>
   );
 };
+export async function redirectOnRegisterSuccess({request}){
+       const user =  await request.body
+       console.log(user)
+       return
+       
+}
+
+export async function handleAction({request}){
+  const user = await request.formData()
+  // console.log(user)
+  const newUser={
+    name:{
+      first:user.get('firstName'),
+      last:user.get('lastName')
+    },
+    email:user.get('email'),
+    password:user.get('password'),
+    shop_name:user.get('shop_name')
+  }
+  console.log(JSON.stringify(newUser))
+  return newUser
+
+}

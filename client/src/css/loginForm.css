@@ -1,4 +1,5 @@
-form {
+
+.login-form {
     max-width: 400px;
     height: 200px;
     display: flex;
@@ -6,6 +7,11 @@ form {
     justify-content: space-between;
     align-items: center;
     align-content: center;
+    margin:auto;
+    background-color: #fafafa;
+    border-radius: 2px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+    padding: 1em;
 }
 
 button {
