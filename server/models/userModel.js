@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const RepairOrderSchema = require("./repairOrderModel");
+const bcrypt = require('bcrypt')
 
 const emailValidate =
   /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
@@ -25,17 +26,23 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     validator: {
-        message: function(props){
-            return 'Password is Required'
-        }
+      message: function (props) {
+        return "Password is Required";
+      },
     },
-    required: [true, 'Password is required']
+    required: [true, "Password is required"],
   },
   shop_name: { type: String },
-  repair_orders: [RepairOrderSchema],
 });
 
-const User = mongoose.model("User", UserSchema);
+
+UserSchema.virtual("repairOrders", {
+  ref: "RepairOrder",
+  local: "_id",
+  foreignField: "user",
+});
+
+const User = mongoose.model("User", UserSchema, "User");
 /**
  *
  * @param {Object} userObj takes in a user object to create a new user
@@ -43,26 +50,33 @@ const User = mongoose.model("User", UserSchema);
  *
  */
 
-exports.createAndSaveUser = function(userObj, done) {
-  const user = new User(userObj);
+exports.createAndSaveUser = function (userObj, done) {
+  const user = new User(userObj, {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  });
   user.save((err) => {
     if (err) return done(err, null);
     return done(null, user);
   });
-}
+};
 
-exports.findUserByEmail = function(userObj, done){
-    User.findOne(userObj, function(err, user){
-        if(err){
-            return done(err)
-        } else if(!user){
-            return done(null, false)
-        } else {
-            return done(null, user)
-        }
-    })
-}
+/**
+ * 
+ * @param {Object} emailObj object containing the users email
+ * @param {callback} done callback returns either error or user
+ */
+
+exports.findUserByEmail = function (emailObj, done) {
+  User.findOne(emailObj, function (err, user) {
+    if (err) {
+      return done(err);
+    } else if (!user) {
+      return done(null, false);
+    } else {
+      return done(null, user);
+    }
+  });
+};
 
 exports.UserSchema = UserSchema;
-
-
