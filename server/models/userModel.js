@@ -38,11 +38,11 @@ const UserSchema = new mongoose.Schema({
 
 UserSchema.virtual("repairOrders", {
   ref: "RepairOrder",
-  local: "_id",
+  localField: "_id",
   foreignField: "user",
 });
 
-const User = mongoose.model("User", UserSchema, "User");
+const User = mongoose.model("users", UserSchema, "users");
 /**
  *
  * @param {Object} userObj takes in a user object to create a new user
@@ -78,5 +78,17 @@ exports.findUserByEmail = function (emailObj, done) {
     }
   });
 };
+
+exports.findUserById = function (userId,done){
+  User.findById(userId, (err, user) => {
+    if(err){
+      return done(err)
+    }else if(!user) {
+      return done(null, false)
+    } else {
+      return done(null, user)
+    }
+  })
+}
 
 exports.UserSchema = UserSchema;
