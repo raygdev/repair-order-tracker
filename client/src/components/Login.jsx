@@ -1,87 +1,23 @@
 import React, {useEffect, useState} from 'react'
 import '../css/loginForm.css'
-import { useLoaderData } from 'react-router-dom'
+import { Form, redirect } from 'react-router-dom'
 
 export const Login = () => {
-const [userLogin, setUserLogin] = useState({
-    email: '',
-    password: ''
-})
-const [isLoading, setIsLoading] = useState(false)
-const [isSubmitted, setIsSubmitted] = useState(false)
-const [error, setError] = useState('')
-
-useEffect(() => {
-    if(isLoading){
-        fetch('./api/login',{
-            method:'POST',
-            headers:{'Content-Type':'application/json'},
-            body:JSON.stringify(userLogin)
-        }).then(res => {
-            if(!res.ok){
-                throw new Error('Something went wrong')
-            } else {
-                return res.json()
-            }
-        }).then(user => {
-            console.log(user)
-            setIsLoading(false)
-            setIsSubmitted(true)
-            setError('')
-            setUserLogin({email:'',password:''})
-            return
-        }).catch(e => {
-            console.log(e)
-            setError(`username/password combination doesn't exist`)
-            setIsLoading(false)
-            return
-        })
-    }
-},[isLoading])
-
-function handleChange(e){
-    const {name, value} = e.target;
-    setUserLogin(prevUserLogin => ({
-        ...prevUserLogin,
-        [name]:value
-    }))
-}
-
-function handleSubmit(e){
-    e.preventDefault()
-    setIsLoading(true)
-}
-
-const errorStyles = {
-    display: error ? 'block': 'none',
-    color: 'red',
-    fontSize:'.75rem'
-}
-
-let email = useLoaderData()
-console.log(`From login: ${email}`)
-
-
 
   return (
     <>
-        <form className='login-form' onSubmit={handleSubmit} action="POST">
+        <Form className='login-form' action='../login' method="POST">
             <h3>Please log in!</h3>
             <input type="email" 
-                value={userLogin.email}
-                onChange={handleChange}
                 name='email'
                 placeholder='enter user email'
             />
             <input type="password" 
-                value={userLogin.password}
-                onChange={handleChange}
                 name='password'
                 placeholder='enter your password'
             />
-            <button>Login</button>
-            <p style={errorStyles}>{error}</p>
-        </form>
+            <button type='submit'>Login</button>
+        </Form>
     </>
   )
 }
@@ -91,7 +27,24 @@ export async function loginLoader({request,params}){
     return 'some email'
 }
 
-export function loginLoadingData({request}){
-    console.log(`login action called ${'hello'}`)
-    return 'some email'
+export async function loginActionData({request}){
+    const formData = await request.formData()
+    const userObj = Object.fromEntries(formData)
+    return verifyUser(userObj).catch(e => console.log(e))
+}
+
+async function verifyUser(userObject){
+    const res = await fetch('/api/login',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify(userObject)
+    })
+
+    if(!res.ok){
+        console.log(res.status)
+            throw ('Something went wrong')
+    }
+    const user = await res.json()
+    console.log(user._id)
+    return redirect(`/user/${user._id}`)
 }
