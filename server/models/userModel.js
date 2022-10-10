@@ -33,14 +33,10 @@ const UserSchema = new mongoose.Schema({
     required: [true, "Password is required"],
   },
   shop_name: { type: String },
+  repairOrders:[{ type: mongoose.Schema.Types.ObjectId, ref:'RepairOrder'}]
 });
 
 
-UserSchema.virtual("repairOrders", {
-  ref: "RepairOrder",
-  localField: "_id",
-  foreignField: "user",
-});
 
 const User = mongoose.model("users", UserSchema, "users");
 /**
@@ -51,10 +47,7 @@ const User = mongoose.model("users", UserSchema, "users");
  */
 
 exports.createAndSaveUser = function (userObj, done) {
-  const user = new User(userObj, {
-    toJSON: { virtuals: true },
-    toObject: { virtuals: true },
-  });
+  const user = new User(userObj);
   user.save((err) => {
     if (err) return done(err, null);
     return done(null, user);
