@@ -7,6 +7,7 @@ require('dotenv').config()
 
 const registerRoute = require('./routes/register.js')
 const loginRoute = require('./routes/login.js')
+const userRoutes = require('./routes/user.js')
 
 const port = process.env.PORT
 const uri = process.env.MONGO_URI
@@ -25,6 +26,7 @@ app.use(express.json())
 
 app.use(registerRoute)
 app.use(loginRoute)
+app.use(userRoutes)
 
 app.listen(port, () => {
     console.log(`App listening on port ${port}`)
