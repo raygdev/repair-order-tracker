@@ -11,7 +11,6 @@ export const router = createBrowserRouter([
             {
                 path:'register',
                 element: <Register />,
-                loader: redirectOnRegisterSuccess,
                 action: handleAction,
             },
             {
