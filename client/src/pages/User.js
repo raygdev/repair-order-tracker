@@ -1,12 +1,12 @@
 import React from 'react'
-import { useLoaderData } from 'react-router-dom'
+import { Outlet, useLoaderData } from 'react-router-dom'
 
 export default function User(props) {
-  const user = useLoaderData()
-  console.log(user)
+  const user = useLoaderData();
   return (
     <div>
-        <h1>Welcome {user.name.first}!</h1>
+        <h1 className='font-extrabold text-2xl text-center'>Welcome {user.name.first}!</h1>
+        <Outlet />
     </div>
   )
 }
