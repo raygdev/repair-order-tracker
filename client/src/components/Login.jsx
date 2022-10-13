@@ -26,14 +26,13 @@ export const Login = () => {
 }
 
 export async function loginLoader({request,params}){
-    console.log(request)
     return 'some email'
 }
 
 export async function loginActionData({request}){
     const formData = await request.formData()
     const userObj = Object.fromEntries(formData)
-    return verifyUser(userObj).catch(e => console.log(e))
+    return verifyUser(userObj).catch(e => console.log(e.message))
 }
 
 async function verifyUser(userObject){
@@ -44,8 +43,7 @@ async function verifyUser(userObject){
     })
 
     if(!res.ok){
-        console.log(res.status)
-            throw new Error('Something went wrong')
+            throw await res.json()
     }
     const user = await res.json()
     console.log(user._id)
