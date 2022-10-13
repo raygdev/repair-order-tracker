@@ -12,7 +12,7 @@ const userRoutes = require('./routes/user.js')
 const port = process.env.PORT
 const uri = process.env.MONGO_URI
 
-const client = mongoose.connect(uri,{},(err) => {
+ mongoose.connect(uri,{},(err) => {
     if(err) return console.error(err.reason)
 })
 

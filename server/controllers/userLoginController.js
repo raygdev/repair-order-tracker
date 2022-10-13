@@ -1,5 +1,7 @@
 const userModel = require("../models/userModel");
-const passport = require('passport-local')
+const passport = require('passport')
+const LocalStrategy = require('passport-local')
+
 
 
 exports.userLoginController = (req, res, next) => {
@@ -15,8 +17,7 @@ exports.userLoginController = (req, res, next) => {
       res.status(404).send(`username/password combination doesn't exist`);
       return;
     } else {
-      //toString() for ObjectId
-      res.status(200).send(user);
+      res.status(200).json(user);
       return;
     }
   });
