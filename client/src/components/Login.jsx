@@ -1,22 +1,25 @@
-import React, {useEffect, useState} from 'react'
-import '../css/loginForm.css'
+import React from 'react'
 import { Form, redirect } from 'react-router-dom'
 
 export const Login = () => {
 
   return (
     <>
-        <Form className='login-form' action='../login' method="POST">
-            <h3>Please log in!</h3>
-            <input type="email" 
+        <Form className='rounded bg-sky-500 flex flex-col m-auto h-60 p-4 justify-evenly shadow-lg shadow-slate-500' action='../login' method="POST">
+            <h3 className='text-lg text-white font-bold self-center'>Please log in!</h3>
+            <input 
+                className='p-1 rounded'
+                type="email" 
                 name='email'
                 placeholder='enter user email'
             />
-            <input type="password" 
+            <input 
+                className='p-1 rounded'
+                type="password" 
                 name='password'
                 placeholder='enter your password'
             />
-            <button type='submit'>Login</button>
+            <button className='text-white bg-sky-700 self-center px-2 py-1 rounded' type='submit'>Login</button>
         </Form>
     </>
   )
@@ -42,7 +45,7 @@ async function verifyUser(userObject){
 
     if(!res.ok){
         console.log(res.status)
-            throw ('Something went wrong')
+            throw new Error('Something went wrong')
     }
     const user = await res.json()
     console.log(user._id)

@@ -1,37 +1,54 @@
 import React from "react";
-import "../css/registerForm.css";
 import { Form, redirect } from "react-router-dom";
-import { registerSubmission } from "../utils/registerSubmit";
 
 export const Register = (props) => {
-  const buttonStyle = {
-    backgroundColor: "yellow",
-  };
-
   return (
-    <Form className="register-form" method="post" action="../register">
+    <div className="flex  flex-col m-auto">
+      <h2 className="text-2xl mb-1 self-center text-emerald-800 font-extrabold">Please Register!</h2>
+      <p className="text-sm self-center font-medium">It's Free!</p>
+    <Form
+      className="p-4 h-80 flex flex-col bg-sky-500 justify-between rounded shadow-lg shadow-slate-500"
+      method="post"
+      action="../register"
+    >
       <input
+        className="p-1 rounded"
         type="text"
         name="firstName"
         required={true}
         placeholder="First Name"
       />
       <input
+        className="p-1 rounded"
         type="text"
         name="lastName"
         required={true}
         placeholder="Last Name"
       />
-      <input type="text" name="shop_name" placeholder="Shop Name" />
       <input
+        className="p-1 rounded"
+        type="text"
+        name="shop_name"
+        placeholder="Shop Name"
+      />
+      <input
+        className="p-1 rounded"
         type="email"
         name="email"
         required={true}
         placeholder="Enter your email"
       />
-      <input type="password" name="password" placeholder="Create a Password" />
-      <button style={buttonStyle}>"Submit"</button>
+      <input
+        className="p-1 rounded"
+        type="password"
+        name="password"
+        placeholder="Create a Password"
+      />
+      <button className="text-white bg-sky-700 self-center px-1 py-1 rounded">
+        Submit
+      </button>
     </Form>
+    </div>
   );
 };
 export async function redirectOnRegisterSuccess({ request }) {
@@ -69,7 +86,6 @@ async function createNewUser(userObj) {
   if (!res.ok) {
     console.log(res.message ?? res.message);
     throw await res.json();
-    redirect("/register");
   }
 
   const newUser = await res.json();
