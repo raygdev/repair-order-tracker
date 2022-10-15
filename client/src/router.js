@@ -3,7 +3,8 @@ import { Login, loginLoader, loginActionData } from "./components/Login";
 import { Register, redirectOnRegisterSuccess, handleAction } from "./components/Register";
 import  App  from './App'
 import User, { userLoaderFunction } from "./pages/User";
-import RepairOrders, { repairOrderLoader } from "./pages/RepairOrders";
+// import RepairOrders, { repairOrderLoader } from "./pages/RepairOrders";
+import CreateRepairOrder from "./pages/CreateRepairOrder";
 export const router = createBrowserRouter([
     {
         path:'/',
@@ -26,12 +27,8 @@ export const router = createBrowserRouter([
                 loader:userLoaderFunction,
                 children:[
                     {
-                     index: 'repair-orders',
-                     element: <RepairOrders />,
-                     loader:repairOrderLoader,
-                     children: [
-                        
-                     ]
+                     path:'create-repair-order',
+                     element: <CreateRepairOrder />
                     }
                 ]
             }

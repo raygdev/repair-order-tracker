@@ -1,12 +1,14 @@
 import React from 'react'
 import { Outlet, useLoaderData } from 'react-router-dom'
+import RepairOrders from './RepairOrders';
 
 export default function User(props) {
   const user = useLoaderData();
   return (
     <div>
-        <h1 className='font-extrabold text-2xl text-center'>Welcome {user.name.first}!</h1>
+        <h1 className='font-extrabold text-2xl text-center mt-5'>Welcome {user.name.first}!</h1>
         <Outlet />
+        <RepairOrders repairOrders={user.repairOrders} userId={user._id}/>
     </div>
   )
 }
