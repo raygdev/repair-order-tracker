@@ -47,7 +47,11 @@ const User = mongoose.model("users", UserSchema, "users");
  */
 
 exports.createAndSaveUser = function (userObj, done) {
-  const user = new User(userObj);
+  const newUser = {
+    ...userObj,
+    password: bcrypt.hashSync(userObj.password,10)
+  }
+  const user = new User(newUser);
   user.save((err) => {
     if (err) return done(err, null);
     return done(null, user);
