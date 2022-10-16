@@ -1,5 +1,7 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import { faLink } from '@fortawesome/free-solid-svg-icons'
 
 export default function RepairOrders({ repairOrders, userId }) {
   const orders =
@@ -20,7 +22,7 @@ export default function RepairOrders({ repairOrders, userId }) {
         <ul>{orders}</ul>
       ) : (
         <h3 className="text-white text-lg font-bold self-center m-auto hover:text-cyan-100">
-         <Link to={`/user/${userId}/create-repair-order`}>Let's Create a Repair Order!</ Link>
+         <Link to={`/user/${userId}/create-repair-order`}><FontAwesomeIcon icon={faLink}/> Let's Create a Repair Order!</ Link>
         </h3>
       )}
     </div>
