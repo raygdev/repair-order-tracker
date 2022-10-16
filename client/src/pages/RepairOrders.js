@@ -6,7 +6,7 @@ import { faLink } from '@fortawesome/free-solid-svg-icons'
 export default function RepairOrders({ repairOrders, userId }) {
   const orders =
     repairOrders.length &&
-    repairOrderLoader.map((ro) => {
+    repairOrders.map((ro) => {
       return (
         <>
           <li key={ro.ro_id}>{ro.ro_number}</li>
