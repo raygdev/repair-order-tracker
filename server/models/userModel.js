@@ -33,7 +33,7 @@ const UserSchema = new mongoose.Schema({
     required: [true, "Password is required"],
   },
   shop_name: { type: String },
-  repairOrders:[{ type: mongoose.Schema.Types.ObjectId, ref:'RepairOrder'}]
+  repairOrders:[{ type: mongoose.Schema.Types.ObjectId, ref:'RepairOrders'}]
 });
 
 
@@ -65,7 +65,9 @@ exports.createAndSaveUser = function (userObj, done) {
  */
 
 exports.findUserByEmail = function (emailObj, done) {
-  User.findOne(emailObj, function (err, user) {
+  User.findOne(emailObj)
+      .populate('repairOrders')
+      .exec(function (err, user) {
     if (err) {
       return done(err);
     } else if (!user) {
@@ -77,13 +79,37 @@ exports.findUserByEmail = function (emailObj, done) {
 };
 
 exports.findUserById = function (userId,done){
-  User.findById(userId, (err, user) => {
+  User.findById(userId)
+      .populate('repairOrders')
+      .select("-password")
+      .exec( (err, user) => {
     if(err){
       return done(err)
     }else if(!user) {
       return done(null, false)
     } else {
       return done(null, user)
+    }
+  })
+}
+
+exports.findUserAndPushRepairOrder = function(userId,roId,done){
+   User.findOne({_id:userId},function (err,user){
+    if(err){
+      console.log(err)
+      return done(err)
+    } else if(!user){
+      console.log('user does not exist')
+    }
+    else {
+      user.repairOrders.push(roId)
+      user.save((err) => {
+        if(err){
+          return done(err)
+        } else {
+          return done(null, user)
+        }
+      })
     }
   })
 }
