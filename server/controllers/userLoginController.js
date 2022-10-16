@@ -16,7 +16,7 @@ exports.userLoginController = (req, res, next) => {
         .status(404)
         .json({ message: `username/password combination doesn't exist` });
     } else {
-      return res.status(200).json(user);
+      return res.status(200).json({...user._doc, password:null});
     }
   });
 };
