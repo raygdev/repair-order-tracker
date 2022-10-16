@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const RepairOrderSchema = new mongoose.Schema({
   ro_number: { type: Number, require: true },
   isWarranty: { type: Boolean, required: true },
-  tech_id: { type: String, required: true },
+  userId: { type: String, required: true },
   vin: {
     type: String,
     uppercase: true,
