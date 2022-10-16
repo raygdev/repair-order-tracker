@@ -36,7 +36,7 @@ const RepairOrders = mongoose.model(
  */
 
 exports.findUserRepairOrders = function (userId, done) {
-  RepairOrders.find({ tech_id: userId }, (err, repairOrders) => {
+  RepairOrders.find({ userId: userId }, (err, repairOrders) => {
     if (err) {
       return done(err);
     } else if (!repairOrders) {
@@ -54,12 +54,12 @@ exports.findUserRepairOrders = function (userId, done) {
  */
 
 exports.createRepairOrder = function (repairOrderObject, done) {
-  const repairOrders = new RepairOrder(repairOrderObject);
-  repairOrder.save((err) => {
+  const repairOrders = new RepairOrders(repairOrderObject);
+  repairOrders.save((err) => {
     if (err) {
       return done(err);
     } else {
-      return done(null, true);
+      return done(null, repairOrders);
     }
   });
 };
