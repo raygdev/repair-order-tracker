@@ -4,7 +4,7 @@ import { Register, redirectOnRegisterSuccess, handleAction } from "./components/
 import  App  from './App'
 import User, { userLoaderFunction } from "./pages/User";
 // import RepairOrders, { repairOrderLoader } from "./pages/RepairOrders";
-import CreateRepairOrder from "./pages/CreateRepairOrder";
+import CreateRepairOrder, {createROActionLoader} from "./pages/CreateRepairOrder";
 export const router = createBrowserRouter([
     {
         path:'/',
@@ -28,6 +28,7 @@ export const router = createBrowserRouter([
                 children:[
                     {
                      path:'create-repair-order',
+                     action:createROActionLoader,
                      element: <CreateRepairOrder />
                     }
                 ]
