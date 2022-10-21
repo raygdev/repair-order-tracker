@@ -1,6 +1,6 @@
 import { createBrowserRouter} from "react-router-dom";
 import { Login, loginLoader, loginActionData } from "./components/Login";
-import { Register, redirectOnRegisterSuccess, handleAction } from "./components/Register";
+import { Register, handleAction } from "./components/Register";
 import  App  from './App'
 import User, { userLoaderFunction } from "./pages/User";
 // import RepairOrders, { repairOrderLoader } from "./pages/RepairOrders";

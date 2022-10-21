@@ -60,7 +60,6 @@ export async function redirectOnRegisterSuccess({ request }) {
 export async function handleAction({ request }) {
   const formData = await request.formData();
   const user = Object.fromEntries(formData);
-  console.log(user);
   const newUser = {
     name: {
       first: user.firstName,
@@ -84,10 +83,9 @@ async function createNewUser(userObj) {
   });
 
   if (!res.ok) {
-    console.log(res.message ?? res.message);
     throw await res.json();
   }
 
-  const newUser = await res.json();
+  console.log('new user created successfully')
   return redirect("/login");
 }

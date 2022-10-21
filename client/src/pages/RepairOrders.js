@@ -1,7 +1,7 @@
 import React from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import { faLink } from '@fortawesome/free-solid-svg-icons'
+import { faLink, faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons'
 
 export default function RepairOrders({ repairOrders, userId }) {
   const orders =
@@ -9,7 +9,7 @@ export default function RepairOrders({ repairOrders, userId }) {
     repairOrders.map((ro) => {
       return (
         <>
-          <li key={ro.ro_id}>{ro.ro_number}</li>
+          <li key={ro.ro_id}><FontAwesomeIcon icon={faLongArrowAltRight}/> {ro.ro_number}</li>
         </>
       );
     });
