@@ -1,5 +1,5 @@
 import React from "react";
-import { Form } from "react-router-dom";
+import { Form, redirect } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExternalLink } from "@fortawesome/free-solid-svg-icons";
 
@@ -47,12 +47,12 @@ export async function createROActionLoader({request, params}) {
     userId:params.userId
   }
 
-  return await createRO(ro)
+  return await createRO(ro,params.userId)
 
 }
 
 
-async function createRO(ro) {
+async function createRO(ro,userId) {
   const res = await fetch('/repairorder', {
     method:'POST',
     headers:{
@@ -65,6 +65,5 @@ async function createRO(ro) {
   if(!res.ok){
     throw await res.json()
   }
-  let data = res.json()
-  return data
+  return redirect(`/user/${userId}`)
 }

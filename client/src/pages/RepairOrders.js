@@ -9,7 +9,7 @@ export default function RepairOrders({ repairOrders, userId }) {
     repairOrders.map((ro) => {
       return (
         <>
-          <li key={ro.ro_id}><FontAwesomeIcon icon={faLongArrowAltRight}/> {ro.ro_number}</li>
+          <li key={ro.ro_id} className="text-white"><FontAwesomeIcon icon={faLongArrowAltRight}/> {ro.ro_number}</li>
         </>
       );
     });
