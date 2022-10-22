@@ -99,6 +99,13 @@ exports.findUserById = function (userId,done){
   })
 }
 
+/**
+ * 
+ * @param {string} userId the user's id
+ * @param {string} roId the id of the RO to push to users repairOrders path
+ * @param {callback} done callback that returns either error or user
+ */
+
 exports.findUserAndPushRepairOrder = function(userId,roId,done){
    User.findOne({_id:userId},function (err,user){
     if(err){
