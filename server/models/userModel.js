@@ -77,6 +77,13 @@ exports.findUserByEmail = function (emailObj, done) {
   });
 };
 
+
+/**
+ * 
+ * @param {string} userId the user's id
+ * @param {callback} done callback returns either error or user
+ */
+
 exports.findUserById = function (userId,done){
   User.findById(userId)
       .populate('repairOrders')
