@@ -4,6 +4,7 @@ const ROcontrollers = require('../controllers/repairOrderControllers')
 
 router.route('/')
     .post(ROcontrollers.createRepairOrder)
+    .delete(ROcontrollers.deletRepairOrderById)
 
 
 module.exports = router
