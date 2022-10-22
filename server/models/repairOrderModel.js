@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { User } = require('./userModel')
 
 const RepairOrderSchema = new mongoose.Schema({
   ro_number: { type: Number, require: true },
@@ -72,7 +73,7 @@ exports.createRepairOrder = function (repairOrderObject, done) {
 
 exports.deleteOneRepairOrderById = function (repairOrderId, done) {
   RepairOrders.findByIdAndDelete(repairOrderId, (err,doc) => {
-    if (!err) {
+    if (err) {
       return done(err);
     } else if(!doc){
       return done(null, false);
