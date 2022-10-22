@@ -114,4 +114,4 @@ exports.findUserAndPushRepairOrder = function(userId,roId,done){
   })
 }
 
-exports.UserSchema = UserSchema;
+exports.User = User;
