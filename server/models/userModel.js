@@ -1,5 +1,4 @@
-const mongoose = require("mongoose");
-const RepairOrderSchema = require("./repairOrderModel");
+const mongoose = require("mongoose")
 const bcrypt = require('bcrypt')
 
 const emailValidate =
