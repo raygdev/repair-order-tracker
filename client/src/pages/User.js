@@ -1,9 +1,9 @@
 import React from 'react'
-import { useLoaderData } from 'react-router-dom'
+import { useRouteLoaderData } from 'react-router-dom'
 import RepairOrders from './RepairOrders';
 
 export default function User(props) {
-  const user = useLoaderData();
+  const user = useRouteLoaderData('root');
   return (
     <>
         <h1 className='font-extrabold text-2xl text-center mt-5'>Welcome {user.name.first}!</h1>

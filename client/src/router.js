@@ -24,11 +24,12 @@ export const router = createBrowserRouter([
             {
                 path: 'user/:userId',
                 element:<UserLayout />,
+                loader: userLoaderFunction,
+                id:'root',
                 children:[
                     {
                         index: true,
-                        element: <User />,
-                        loader: userLoaderFunction
+                        element: <User />
                     },
                     {
                      path:'create-repair-order',
