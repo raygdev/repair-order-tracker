@@ -7,7 +7,7 @@ export default function DeleteButton(props) {
   return (
     <>
         <Form method='delete' action={`repairorder/delete/${props.id}`}>
-            <button type='submit'><FontAwesomeIcon icon={faTrashCan} /></button>
+            <button type='submit' className='hover:text-red-400'><FontAwesomeIcon icon={faTrashCan} /></button>
         </Form>
     </>
   )
