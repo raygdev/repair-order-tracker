@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment} from "react";
 import { Link } from "react-router-dom";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import { faLink, faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons'
@@ -8,9 +8,9 @@ export default function RepairOrders({ repairOrders, userId }) {
     repairOrders.length &&
     repairOrders.map((ro) => {
       return (
-        <>
-          <li key={ro.ro_id} className="text-white"><FontAwesomeIcon icon={faLongArrowAltRight}/> {ro.ro_number}</li>
-        </>
+        <Fragment key={ro._id}>
+          <li className="text-white"><FontAwesomeIcon icon={faLongArrowAltRight}/> {ro.ro_number}</li>
+        </Fragment>
       );
     });
   return (
