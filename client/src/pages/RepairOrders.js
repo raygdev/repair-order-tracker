@@ -2,6 +2,7 @@ import React, { Fragment} from "react";
 import { Link } from "react-router-dom";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import { faLink, faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons'
+import DeleteButton from "../components/DeleteButton";
 
 export default function RepairOrders({ repairOrders, userId }) {
   const orders =
@@ -9,7 +10,11 @@ export default function RepairOrders({ repairOrders, userId }) {
     repairOrders.map((ro) => {
       return (
         <Fragment key={ro._id}>
-          <li className="text-white"><FontAwesomeIcon icon={faLongArrowAltRight}/> {ro.ro_number}</li>
+          <li className=" flex justify-around text-white">
+            <div>
+            <FontAwesomeIcon icon={faLongArrowAltRight}/> {ro.ro_number} 
+            </div>
+            <DeleteButton id={ro._id}/></li>
         </Fragment>
       );
     });
