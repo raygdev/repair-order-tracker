@@ -1,19 +1,18 @@
 import React from 'react'
-import { Outlet, useLoaderData } from 'react-router-dom'
+import { useLoaderData } from 'react-router-dom'
 import RepairOrders from './RepairOrders';
 
 export default function User(props) {
   const user = useLoaderData();
   return (
-    <div>
+    <>
         <h1 className='font-extrabold text-2xl text-center mt-5'>Welcome {user.name.first}!</h1>
-        <Outlet />
         <RepairOrders repairOrders={user.repairOrders} userId={user._id}/>
-    </div>
+    </>
   )
 }
 
-export function userLoaderFunction({request,params}){
+export function userLoaderFunction({params}){
     return loadUser(params.userId).catch(e => console.log(e.message))
 }
 

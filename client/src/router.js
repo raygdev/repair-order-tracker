@@ -2,8 +2,8 @@ import { createBrowserRouter} from "react-router-dom";
 import { Login, loginLoader, loginActionData } from "./components/Login";
 import { Register, handleAction } from "./components/Register";
 import  App  from './App'
+import UserLayout from "./pages/UserLayout";
 import User, { userLoaderFunction } from "./pages/User";
-// import RepairOrders, { repairOrderLoader } from "./pages/RepairOrders";
 import CreateRepairOrder, {createROActionLoader} from "./pages/CreateRepairOrder";
 export const router = createBrowserRouter([
     {
@@ -23,9 +23,13 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'user/:userId',
-                element:<User />,
-                loader:userLoaderFunction,
+                element:<UserLayout />,
                 children:[
+                    {
+                        index: true,
+                        element: <User />,
+                        loader: userLoaderFunction
+                    },
                     {
                      path:'create-repair-order',
                      action:createROActionLoader,
