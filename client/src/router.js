@@ -6,12 +6,17 @@ import UserLayout from "./pages/UserLayout";
 import User, { userLoaderFunction } from "./pages/User";
 import CreateRepairOrder, {createROActionLoader} from "./pages/CreateRepairOrder";
 import NotFound from "./pages/NotFound";
+import Home from "./pages/Home";
 export const router = createBrowserRouter([
     {
         path:'/',
         element: <App />,
         errorElement: <NotFound />,
         children: [
+            {
+                index:true,
+                element:<Home />
+            },
             {
                 path:'register',
                 element: <Register />,
