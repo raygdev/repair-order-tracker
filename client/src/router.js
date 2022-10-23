@@ -5,10 +5,12 @@ import  App  from './App'
 import UserLayout from "./pages/UserLayout";
 import User, { userLoaderFunction } from "./pages/User";
 import CreateRepairOrder, {createROActionLoader} from "./pages/CreateRepairOrder";
+import NotFound from "./pages/NotFound";
 export const router = createBrowserRouter([
     {
         path:'/',
         element: <App />,
+        errorElement: <NotFound />,
         children: [
             {
                 path:'register',
