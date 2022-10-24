@@ -15,14 +15,14 @@ export default function RepairOrders({ repairOrders, userId }) {
       return (
         <Fragment key={ro._id}>
           <li className=" flex justify-between text-white">
-            <div>
+            <Link to={`repairorder/${ro._id}`}>
             <FontAwesomeIcon icon={faLongArrowAltRight}/> {ro.ro_number} 
-            </div>
+            </Link>
             <DeleteButton id={ro._id}/></li>
         </Fragment>
       );
     });
-    
+
   return (
     <div className="bg-sky-700 h-screen flex flex-col align-center mt-6 p-6 m-auto w-3/4 rounded-lg md:w-2/4">
       <h2 className="text-xl font-bold  text-white self-center">
