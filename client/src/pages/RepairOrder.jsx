@@ -1,12 +1,14 @@
 import React from 'react'
-import { useRouteLoaderData, useParams } from 'react-router-dom'
+import { useRouteLoaderData, useParams, Link } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 
 //TODO pretty up the UI
 
 export default function RepairOrder() {
 
     const { repairOrders } = useRouteLoaderData('root')
-    const { repairId } = useParams()
+    const { repairId, userId } = useParams()
 
     const [repairOrder ] = repairOrders.filter(RO => RO._id == repairId)
 
@@ -21,6 +23,8 @@ export default function RepairOrder() {
         <p title='vehicle vin number'>VIN # {repairOrder.vin}</p>
         <p title='pay type' className='whitespace-pre-wrap'>Pay Type: {repairOrder.isWarranty ? "Warranty":"Customer Pay"}</p>
         <p title='technician notes' className='self-start whitespace-pre-line w-full'>Tech Notes: <br /><hr/>{repairOrder.notes}</p>
+        <Link to={`/user/${userId}`} className='underline hover:text-violet-900'>Go to Dashboard</Link>
+        <button>Edit <FontAwesomeIcon icon={faPenToSquare} /></button>
     </main>
   )
 }
