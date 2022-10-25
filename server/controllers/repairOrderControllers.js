@@ -3,7 +3,14 @@ const userModel = require('../models/userModel.js')
 const mongoose = require('mongoose')
 
 function createRepairOrder(req,res,next){
-    repairOrderModel.createRepairOrder(req.body,(err,repairOrder) => {
+    let userObj = req.body
+    if(!userObj.created_on){
+        userObj = {
+            ...userObj,
+            created_on: Date.now()
+        }
+    }
+    repairOrderModel.createRepairOrder(userObj,(err,repairOrder) => {
         if(err) {
             return res.status(409).json({message: "Something went wrong saving the RO"})
         } else {
