@@ -13,14 +13,14 @@ export default function RepairOrder() {
     let date = new Date(repairOrder.created_on).toLocaleDateString()
 
   return (
-    <main className='flex flex-col bg-sky-500 items-center text-white p-4 my-5'>
+    <main className='flex flex-col bg-sky-500 items-center text-white p-4 my-5 md:w-3/4 m-auto lg:w-2/4'>
         <div className='flex justify-between w-96 p-4'>
             <p title='repair order number' className=''>Repair Order # {repairOrder.ro_number}</p>
             <p title='repair order creation date' className=''>Created On <date>{date}</date></p>
         </div>
         <p title='vehicle vin number'>VIN # {repairOrder.vin}</p>
-        <p title='pay type'>Pay Type: {repairOrder.isWarranty ? "Warranty":"Customer Pay"}</p>
-        <p title='technician notes'>Tech Notes: <br /><hr/>{repairOrder.notes}</p>
+        <p title='pay type' className='whitespace-pre-wrap'>Pay Type: {repairOrder.isWarranty ? "Warranty":"Customer Pay"}</p>
+        <p title='technician notes' className='self-start whitespace-pre-line w-full'>Tech Notes: <br /><hr/>{repairOrder.notes}</p>
     </main>
   )
 }
