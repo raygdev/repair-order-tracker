@@ -1,5 +1,5 @@
 import React from "react";
-import CreateRepairButton from "./CreateRepairButton";
+import AddRepairButton from "./AddRepairButton";
 import RepairOrderListItems from "./RepairOrderListItems";
 import CreateFirstRepair from "./CreateFirstRepair";
 
@@ -28,7 +28,7 @@ export default function RepairOrders({ repairOrders, userId }) {
       <h2 className="text-xl font-bold  text-white self-center">
         Repair Orders
       </h2>
-      {sortedOrders.length && <CreateRepairButton />}
+      {sortedOrders.length && <AddRepairButton />}
       {sortedOrders.length ? (
         <ul>{sortedOrders}</ul>
       ) : (
