@@ -1,6 +1,6 @@
 import React from 'react'
 import { useRouteLoaderData } from 'react-router-dom'
-import RepairOrders from './RepairOrders';
+import RepairOrders from '../components/RepairOrders';
 
 export default function User(props) {
   const user = useRouteLoaderData('root');
