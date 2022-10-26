@@ -10,7 +10,7 @@ export default function RepairOrder() {
     const { repairOrders } = useRouteLoaderData('root')
     const { repairId, userId } = useParams()
 
-    const [repairOrder ] = repairOrders.filter(RO => RO._id == repairId)
+    const [repairOrder ] = repairOrders.filter(RO => RO._id === repairId)
 
     let date = new Date(repairOrder.created_on).toLocaleDateString()
 
