@@ -2,6 +2,7 @@ import React from 'react'
 import { useRouteLoaderData, useParams, Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
+import DeleteButton from '../components/DeleteButton'
 
 //TODO pretty up the UI
 
@@ -25,8 +26,11 @@ export default function RepairOrder() {
         <hr className='w-full my-4'/>
         <p title='technician notes' className='self-start whitespace-pre-line w-full'>Tech Notes: <br />{repairOrder.notes}</p>
         <hr className='w-full my-4'/>
-        <Link to={`/user/${userId}`} className='underline hover:text-violet-900'>Go to Dashboard</Link>
-        <button>Edit <FontAwesomeIcon icon={faPenToSquare} /></button>
+        <div className='flex w-full justify-between'>
+            <Link to={`/user/${userId}`} className='underline hover:text-violet-900'>Go to Dashboard</Link>
+            <DeleteButton path={'../repairorder/delete/'}  id={repairOrder._id}/>
+            <button className='hover:text-green-300'>Edit <FontAwesomeIcon icon={faPenToSquare} /></button>
+        </div>
     </main>
   )
 }

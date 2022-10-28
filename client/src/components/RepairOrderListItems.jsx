@@ -11,7 +11,10 @@ export default function RepairOrderListItems(props) {
         <Link to={`repairorder/${props.id}`}>
           <FontAwesomeIcon icon={faLongArrowAltRight} /> {props.ro_number}
         </Link>
-        <DeleteButton id={props.id} />
+        <DeleteButton 
+            path={'repairorder/delete/'} 
+            id={props.id} 
+        />
       </li>
     </>
   );

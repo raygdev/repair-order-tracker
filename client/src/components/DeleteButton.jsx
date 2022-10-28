@@ -6,7 +6,7 @@ import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
 export default function DeleteButton(props) {
   return (
     <>
-        <Form method='delete' action={`repairorder/delete/${props.id}`}>
+        <Form method='delete' action={`${props.path}${props.id}`}>
             <button type='submit' className='hover:text-red-400'><FontAwesomeIcon icon={faTrashCan} /></button>
         </Form>
     </>
