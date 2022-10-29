@@ -28,8 +28,8 @@ export default function RepairOrder() {
         <hr className='w-full my-4'/>
         <div className='flex w-full justify-between'>
             <Link to={`/user/${userId}`} className='underline hover:text-violet-900'>Go to Dashboard</Link>
-            <DeleteButton path={'../repairorder/delete/'}  id={repairOrder._id}/>
-            <button className='hover:text-green-300'>Edit <FontAwesomeIcon icon={faPenToSquare} /></button>
+            <DeleteButton path={'../repairorder/delete/'}  id={repairOrder._id} text={'Delete'}/>
+            <button className='transition ease-in-out delay-100 hover:text-green-300 font-semibold'>Edit <FontAwesomeIcon icon={faPenToSquare} /></button>
         </div>
     </main>
   )

@@ -4,10 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
 
 export default function DeleteButton(props) {
+    const buttonText = props.text ? (props.text + ' ') : ''
   return (
     <>
         <Form method='delete' action={`${props.path}${props.id}`}>
-            <button type='submit' className='hover:text-red-400'><FontAwesomeIcon icon={faTrashCan} /></button>
+            <button type='submit' className='transition ease-in-out delay-100 hover:text-red-400 font-semibold'>{buttonText}<FontAwesomeIcon icon={faTrashCan} /></button>
         </Form>
     </>
   )
