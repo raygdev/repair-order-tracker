@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useRouteLoaderData, useParams, Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
@@ -7,6 +7,9 @@ import DeleteButton from '../components/DeleteButton'
 //TODO pretty up the UI
 
 export default function RepairOrder() {
+    useEffect(() => {
+        document.title='Repair Order'
+    }, [])
 
     const { repairOrders } = useRouteLoaderData('root')
     const { repairId, userId } = useParams()

@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useRouteLoaderData } from 'react-router-dom'
 import RepairOrders from '../components/RepairOrders';
 
 export default function User(props) {
+  useEffect(()=> {
+    document.title = "User Dashboard"
+  },[])
+
   const user = useRouteLoaderData('root');
   return (
     <>
