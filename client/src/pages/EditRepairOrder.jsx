@@ -1,0 +1,88 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React, { useState } from 'react'
+import { Form, useParams, useRouteLoaderData } from 'react-router-dom'
+import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
+
+export default function EditRepairOrder() {
+    const { repairOrders } = useRouteLoaderData('root')
+    const { repairId } = useParams()
+    const [ repairOrder ] = repairOrders.filter(ro => ro._id === repairId)
+    
+    const date = new Date(repairOrder.created_on).toLocaleDateString()
+    const [ repairInfo, setRepairInfo ] = useState({
+        ...repairOrder,
+        created_on: new Date(date).toISOString().substring(0,10)
+    })
+    console.log(repairInfo)
+    function handleFormChange(e){
+        const { name, value, type, checked } = e.target;
+        setRepairInfo(prevInfo => ({
+            ...prevInfo,
+            [ name ]: type === 'checkbox' ? checked : value
+        }))
+    }
+
+     return (
+        <Form className='flex flex-col p-4 bg-sky-700 w-5/6  sm:w-1/2  md:w-1/3 lg:w-1/4 m-auto min-h-screen justify-between'>
+            <div className='flex flex-col'>
+                <label htmlFor="ro_number" className='text-white font-semibold'>RO Number</label>
+                <input
+                    className='p-1 rounded'
+                    type="text" 
+                    id="ro_number"
+                    name={'ro_number'}
+                    value={repairInfo.ro_number}
+                    onChange={handleFormChange} 
+                />
+            </div>
+            <div className='flex flex-col'>
+                <label htmlFor="vin" className='text-white font-semibold'>VIN*</label>
+                <input 
+                    className='p-1 rounded'
+                    type="text" 
+                    id="vin"
+                    name='vin'
+                    value={repairInfo.vin}
+                    onChange={handleFormChange} 
+                />
+            </div>
+            <div className='flex flex-col'>
+                <label htmlFor="created_on" className='text-white font-semibold'>Created On</label>
+                <input 
+                    className='p-1 rounded'
+                    type="date" 
+                    id="created_on"
+                    name='created_on'
+                    value={repairInfo.created_on}
+                    onChange={handleFormChange} 
+                />
+            </div>
+            <div className='flex w-full'>
+                <div className='flex basis-1/2 justify-between '>
+                <label htmlFor="isWarranty" className='text-white font-semibold'>Warranty</label>
+                <input 
+                    type="checkbox" 
+                    id="isWarranty"
+                    name='isWarranty'
+                    checked={repairInfo.isWarranty}
+                    value={repairInfo.isWarranty}
+                    onChange={handleFormChange} 
+                />
+                </div>
+            </div>
+            <div className='flex flex-col'>
+                <label htmlFor="notes" className='text-white font-semibold'>Notes</label>
+                <textarea
+                    className='bg-inherit text-white p-1 rounded'
+                    name="notes" 
+                    id="notes" 
+                    value={repairInfo.notes}
+                    onChange={handleFormChange}
+                    cols="30" 
+                    rows="10" 
+                />
+            </div>
+            <button className='text-white font-semibold p-2 self-center bg-sky-800 rounded-md m-auto transition delay-100 hover:bg-sky-600'>Edit <FontAwesomeIcon icon={faPenToSquare}/></button>
+        </Form>
+     )
+}

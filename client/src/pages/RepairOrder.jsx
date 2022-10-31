@@ -32,7 +32,7 @@ export default function RepairOrder() {
         <div className='flex w-full justify-between'>
             <Link to={`/user/${userId}`} className='underline hover:text-violet-900'>Go to Dashboard</Link>
             <DeleteButton path={'../repairorder/delete/'}  id={repairOrder._id} text={'Delete'}/>
-            <button className='transition ease-in-out delay-100 hover:text-green-300 font-semibold'>Edit <FontAwesomeIcon icon={faPenToSquare} /></button>
+            <Link to={`../editrepairorder/${repairId}`} className='transition ease-in-out delay-100 hover:text-green-300 font-semibold'>Edit <FontAwesomeIcon icon={faPenToSquare} /></Link>
         </div>
     </main>
   )

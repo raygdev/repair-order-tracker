@@ -9,6 +9,7 @@ import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
 import { deleteRepairOrderAction } from "./components/DeleteButton";
 import RepairOrder from "./pages/RepairOrder";
+import EditRepairOrder from "./pages/EditRepairOrder";
 export const router = createBrowserRouter([
     {
         path:'/',
@@ -44,6 +45,10 @@ export const router = createBrowserRouter([
                      path:'create-repair-order',
                      action:createROActionLoader,
                      element: <CreateRepairOrder />
+                    },
+                    {
+                        path:'editrepairorder/:repairId',
+                        element: <EditRepairOrder />
                     },
                     {
                         path:'repairorder/:repairId',
