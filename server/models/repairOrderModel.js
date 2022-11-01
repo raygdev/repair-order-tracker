@@ -98,3 +98,15 @@ exports.deleteAllRepairOrders = function(tech_id,done){
       }
   })
 }
+
+exports.updateOneRepairOrder = function(ro_id, updateObj, done){
+  RepairOrders.findByIdAndUpdate(ro_id,updateObj,function(err,ro){
+    if(err){
+      return done(err)
+    } else if(!ro){
+      return done(nll,false)
+    } else {
+      return done(null, ro)
+    }
+  })
+}
