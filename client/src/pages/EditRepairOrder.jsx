@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useState } from 'react'
-import { Form, useParams, useRouteLoaderData } from 'react-router-dom'
+import { Form, useParams, useRouteLoaderData, redirect } from 'react-router-dom'
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 
 export default function EditRepairOrder() {
@@ -13,7 +13,7 @@ export default function EditRepairOrder() {
         ...repairOrder,
         created_on: new Date(date).toISOString().substring(0,10)
     })
-    console.log(repairInfo)
+
     function handleFormChange(e){
         const { name, value, type, checked } = e.target;
         setRepairInfo(prevInfo => ({
@@ -23,7 +23,7 @@ export default function EditRepairOrder() {
     }
 
      return (
-        <Form className='flex flex-col p-4 bg-sky-700 w-5/6  sm:w-1/2  md:w-1/3 lg:w-1/4 m-auto min-h-screen justify-between'>
+        <Form method='put' action={`../repairorders/edit/${repairId}`} className='flex flex-col p-4 bg-sky-700 w-5/6  sm:w-1/2  md:w-1/3 lg:w-1/4 m-auto min-h-screen justify-between'>
             <div className='flex flex-col'>
                 <label htmlFor="ro_number" className='text-white font-semibold'>RO Number</label>
                 <input
@@ -82,7 +82,42 @@ export default function EditRepairOrder() {
                     rows="10" 
                 />
             </div>
-            <button className='text-white font-semibold p-2 self-center bg-sky-800 rounded-md m-auto transition delay-100 hover:bg-sky-600'>Edit <FontAwesomeIcon icon={faPenToSquare}/></button>
+            <button className='text-white font-semibold p-2 self-center bg-sky-800 rounded-md m-auto transition delay-100 hover:bg-sky-600' type='submit' >Edit <FontAwesomeIcon icon={faPenToSquare} /></button>
         </Form>
      )
+}
+
+export async function editRepairOrderAction({request,params}){
+    console.log(await request.method)
+    const formData = await request.formData()
+    const ro = Object.fromEntries(formData)
+    const id = await params.repairId
+    const userId = await params.userId
+    const updatedRO = {
+        ...ro,
+        isWarranty: ro.isWarranty ? true: false,
+        _id: id,
+        created_on: ro.created_on.replace(/-/g,'\/')
+    }
+
+    await editRo(updatedRO)
+
+    return redirect(`/user/${userId}/repairorder/${id}`)
+
+}
+
+async function editRo(upatedRO){
+    const res = await fetch('/repairorder',{
+        method:'put',
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body: JSON.stringify(upatedRO)
+    })
+
+    if(!res.ok){
+        throw res
+    }
+
+    return
 }
