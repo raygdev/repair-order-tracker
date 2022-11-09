@@ -50,10 +50,15 @@ exports.createAndSaveUser = function (userObj, done) {
     ...userObj,
     password: bcrypt.hashSync(userObj.password,10)
   }
+
   const user = new User(newUser);
+
   user.save((err) => {
+
     if (err) return done(err, null);
+
     return done(null, user);
+
   });
 };
 
@@ -67,14 +72,14 @@ exports.findUserByEmail = function (emailObj, done) {
   User.findOne(emailObj)
       .populate('repairOrders')
       .exec(function (err, user) {
-    if (err) {
-      return done(err);
-    } else if (!user) {
-      return done(null, false);
-    } else {
-      return done(null, user);
-    }
-  });
+
+        if(err) return done(err);
+
+        if (!user) return done(null, false);
+        
+        return done(null, user);
+    
+      });
 };
 
 
@@ -89,14 +94,13 @@ exports.findUserById = function (userId,done){
       .populate('repairOrders')
       .select("-password")
       .exec( (err, user) => {
-    if(err){
-      return done(err)
-    }else if(!user) {
-      return done(null, false)
-    } else {
-      return done(null, user)
-    }
-  })
+
+          if(err) return done(err)
+
+          if(!user) return done(null, false)
+
+          return done(null, user)
+      })
 }
 
 /**
@@ -108,22 +112,18 @@ exports.findUserById = function (userId,done){
 
 exports.findUserAndPushRepairOrder = function(userId,roId,done){
    User.findOne({_id:userId},function (err,user){
-    if(err){
-      console.log(err)
-      return done(err)
-    } else if(!user){
-      console.log('user does not exist')
-    }
-    else {
-      user.repairOrders.push(roId)
-      user.save((err) => {
-        if(err){
-          return done(err)
-        } else {
-          return done(null, user)
-        }
-      })
-    }
+
+    if(err) return done(err)
+    if(!user) return done(null,false)
+
+    user.repairOrders.push(roId)
+
+    user.save((err) => {
+
+      if(err) return done(err)
+      return done(null, user)
+
+    })
   })
 }
 
