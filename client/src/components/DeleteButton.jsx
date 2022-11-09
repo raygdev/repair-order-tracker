@@ -1,7 +1,9 @@
+import loadable from '@loadable/component'
 import React from 'react'
-import { Form, redirect } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { redirect } from 'react-router-dom'
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
+const Form = loadable(() => import('react-router-dom').then(module => ({default: module.Form})))
+const FontAwesomeIcon = loadable(() => import('@fortawesome/react-fontawesome').then(module => ({default:module.FontAwesomeIcon})))
 
 export default function DeleteButton(props) {
     const buttonText = props.text ? (props.text + ' ') : ''

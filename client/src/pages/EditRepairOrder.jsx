@@ -1,7 +1,8 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useState } from 'react'
 import { Form, useParams, useRouteLoaderData, redirect } from 'react-router-dom'
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
+import loadable from '@loadable/component'
+const FontAwesomeIcon = loadable(() => import('@fortawesome/react-fontawesome').then(module => ({default:module.FontAwesomeIcon})))
 
 export default function EditRepairOrder() {
     const { repairOrders } = useRouteLoaderData('root')

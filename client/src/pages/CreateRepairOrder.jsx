@@ -1,7 +1,9 @@
 import React from "react";
-import { Form, redirect } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { redirect } from "react-router-dom";
 import { faExternalLink } from "@fortawesome/free-solid-svg-icons";
+import loadable from "@loadable/component";
+const FontAwesomeIcon = loadable(() => import('@fortawesome/react-fontawesome').then(module => ({default:module.FontAwesomeIcon})))
+const Form = loadable(() => import('react-router-dom').then(module => ({default:module.Form})))
 
 //TODO provide better error handling for form
 //validate input

@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, redirect } from "react-router-dom";
 
-export const Register = (props) => {
+export default function Register (props) {
   return (
     <div className="flex  flex-col m-auto">
       <h2 className="text-2xl mb-1 self-center text-emerald-800 font-extrabold">Please Register!</h2>

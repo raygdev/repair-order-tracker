@@ -1,5 +1,6 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import loadable from '@loadable/component'
+const Link = loadable(() => import('react-router-dom').then(module => ({default:module.Link})))
 
 export default function Home() {
   return (

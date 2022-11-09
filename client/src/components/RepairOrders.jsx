@@ -1,7 +1,9 @@
 import React from "react";
-import AddRepairButton from "./AddRepairButton";
-import RepairOrderListItems from "./RepairOrderListItems";
-import CreateFirstRepair from "./CreateFirstRepair";
+import loadable from "@loadable/component";
+// import RepairOrderListItems from "./RepairOrderListItems";
+const AddRepairButton = loadable(() => import('./AddRepairButton'))
+const CreateFirstRepair = loadable(() => import('./CreateFirstRepair'))
+const RepairOrderListItems = loadable(() => import('./RepairOrderListItems'))
 
 export default function RepairOrders({ repairOrders, userId }) {
 

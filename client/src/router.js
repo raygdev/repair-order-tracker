@@ -1,15 +1,20 @@
+import loadable from '@loadable/component'
 import { createBrowserRouter} from "react-router-dom";
 import { Login, loginLoader, loginActionData } from "./components/Login";
-import { Register, handleAction } from "./components/Register";
-import  App  from './App'
-import UserLayout from "./pages/UserLayout";
-import User, { userLoaderFunction } from "./pages/User";
-import CreateRepairOrder, {createROActionLoader} from "./pages/CreateRepairOrder";
-import NotFound from "./pages/NotFound";
-import Home from "./pages/Home";
+import  {handleAction } from "./components/Register";
+import { userLoaderFunction } from "./pages/User";
+import {createROActionLoader} from "./pages/CreateRepairOrder";
 import { deleteRepairOrderAction } from "./components/DeleteButton";
-import RepairOrder from "./pages/RepairOrder";
-import EditRepairOrder, { editRepairOrderAction } from "./pages/EditRepairOrder";
+import { editRepairOrderAction } from "./pages/EditRepairOrder";
+const UserLayout = loadable(() => import("./pages/UserLayout"))
+const  App = loadable( () => import('./App'))
+const RepairOrder =  loadable(() => import("./pages/RepairOrder"))
+const Home = loadable(() => import("./pages/Home"))
+const Register = loadable(() => import('./components/Register'))
+const User = loadable(() => import('./pages/User'))
+const NotFound = loadable(() => import('./pages/NotFound'))
+const EditRepairOrder = loadable(() => import('./pages/EditRepairOrder'))
+const CreateRepairOrder = loadable(() => import('./pages/CreateRepairOrder'))
 export const router = createBrowserRouter([
     {
         path:'/',

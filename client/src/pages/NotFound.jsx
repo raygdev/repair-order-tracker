@@ -1,9 +1,8 @@
 import React from 'react'
-import { useLocation, Link } from 'react-router-dom'
-import { Header } from '../components/Header'
+import loadable from '@loadable/component'
+const Link = loadable(() => import('react-router-dom').then(module => ({default:module.Link})))
+const Header = loadable(() => import('../components/Header'))
 export default function NotFound() {
-  const location = useLocation()
-  console.log(location)
   return (
     <div className='h-screen flex flex-col'>
     <Header />

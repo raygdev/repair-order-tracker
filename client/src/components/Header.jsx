@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-export const Header = (props) => {
+export default function Header(props) {
   return (
     <header className='p-4 bg-sky-500 flex sticky top-0'>
         <nav className='bg-sky-500 flex basis-full justify-around'>

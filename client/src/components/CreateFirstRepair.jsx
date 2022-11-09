@@ -1,7 +1,8 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import loadable from "@loadable/component";
 import { faLink } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+const Link = loadable(() => import('react-router-dom').then(module => ({default:module.Link})))
+const FontAwesomeIcon = loadable(() => import('@fortawesome/react-fontawesome').then(module => ({default:module.FontAwesomeIcon})))
 
 export default function CreateFirstRepair({ userId }) {
   return (

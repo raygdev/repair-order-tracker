@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react'
 import { useRouteLoaderData, useParams, Link } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
-import DeleteButton from '../components/DeleteButton'
+import loadable from '@loadable/component'
+const DeleteButton = loadable(() => import('../components/DeleteButton'))
+const FontAwesomeIcon = loadable(() => import('@fortawesome/react-fontawesome').then(module => ({default:module.FontAwesomeIcon})))
 
 //TODO pretty up the UI
 

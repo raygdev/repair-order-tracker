@@ -1,5 +1,8 @@
 import React from 'react'
-import { Form, redirect } from 'react-router-dom'
+// import { redirect } from 'react-router-dom'
+import loadable from '@loadable/component'
+import { redirect } from 'react-router-dom'
+const Form = loadable(() => import('react-router-dom').then(module => ({default: module.Form})))
 
 export const Login = () => {
 
