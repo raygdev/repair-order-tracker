@@ -37,14 +37,14 @@ const RepairOrders = mongoose.model(
  */
 
 exports.findUserRepairOrders = function (userId, done) {
+
   RepairOrders.find({ userId: userId }, (err, repairOrders) => {
-    if (err) {
-      return done(err);
-    } else if (!repairOrders) {
-      return done(null, false);
-    } else {
-      return done(null, repairOrders);
-    }
+
+    if (err) return done(err);
+
+    if (!repairOrders) return done(null, false);
+    
+    return done(null, repairOrders);
   });
 };
 
@@ -55,13 +55,14 @@ exports.findUserRepairOrders = function (userId, done) {
  */
 
 exports.createRepairOrder = function (repairOrderObject, done) {
+
   const repairOrders = new RepairOrders(repairOrderObject);
+
   repairOrders.save((err) => {
-    if (err) {
-      return done(err);
-    } else {
-      return done(null, repairOrders);
-    }
+
+    if (err) return done(err);
+
+    return done(null, repairOrders);
   });
 };
 
@@ -72,14 +73,14 @@ exports.createRepairOrder = function (repairOrderObject, done) {
  */
 
 exports.deleteOneRepairOrderById = function (repairOrderId, done) {
+
   RepairOrders.findByIdAndDelete(repairOrderId, (err,doc) => {
-    if (err) {
-      return done(err);
-    } else if(!doc){
-      return done(null, false);
-    } else {
-      return done(null, doc)
-    }
+
+    if (err) return done(err);
+
+    if(!doc) return done(null, false);
+
+    return done(null, doc)
   });
 };
 
@@ -90,23 +91,23 @@ exports.deleteOneRepairOrderById = function (repairOrderId, done) {
  */
 
 exports.deleteAllRepairOrders = function(tech_id,done){
+
   RepairOrders.deleteMany({tech_id:tech_id}, (err,doc) => {
-      if(err) {
-        return done(err)
-      }else {
-        return done(null, doc.deletedCount)
-      }
+
+      if(err) return done(err)
+
+      return done(null, doc.deletedCount)
   })
 }
 
 exports.updateOneRepairOrder = function(ro_id, updateObj, done){
+
   RepairOrders.findByIdAndUpdate(ro_id,updateObj,function(err,ro){
-    if(err){
-      return done(err)
-    } else if(!ro){
-      return done(nll,false)
-    } else {
-      return done(null, ro)
-    }
+
+    if(err) return done(err)
+
+    if(!ro) return done(nll,false)
+    
+    return done(null, ro)
   })
 }
