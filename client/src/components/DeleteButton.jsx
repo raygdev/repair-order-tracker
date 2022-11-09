@@ -10,7 +10,7 @@ export default function DeleteButton(props) {
   return (
     <>
         <Form method='delete' action={`${props.path}${props.id}`}>
-            <button type='submit' className='transition ease-in-out delay-100 hover:text-red-400 font-semibold'>{buttonText}<FontAwesomeIcon icon={faTrashCan} /></button>
+            <button type='submit' className='transition ease-in-out delay-100 hover:text-red-400 font-semibold'>{buttonText}<FontAwesomeIcon size={props.size} icon={faTrashCan} /></button>
         </Form>
     </>
   )
