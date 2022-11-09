@@ -16,7 +16,8 @@ export default function RepairOrderListItems(props) {
         </Link>
         <DeleteButton 
             path={'repairorder/delete/'} 
-            id={props.id} 
+            id={props.id}
+            size='lg'
         />
       </li>
     </>
