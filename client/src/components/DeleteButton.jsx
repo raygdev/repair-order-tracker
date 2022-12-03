@@ -1,5 +1,5 @@
-import loadable from '@loadable/component'
 import React from 'react'
+import loadable from '@loadable/component'
 import { redirect } from 'react-router-dom'
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
 const Form = loadable(() => import('react-router-dom').then(module => ({default: module.Form})))
@@ -10,7 +10,7 @@ export default function DeleteButton(props) {
   return (
     <>
         <Form method='delete' action={`${props.path}${props.id}`}>
-            <button type='submit' className='transition ease-in-out delay-100 hover:text-red-400 font-semibold'>{buttonText}<FontAwesomeIcon size={props.size} icon={faTrashCan} /></button>
+            <button area-label='delete' type='submit' className='transition ease-in-out delay-100 hover:text-red-400 font-semibold'>{buttonText}<FontAwesomeIcon size={props.size} icon={faTrashCan} /></button>
         </Form>
     </>
   )

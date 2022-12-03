@@ -1,13 +1,13 @@
 import React, {Suspense} from 'react' 
 import './App.css';
-import { Outlet } from 'react-router-dom'
 import loadable from '@loadable/component';
 const Header = loadable(() => import('./components/Header'))
+const Outlet = loadable(() => import('react-router-dom').then(module => ({default : module.Outlet})))
 
 function App() {
 
   return (
-    <div className='app'>
+    <div className='app font-serif w-full'>
       <Header />
       <Suspense fallback={<div>...Loading</div>}>
         <Outlet />

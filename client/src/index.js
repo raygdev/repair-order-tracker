@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+// import { Provider } from 'react-redux'
 import { router } from './router'
 import loadable from '@loadable/component';
 const RouterProvider = loadable(() => import('react-router-dom').then(module => ({default: module.RouterProvider})))
