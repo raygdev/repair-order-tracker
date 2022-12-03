@@ -6,11 +6,13 @@ const bcrypt = require("bcrypt");
 exports.userLoginController = (req, res, next) => {
   const { email, password } = req.body;
 
+  if(!email || !password) return res.status(404).json({message: 'Both fields  are required'})
+
   userModel.findUserByEmail({ email: email }, (err, user) => {
 
     if (err) return res.send(err);
 
-    if (!user) return res.status(404).json({ message: `can't seem to find that user` });
+    if (!user) return res.status(404).json({ message: `username/password combination doesn't exist` });
 
     if (!bcrypt.compareSync(password, user.password)) return res.status(404).json({ message: `username/password combination doesn't exist` });
     
