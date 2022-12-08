@@ -14,6 +14,7 @@ export default function RepairOrders({ repairOrders, userId }) {
         if (a._id > b._id) {
           return -1;
         }
+        return 1
       })
       .map((ro) => {
         return (
@@ -26,13 +27,15 @@ export default function RepairOrders({ repairOrders, userId }) {
       });
 
   return (
-    <div className="bg-sky-700 h-screen flex flex-col align-center mt-6 p-6 m-auto w-3/4 rounded-lg md:w-2/4">
-      <h2 className="text-xl font-bold  text-white self-center">
+    <div className="bg-sky-700 h-screen text-white text-xl flex flex-col align-center mt-6 p-6 m-auto w-3/4 rounded-lg md:w-2/4">
+      <h2 className="font-bold self-center">
         Repair Orders
       </h2>
       {sortedOrders.length && <AddRepairButton />}
       {sortedOrders.length ? (
-        <ul>{sortedOrders}</ul>
+        <ul className="text-lg">
+          {sortedOrders}
+        </ul>
       ) : (
         <CreateFirstRepair userId={userId} />
       )}
