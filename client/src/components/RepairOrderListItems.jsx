@@ -10,7 +10,7 @@ const FontAwesomeIcon = loadable(() => import('@fortawesome/react-fontawesome').
 export default function RepairOrderListItems(props) {
   return (
     <>
-      <li className=" flex justify-between text-white text-lg">
+      <li className=" flex justify-between">
         <Link to={`repairorder/${props.id}`}>
           <FontAwesomeIcon icon={faLongArrowAltRight} /> {props.ro_number}
         </Link>
