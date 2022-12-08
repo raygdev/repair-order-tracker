@@ -10,9 +10,9 @@ export default function Register (props) {
             method="post"
             action="../register"
           >
-            <div className="mb-4">
-              <h2 className="text-2xl text-center mb-1 self-center bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent  font-extrabold">Please Register!</h2>
-              <p className="text-sm text-center self-center font-medium">It's <span>Free</span>!</p>
+            <div className="mb-4 text-center">
+              <h2 className="text-2xl mb-1 self-center bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent font-extrabold">Please Register!</h2>
+              <p className="text-sm self-center font-medium">It's <span>Free</span>!</p>
             </div>
             <label htmlFor="firstName">First Name <span>*</span></label>
             <input
