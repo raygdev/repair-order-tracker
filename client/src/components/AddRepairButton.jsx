@@ -6,8 +6,8 @@ const FontAwesomeIcon = loadable(() => import('@fortawesome/react-fontawesome').
 
 export default function AddRepairButton() {
   return (
-    <div className='flex  justify-center py-5'>
-        <Link to='create-repair-order' className='text-white underline font-semibold hover:text-green-300'>Add <FontAwesomeIcon icon={faAdd} /></Link>
+    <div className='flex justify-center py-5 underline font-semibold text-lg'>
+        <Link to='create-repair-order' className=' hover:text-green-300'>Add <FontAwesomeIcon icon={faAdd} /></Link>
     </div>
   )
 }
