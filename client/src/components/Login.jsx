@@ -12,7 +12,7 @@ export const Login = () => {
     password: "",
   });
   const navigation = useNavigation();
-  const data = useActionData();
+  const error = useActionData();
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -36,7 +36,7 @@ export const Login = () => {
           <label htmlFor="email">Email</label>
           <input
             className={`p-1 rounded ${
-              data && !input.email && "border-2 border-red-400"
+              error && !input.email && "border-2 border-red-400"
             }`}
             type="email"
             name="email"
@@ -44,13 +44,13 @@ export const Login = () => {
             placeholder="Email"
             onChange={handleChange}
           />
-          {data && !input.email && (
+          {error && !input.email && (
             <span className="text-red-500">Email required</span>
           )}
           <label htmlFor="password">Password</label>
           <input
             className={`p-1 rounded ${
-              data && !input.password && "border-2 border-red-400"
+              error && !input.password && "border-2 border-red-400"
             }`}
             type="password"
             name="password"
@@ -58,7 +58,7 @@ export const Login = () => {
             placeholder="Password"
             onChange={handleChange}
           />
-          {data && !input.password && (
+          {error && !input.password && (
             <span className="text-red-500">Password required</span>
           )}
           <button
@@ -70,8 +70,8 @@ export const Login = () => {
           </button>
         </Form>
       </div>
-      {data && (
-        <span className="p-6 mt-6 text-center text-red-500">{data}</span>
+      {error && (
+        <span className="p-6 mt-6 text-center text-red-500">{error}</span>
       )}
     </main>
   );
