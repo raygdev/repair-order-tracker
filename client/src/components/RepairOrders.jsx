@@ -10,12 +10,7 @@ export default function RepairOrders({ repairOrders, userId }) {
   const sortedOrders =
     repairOrders.length &&
     repairOrders
-      .sort((a, b) => {
-        if (a._id > b._id) {
-          return -1;
-        }
-        return 1
-      })
+      .sort((a, b) => a._id < b._id ? 1 : -1 )
       .map((ro) => {
         return (
           <RepairOrderListItems
