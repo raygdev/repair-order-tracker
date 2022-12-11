@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useRouteLoaderData, useParams, Link } from 'react-router-dom'
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import loadable from '@loadable/component'
+import { toLocalDateString } from '../utils/datesHelpers'
 const DeleteButton = loadable(() => import('../components/DeleteButton'))
 const FontAwesomeIcon = loadable(() => import('@fortawesome/react-fontawesome').then(module => ({default:module.FontAwesomeIcon})))
 
@@ -16,7 +17,7 @@ export default function RepairOrder() {
 
     const repairOrder  = repairOrders.find(RO => RO._id === repairId)
 
-    let date = new Date(repairOrder.created_on).toLocaleDateString()
+    let date = toLocalDateString(repairOrder.created_on)
 
   return (
     <main className='bg-sky-500 items-center text-white p-4 mt-5 mx-auto min-h-max xs: max-w-xl'>
