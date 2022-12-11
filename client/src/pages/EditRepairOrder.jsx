@@ -88,37 +88,3 @@ export default function EditRepairOrder() {
         </Form>
      )
 }
-
-export async function editRepairOrderAction({request,params}){
-    const formData = await request.formData()
-    const ro = Object.fromEntries(formData)
-    const id = await params.repairId
-    const userId = await params.userId
-    const updatedRO = {
-        ...ro,
-        isWarranty: ro.isWarranty ? true: false,
-        _id: id,
-        created_on: ro.created_on.replace(/-/g,'/')
-    }
-
-    await editRo(updatedRO)
-
-    return redirect(`/user/${userId}/repairorder/${id}`)
-
-}
-
-async function editRo(upatedRO){
-    const res = await fetch('/repairorder',{
-        method:'put',
-        headers:{
-            "Content-Type":"application/json"
-        },
-        body: JSON.stringify(upatedRO)
-    })
-
-    if(!res.ok){
-        throw res
-    }
-
-    return
-}

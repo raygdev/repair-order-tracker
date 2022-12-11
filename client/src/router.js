@@ -1,11 +1,14 @@
 import loadable from '@loadable/component'
 import { createBrowserRouter} from "react-router-dom";
-import { Login, loginLoader, loginActionData } from "./components/Login";
-import  {handleAction } from "./components/Register";
-import { userLoaderFunction } from "./pages/User";
-import {createROActionLoader} from "./pages/CreateRepairOrder";
-import { deleteRepairOrderAction } from "./components/DeleteButton";
-import { editRepairOrderAction } from "./pages/EditRepairOrder";
+import {
+    createROAction,
+    deleteRepairOrderAction,
+    editRepairOrderAction,
+    registerAction,
+    userLoader,
+    loginAction
+} from "./utils/actionsAndLoaders";
+
 const UserLayout = loadable(() => import("./pages/UserLayout"))
 const  App = loadable( () => import('./App'))
 const RepairOrder =  loadable(() => import("./pages/RepairOrder"))
@@ -15,6 +18,8 @@ const User = loadable(() => import('./pages/User'))
 const NotFound = loadable(() => import('./pages/NotFound'))
 const EditRepairOrder = loadable(() => import('./pages/EditRepairOrder'))
 const CreateRepairOrder = loadable(() => import('./pages/CreateRepairOrder'))
+const Login = loadable(() => import('./components/Login'))
+
 export const router = createBrowserRouter([
     {
         path:'/',
@@ -28,18 +33,17 @@ export const router = createBrowserRouter([
             {
                 path:'register',
                 element: <Register />,
-                action: handleAction,
+                action: registerAction,
             },
             {
                 path: 'login',
                 element: <Login />,
-                loader:loginLoader,
-                action:loginActionData
+                action:loginAction
             },
             {
                 path: 'user/:userId',
                 element:<UserLayout />,
-                loader: userLoaderFunction,
+                loader: userLoader,
                 id:'root',
                 children:[
                     {
@@ -48,7 +52,7 @@ export const router = createBrowserRouter([
                     },
                     {
                      path:'create-repair-order',
-                     action:createROActionLoader,
+                     action:createROAction,
                      element: <CreateRepairOrder />
                     },
                     {

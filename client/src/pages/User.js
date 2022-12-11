@@ -16,16 +16,3 @@ export default function User(props) {
     </>
   )
 }
-
-export function userLoaderFunction({params}){
-    return loadUser(params.userId).catch(e => console.log(e.message))
-}
-
-async function loadUser(userId){
-    const res = await fetch(`/api/user/${userId}`)
-    if(!res.ok){
-        throw await res.json()
-    }
-    const user = await res.json()
-    return user
-}

@@ -6,7 +6,7 @@ const Form = loadable(() =>
   import("react-router-dom").then((module) => ({ default: module.Form }))
 );
 
-export const Login = () => {
+export default function Login(){
   const [input, setInput] = useState({
     email: "",
     password: "",
@@ -76,28 +76,3 @@ export const Login = () => {
     </main>
   );
 };
-
-export async function loginLoader({ request, params }) {
-  return "some email";
-}
-
-export async function loginActionData({ request }) {
-  const formData = await request.formData();
-  const userObj = Object.fromEntries(formData);
-  return verifyUser(userObj).catch((e) => e.message);
-}
-
-async function verifyUser(userObject) {
-  const res = await fetch("/api/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(userObject),
-  });
-
-  if (!res.ok) {
-    throw await res.json();
-  }
-  const user = await res.json();
-
-  return redirect(`/user/${user._id}`);
-}
