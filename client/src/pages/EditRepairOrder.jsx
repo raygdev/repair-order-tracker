@@ -90,7 +90,6 @@ export default function EditRepairOrder() {
 }
 
 export async function editRepairOrderAction({request,params}){
-    console.log(await request.method)
     const formData = await request.formData()
     const ro = Object.fromEntries(formData)
     const id = await params.repairId
