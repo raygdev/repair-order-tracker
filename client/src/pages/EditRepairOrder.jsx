@@ -2,17 +2,18 @@ import React, { useState } from 'react'
 import { Form, useParams, useRouteLoaderData, redirect } from 'react-router-dom'
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import loadable from '@loadable/component'
+import { toLocalDateString, toISOString } from '../utils/datesHelpers'
 const FontAwesomeIcon = loadable(() => import('@fortawesome/react-fontawesome').then(module => ({default:module.FontAwesomeIcon})))
 
 export default function EditRepairOrder() {
     const { repairOrders } = useRouteLoaderData('root')
     const { repairId } = useParams()
-    const [ repairOrder ] = repairOrders.filter(ro => ro._id === repairId)
+    const repairOrder = repairOrders.find(ro => ro._id === repairId)
     
-    const date = new Date(repairOrder.created_on).toLocaleDateString()
+    const date = toLocalDateString(repairOrder.created_on)
     const [ repairInfo, setRepairInfo ] = useState({
         ...repairOrder,
-        created_on: new Date(date).toISOString().substring(0,10)
+        created_on: toISOString(date)
     })
 
     function handleFormChange(e){
@@ -98,7 +99,7 @@ export async function editRepairOrderAction({request,params}){
         ...ro,
         isWarranty: ro.isWarranty ? true: false,
         _id: id,
-        created_on: ro.created_on.replace(/-/g,'\/')
+        created_on: ro.created_on.replace(/-/g,'/')
     }
 
     await editRo(updatedRO)
