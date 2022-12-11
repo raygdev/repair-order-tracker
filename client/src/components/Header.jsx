@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 
 export default function Header(props) {
  const location = useLocation()
- console.log(location.pathname)
+
   return (
     <header className='p-4 bg-sky-700 flex sticky top-0 min-w-max text-white font-semibold'>
         <nav className='flex basis-full justify-around'>
