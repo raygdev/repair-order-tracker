@@ -7,7 +7,7 @@ const Outlet = loadable(() => import('react-router-dom').then(module => ({defaul
 function App() {
 
   return (
-    <div className='app font-serif w-full'>
+    <div className='app font-mono w-full'>
       <Header />
       <Suspense fallback={<div>...Loading</div>}>
         <Outlet />
