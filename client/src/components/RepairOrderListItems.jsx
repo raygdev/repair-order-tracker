@@ -1,7 +1,5 @@
 import React from "react";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLongArrowAltRight } from "@fortawesome/free-solid-svg-icons";
-// import DeleteButton from "./DeleteButton";
 import { Link } from "react-router-dom";
 import loadable from "@loadable/component";
 const DeleteButton = loadable(() => import('./DeleteButton'))
