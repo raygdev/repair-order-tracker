@@ -1,7 +1,6 @@
 const userModel = require("../models/userModel");
-const passport = require("passport");
-const LocalStrategy = require("passport-local");
 const bcrypt = require("bcrypt");
+const { generateToken }  = require('./middleware/tokenUtil')
 
 exports.userLoginController = (req, res, next) => {
   const { email, password } = req.body;
@@ -16,6 +15,6 @@ exports.userLoginController = (req, res, next) => {
 
     if (!bcrypt.compareSync(password, user.password)) return res.status(404).json({ message: `username/password combination doesn't exist` });
     
-    return res.status(200).json({...user._doc, password:null});
+    return res.status(200).json({...user._doc, token: generateToken(user.id)});
   });
 };
