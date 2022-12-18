@@ -22,7 +22,7 @@ export default function RepairOrders({ repairOrders, userId }) {
       });
 
   return (
-    <div className="bg-sky-700 h-screen text-white text-xl flex flex-col align-center mt-6 p-6 m-auto w-3/4 rounded-lg md:w-2/4">
+    <div className="bg-sky-700 h-screen text-white text-xl flex flex-col align-center mt-6 p-6 m-auto w-full rounded-lg md:w-2/4 xs:w-3/4">
       <h2 className="font-bold self-center">
         Repair Orders
       </h2>
