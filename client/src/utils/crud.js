@@ -1,5 +1,5 @@
 import { redirect } from "react-router-dom";
-const token = localStorage.getItem("token");
+let token;
 
 export async function verifyUser(userObject) {
   const res = await fetch("/api/login", {
@@ -13,10 +13,10 @@ export async function verifyUser(userObject) {
   }
   const user = await res.json();
 
-  console.log(user.token);
-
   localStorage.setItem("token", user.token);
 
+  token = localStorage.getItem('token')
+  
   return redirect(`/user/${user._id}`);
 }
 
