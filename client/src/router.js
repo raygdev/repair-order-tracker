@@ -6,7 +6,8 @@ import {
     editRepairOrderAction,
     registerAction,
     userLoader,
-    loginAction
+    loginAction,
+    logoutAction
 } from "./utils/actionsAndLoaders";
 
 const UserLayout = loadable(() => import("./pages/UserLayout"))
@@ -34,6 +35,10 @@ export const router = createBrowserRouter([
                 path:'register',
                 element: <Register />,
                 action: registerAction,
+            },
+            {
+                path: 'logout',
+                action: logoutAction
             },
             {
                 path: 'login',
@@ -70,7 +75,7 @@ export const router = createBrowserRouter([
                     {
                         path:'repairorders/edit/:repairId',
                         action: editRepairOrderAction
-                    }
+                    },
                 ]
             }
         ]
