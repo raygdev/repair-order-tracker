@@ -1,3 +1,4 @@
+import { redirect } from 'react-router-dom';
 import {
     createNewUser,
     verifyUser,
@@ -72,6 +73,11 @@ export async function createROAction({ request, params }) {
 
 export function userLoader({params}){
     return getUser(params.userId).catch(e => console.log(e.message))
+}
+
+export function logoutAction(){
+  localStorage.removeItem('token')
+  return redirect('/login')
 }
 
 
