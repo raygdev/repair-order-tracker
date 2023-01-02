@@ -16,7 +16,7 @@ export async function verifyUser(userObject) {
   localStorage.setItem("token", user.token);
 
   token = localStorage.getItem('token')
-  
+
   return redirect(`/user/${user._id}`);
 }
 
@@ -90,7 +90,7 @@ export async function editRO(updatedRO, userId) {
 export async function getUser(userId) {
   const res = await fetch(`/api/user/${userId}`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
     },
   });
   if (res.status === 401) {
