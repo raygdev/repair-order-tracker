@@ -1,5 +1,6 @@
 import { redirect } from "react-router-dom";
-let token;
+import { getToken, setToken, clearToken } from "./token";
+
 
 export async function verifyUser(userObject) {
   const res = await fetch("/api/login", {
@@ -13,9 +14,7 @@ export async function verifyUser(userObject) {
   }
   const user = await res.json();
 
-  localStorage.setItem("token", user.token);
-
-  token = localStorage.getItem('token')
+  setToken(user.token);
 
   return redirect(`/user/${user._id}`);
 }
@@ -42,13 +41,18 @@ export async function deleteRepairOrder(ids) {
     method: "delete",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${getToken()}`,
     },
     body: JSON.stringify(ids),
   });
 
   if (!res.ok) {
-    throw res;
+    if(res.status === 401) {
+      clearToken()
+      return
+    } else {
+      throw res;
+    }
   }
 
   return redirect(`/user/${ids.userId}`);
@@ -59,12 +63,16 @@ export async function createRO(ro, userId) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${getToken()}`,
     },
     body: JSON.stringify(ro),
   });
 
   if (!res.ok) {
+    if(res.status === 401){
+      clearToken()
+      return;
+    }
     throw await res.json();
   }
   return redirect(`/user/${userId}`);
@@ -75,13 +83,18 @@ export async function editRO(updatedRO, userId) {
     method: "put",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${getToken()}`,
     },
     body: JSON.stringify(updatedRO),
   });
 
   if (!res.ok) {
-    throw res;
+    if(res.status === 401){
+      clearToken()
+      return
+    } else {
+      throw res;
+    }
   }
 
   return redirect(`/user/${userId}/repairorder/${updatedRO._id}`);
@@ -90,14 +103,16 @@ export async function editRO(updatedRO, userId) {
 export async function getUser(userId) {
   const res = await fetch(`/api/user/${userId}`, {
     headers: {
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
+      Authorization: `Bearer ${getToken()}`,
     },
   });
-  if (res.status === 401) {
-    return redirect("/login");
-  }
+
   if (!res.ok) {
-    throw await res.json();
+    if (res.status === 401) {
+      return redirect("/login");
+    } else {
+      throw await res.json();
+    }
   }
 
   const user = await res.json();
