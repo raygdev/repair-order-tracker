@@ -20,6 +20,7 @@ const NotFound = loadable(() => import('./pages/NotFound'))
 const EditRepairOrder = loadable(() => import('./pages/EditRepairOrder'))
 const CreateRepairOrder = loadable(() => import('./pages/CreateRepairOrder'))
 const Login = loadable(() => import('./components/Login'))
+const About = loadable(() => import('./pages/About'))
 
 export const router = createBrowserRouter([
     {
@@ -39,6 +40,10 @@ export const router = createBrowserRouter([
             {
                 path: 'logout',
                 action: logoutAction
+            },
+            {
+                path: 'about',
+                element: <About />
             },
             {
                 path: 'login',
