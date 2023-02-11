@@ -1,3 +1,4 @@
+
 import { redirect } from 'react-router-dom';
 import {
     createNewUser,
@@ -28,7 +29,7 @@ export async function registerAction({ request }) {
   export async function loginAction({ request }) {
     const formData = await request.formData();
     const userObj = Object.fromEntries(formData);
-    return verifyUser(userObj).catch((e) => e.message);
+    return await verifyUser(userObj).catch((e) => e.message);
   }
 
   export async function deleteRepairOrderAction({params}){
