@@ -1,5 +1,6 @@
 import loadable from '@loadable/component'
 import { createBrowserRouter} from "react-router-dom";
+import { AuthProvider } from './provider/useAuthProvider';
 import {
     createROAction,
     deleteRepairOrderAction,
@@ -52,7 +53,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'user/:userId',
-                element:<UserLayout />,
+                element:<AuthProvider><UserLayout /></AuthProvider>,
                 loader: userLoader,
                 id:'root',
                 children:[
