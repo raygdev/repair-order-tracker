@@ -7,7 +7,7 @@ const VehicleSchema = new mongoose.Schema({
     Model: { type: String, required: true },
     Year: { type: String, required: true },
     EngineSize: { type: String, required: true },
-    VIN: { type: String, required: true, uppercase: true }
+    VIN: { type: String, required: true, uppercase: true, unique: true }
 })
 
 const Vehicles = mongoose.model("vehicles",VehicleSchema)
@@ -16,8 +16,11 @@ async function getVehicleData(vin, callback){
     try{
         let res = await axios.get(`https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVin/${vin}?format=json`)
         let vehicleInfo = transformVehicleData(res.data.Results)
-        vehicleInfo.VIN = vin
-        callback(null, vehicleInfo)
+        if(typeof vehicleInfo === "string"){
+            callback(vehicleInfo)
+        } else {
+            callback(null, vehicleInfo)
+        }
     }
     catch(e){
         console.log(e)
@@ -28,7 +31,7 @@ async function getVehicleData(vin, callback){
 exports.createVehicle = (vin, done) => {
     getVehicleData(vin, (err, vehicleInfo) => {
         if(err) return done(err)
-        if(vehicleInfo === "Incorrect Vin") return done(vehicleInfo)
+        vehicleInfo.VIN = vin
         let vehicle = new Vehicles(vehicleInfo)
         vehicle.save(error => {
             if(error) return done(error)
@@ -39,7 +42,7 @@ exports.createVehicle = (vin, done) => {
 }
 
 exports.getVehicle = (vin, done) => {
-    Vehicles.find({VIN: vin}, (err, vehicle) => {
+    Vehicles.findOne({VIN: vin}, (err, vehicle) => {
         if(err) return done(err)
         if(!vehicle) return done(null, false)
         return done(null, vehicle)
