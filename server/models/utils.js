@@ -6,8 +6,8 @@
  */
 function transformVehicleData(data){
     let variables = ["Make","Model", "Model Year", "Displacement (L)"]
-    if(data[0].Value.includes("!")){
-        return "Incorrect Vin"
+    if(data[0].Value.includes("!") || (parseInt(data[1].Value) !== 0)){
+        return "Possible Incorrect VIN"
     }
     /**
      * @variable array of objects with the targeted information
