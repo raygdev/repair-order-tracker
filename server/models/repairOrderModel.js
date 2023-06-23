@@ -51,19 +51,12 @@ exports.findUserRepairOrders = function (userId, done) {
 /**
  * 
  * @param {Object} repairOrderObject an object passed to create the repair order
- * @param {callback} done return an error or true if doc was successfully save
+ * @param {callback} done return the repairOrder to be saved
  */
 
 exports.createRepairOrder = function (repairOrderObject, done) {
-
   const repairOrders = new RepairOrders(repairOrderObject);
-
-  repairOrders.save((err) => {
-
-    if (err) return done(err);
-
-    return done(null, repairOrders);
-  });
+  return done(repairOrders);
 };
 
 /**
