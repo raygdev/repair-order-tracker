@@ -109,6 +109,7 @@ export async function getUser(userId) {
 
   if (!res.ok) {
     if (res.status === 401) {
+      clearToken()
       return redirect("/login");
     } else {
       throw await res.json();
