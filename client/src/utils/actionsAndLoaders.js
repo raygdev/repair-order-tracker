@@ -72,8 +72,8 @@ export async function createROAction({ request, params }) {
         return await editRO(updatedRO, userId)
 }
 
-export function userLoader({params}){
-    return getUser(params.userId).catch(e => console.log(e.message))
+export async function userLoader({params}){
+    return await getUser(params.userId)
 }
 
 export function logoutAction(){
@@ -81,5 +81,11 @@ export function logoutAction(){
   return redirect('/login')
 }
 
-
+export async function repairOrderLoader({request}){
+  console.log(request)
+  console.log("hello")
+  let vin = new URLSearchParams(request.url)
+  console.log(vin)
+  return null
+}
 
