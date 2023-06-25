@@ -17,6 +17,7 @@ export default function RepairOrders({ repairOrders, userId }) {
             key={ro._id}
             id={ro._id}
             ro_number={ro.ro_number}
+            vin={ro.vin}
           />
         );
       });
