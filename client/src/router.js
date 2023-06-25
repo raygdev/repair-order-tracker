@@ -8,7 +8,8 @@ import {
     registerAction,
     userLoader,
     loginAction,
-    logoutAction
+    logoutAction,
+    repairOrderLoader
 } from "./utils/actionsAndLoaders";
 
 const UserLayout = loadable(() => import("./pages/UserLayout"))
@@ -72,7 +73,8 @@ export const router = createBrowserRouter([
                     },
                     {
                         path:'repairorder/:repairId',
-                        element: <RepairOrder />
+                        element: <RepairOrder />,
+                        loader: repairOrderLoader
                     },
                     {
                         path:'repairorder/delete/:repairId',
