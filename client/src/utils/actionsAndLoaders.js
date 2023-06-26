@@ -6,7 +6,8 @@ import {
     deleteRepairOrder,
     createRO,
     editRO,
-    getUser
+    getUser,
+    getVehicle
 } from './crud'
 
 
@@ -82,10 +83,8 @@ export function logoutAction(){
 }
 
 export async function repairOrderLoader({request}){
-  console.log(request)
-  console.log("hello")
-  let vin = new URLSearchParams(request.url)
-  console.log(vin)
-  return null
+  let url = new URL(request.url).searchParams
+  let vin = url.get("vin")
+  return await getVehicle(vin)
 }
 

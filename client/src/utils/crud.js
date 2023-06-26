@@ -119,3 +119,12 @@ export async function getUser(userId) {
   const user = await res.json();
   return user;
 }
+
+export async function getVehicle(vin){
+  let res = await fetch(`/api/vehicle/${vin}`)
+  let vehicle =  await res.json()
+  if(!res.ok){
+    return vehicle.message
+  }
+  return vehicle
+}
