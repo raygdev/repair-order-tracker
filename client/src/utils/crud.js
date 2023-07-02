@@ -73,7 +73,7 @@ export async function createRO(ro, userId) {
     }
     throw await res.json();
   }
-  return redirect(`/user/${userId}`);
+  return redirect(`/user/${ro.userId}`);
 }
 
 export async function editRO(updatedRO, userId) {
