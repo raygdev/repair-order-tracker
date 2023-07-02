@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Form, useParams, useRouteLoaderData, redirect } from 'react-router-dom'
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import loadable from '@loadable/component'
@@ -11,18 +11,6 @@ export default function EditRepairOrder() {
     const repairOrder = repairOrders.find(ro => ro._id === repairId)
     
     const date = toLocalDateString(repairOrder.created_on)
-    const [ repairInfo, setRepairInfo ] = useState({
-        ...repairOrder,
-        created_on: toISOString(date)
-    })
-
-    function handleFormChange(e){
-        const { name, value, type, checked } = e.target;
-        setRepairInfo(prevInfo => ({
-            ...prevInfo,
-            [ name ]: type === 'checkbox' ? checked : value
-        }))
-    }
 
      return (
         <Form method='put' action={`../repairorders/edit/${repairId}`} className='flex flex-col p-4  w-5/6  sm:w-1/2  md:w-1/3 m-auto min-h-screen justify-between bg-[#fffff2] shadow-2xl my-4'>
@@ -35,8 +23,7 @@ export default function EditRepairOrder() {
                     type="text" 
                     id="ro_number"
                     name={'ro_number'}
-                    value={repairInfo.ro_number}
-                    onChange={handleFormChange} 
+                    defaultValue={repairOrder.ro_number}
                 />
             </div>
             <div className='flex flex-col'>
@@ -46,8 +33,7 @@ export default function EditRepairOrder() {
                     type="text" 
                     id="vin"
                     name='vin'
-                    value={repairInfo.vin}
-                    onChange={handleFormChange} 
+                    defaultValue={repairOrder.vin}
                 />
             </div>
             <div className='flex flex-col'>
@@ -57,8 +43,7 @@ export default function EditRepairOrder() {
                     type="date" 
                     id="created_on"
                     name='created_on'
-                    value={repairInfo.created_on}
-                    onChange={handleFormChange} 
+                    defaultValue={toISOString(date)}
                 />
             </div>
             <div className='flex w-full'>
@@ -68,9 +53,7 @@ export default function EditRepairOrder() {
                     type="checkbox" 
                     id="isWarranty"
                     name='isWarranty'
-                    checked={repairInfo.isWarranty}
-                    value={repairInfo.isWarranty}
-                    onChange={handleFormChange} 
+                    defaultChecked={repairOrder.isWarranty}
                 />
                 </div>
             </div>
@@ -80,8 +63,7 @@ export default function EditRepairOrder() {
                     className='bg-inherit p-1 rounded'
                     name="notes" 
                     id="notes" 
-                    value={repairInfo.notes}
-                    onChange={handleFormChange}
+                    defaultValue={repairOrder.notes}
                     cols="30" 
                     rows="10" 
                 />
