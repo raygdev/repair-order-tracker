@@ -77,7 +77,7 @@ export async function createRO(ro, userId) {
 }
 
 export async function editRO(updatedRO, userId) {
-  const res = await fetch("/repairorder", {
+  const res = await fetch(`/repairorder/${updatedRO.id}`, {
     method: "put",
     headers: {
       "Content-Type": "application/json",
