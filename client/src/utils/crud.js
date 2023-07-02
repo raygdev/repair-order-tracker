@@ -95,7 +95,7 @@ export async function editRO(updatedRO, userId) {
     }
   }
 
-  return redirect(`/user/${userId}/repairorder/${updatedRO._id}?vin=${updatedRO.vin}`);
+  return redirect(`/user/${updatedRO.userId}/repairorder/${updatedRO.id}?vin=${updatedRO.vin}`);
 }
 
 export async function getUser(userId) {
