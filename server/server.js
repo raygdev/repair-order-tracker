@@ -29,7 +29,7 @@ app.use(express.json())
 app.use(registerRoute)
 app.use(loginRoute)
 app.use(userRoutes)
-app.use('/repairorder', repairOrderRoutes)
+app.use(repairOrderRoutes)
 app.use(vehicleRoutes)
 
 app.listen(port, () => {
