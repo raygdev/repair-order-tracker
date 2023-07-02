@@ -6,7 +6,7 @@ export default function Register (props) {
     <main className=" flex w-full flex-col min-h-screen bg-gradient-to-br from-blue-800 via-sky-300">
         <div className="w-full xs:max-w-md m-auto">
           <Form
-            className="p-4 min-h-max flex flex-col bg-sky-300 justify-between rounded shadow-lg shadow-slate-500"
+            className="p-4 min-h-max flex flex-col bg-[#fffff2] justify-between rounded shadow-xl shadow-slate-500"
             method="post"
             action="../register"
           >
