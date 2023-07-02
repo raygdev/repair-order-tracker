@@ -44,14 +44,13 @@ export async function createROAction({ request, params }) {
 export async function editRepairOrderAction({request,params}){
     const formData = await request.formData()
     const ro = Object.fromEntries(formData)
-    const userId = await params.userId
     const updatedRO = {
         ...ro,
         isWarranty: Boolean(ro.isWarranty),
         created_on: ro.created_on.replace(/-/g,'/')
     }
 
-        return await editRO(updatedRO, userId)
+        return await editRO(updatedRO)
 }
 
 export async function userLoader({params}){
