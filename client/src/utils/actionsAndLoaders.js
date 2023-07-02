@@ -41,8 +41,8 @@ export async function createROAction({ request, params }) {
     const roData = Object.fromEntries(formData);
     let ro = {
       ...roData,
-      isWarranty: roData.isWarranty ? true : false,
       userId: params.userId,
+      isWarranty: Boolean(roData.isWarranty),
     };
   
     return await createRO(ro, params.userId);
