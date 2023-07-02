@@ -11,8 +11,8 @@ export default function User(props) {
   const user = useRouteLoaderData('root');
   return (
     <>
-        <h1 className='font-extrabold text-2xl text-center mt-5'>Welcome {user.name.first}!</h1>
-        <RepairOrders repairOrders={user.repairOrders} userId={user._id}/>
+        <h1 className='font-extrabold text-2xl text-center mt-5'>Welcome {user.firstName}!</h1>
+        <RepairOrders repairOrders={user.repairOrders} userId={user.id}/>
     </>
   )
 }
