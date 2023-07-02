@@ -17,22 +17,26 @@ export default function Register (props) {
             <label className="flex flex-col gap-1 my-1">First Name
               <input
                 id='firstName'
-                className="p-2 rounded border border-slate-400"
+                className="peer p-2 rounded border border-slate-400"
                 type="text"
                 name="firstName"
                 required={true}
                 placeholder="First Name"
+                minLength={2}
               />
+              <div className="hidden peer-placeholder-shown:!hidden peer-invalid:block text-red-600">First Name Required</div>
             </label>
             <label className="flex flex-col gap-1 my-1">Last Name
               <input
                 id='lastName'
-                className="p-2 rounded border border-slate-400"
+                className="peer p-2 rounded border border-slate-400"
                 type="text"
                 name="lastName"
                 required={true}
                 placeholder="Last Name"
+                minLength={3}
               />
+              <div className="hidden peer-placeholder-shown:!hidden peer-invalid:block text-red-600">Last Name Required</div>
             </label>
             <label className="flex flex-col gap-1 my-1">Shop Name (optional)
               <input
@@ -46,22 +50,25 @@ export default function Register (props) {
             <label className="flex flex-col gap-1 my-1">Email
               <input
                 id='email'
-                className="p-2 rounded border border-slate-400"
+                className="peer p-2 rounded border border-slate-400"
                 type="email"
                 name="email"
                 required={true}
                 placeholder="Email"
               />
+              <div className="hidden peer-placeholder-shown:!hidden peer-invalid:block text-red-600">Email Required</div>
             </label>
             <label className="flex flex-col gap-1 my-1">Password
               <input
                 id='password'
-                className="p-2 rounded border border-slate-400"
+                className="peer p-2 rounded border border-slate-400"
                 type="password"
                 name="password"
                 placeholder="Password"
                 required={true}
+                minLength={8}
               />
+              <div className="hidden peer-placeholder-shown:!hidden peer-invalid:block text-red-600">Password must be 8 characters and contain special characters</div>
             </label>
             <button className="text-white bg-sky-700 self-center px-1 py-1 rounded mt-4">
               Submit
