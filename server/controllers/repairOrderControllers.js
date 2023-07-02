@@ -54,16 +54,16 @@ function createRepairOrder(req,res,next){
 
 function deletRepairOrderById(req,res,next){
 
-    const ro_id  = req.body.ro_id
+    const roId  = req.params.roId
     const userId = req.user.id
 
-    repairOrderModel.deleteOneRepairOrderById(ro_id, (err, doc) => {
+    repairOrderModel.deleteOneRepairOrderById(roId, (err, doc) => {
 
         if(err) return res.status(409).json({message:'Something went wrong deleting the repair order'})
 
-        if(!doc) return res.status(404).json({message: `repair order with id ${ro_id} does not exist`})
+        if(!doc) return res.status(404).json({message: `repair order with id ${roId} does not exist`})
 
-        userModel.User.findOneAndUpdate({_id:userId},{$pull:{repairOrders: mongoose.Types.ObjectId(ro_id)}},function (err,user){
+        userModel.User.findOneAndUpdate({_id:userId},{$pull:{repairOrders: mongoose.Types.ObjectId(roId)}},function (err,user){
 
             if(err) return console.log(err)
 
