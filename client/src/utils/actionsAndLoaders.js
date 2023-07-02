@@ -26,13 +26,7 @@ export async function registerAction({ request }) {
   export async function deleteRepairOrderAction({params}){
     const id = await params.repairId
     const userId = await params.userId
-
-    const ids = {
-        ro_id: id,
-        userId
-    }
-    return await deleteRepairOrder(ids)
-
+    return await deleteRepairOrder(id, userId)
 }
 
 
