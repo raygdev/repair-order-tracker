@@ -21,7 +21,7 @@ export default function RepairOrder() {
     let date = toLocalDateString(repairOrder.created_on)
 
   return (
-    <main className='items-center pb-4 mt-5 mx-auto min-h-max xs: max-w-xl bg-[#fffff2] rounded shadow-lg'>
+    <main className='items-center pb-4 my-5 mx-auto min-h-max xs: max-w-xl bg-[#fffff2] rounded shadow-lg'>
         <div  className='shadow-md p-8 flex justify-around'>
             <h2 className='text-lg text'>Repair Order# {repairOrder.ro_number}</h2>
             <p date={date}>Created On {date}</p>
