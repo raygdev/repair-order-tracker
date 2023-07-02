@@ -29,7 +29,7 @@ const UserSchema = new mongoose.Schema({
     },
     required: [true, "Password is required"],
   },
-  shop_name: { type: String },
+  shopName: { type: String },
   repairOrders:[{ type: mongoose.Schema.Types.ObjectId, ref:'RepairOrders'}]
 }, { toJSON: { virtuals: true } });
 
