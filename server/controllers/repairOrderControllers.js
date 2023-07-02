@@ -79,8 +79,8 @@ function deletRepairOrderById(req,res,next){
 }
 
 function updateOneRepairOrderById(req, res, next){
-    const id = req.body._id
-    repairOrderModel.updateOneRepairOrder(id, req.body, (err,ro)=> {
+    const roId = req.params.roId
+    repairOrderModel.updateOneRepairOrder(roId, req.body, (err,ro)=> {
 
         if(err) return res.status(404).json({message:'Something went wrong updating the RO'})
 
