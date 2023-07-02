@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, redirect } from "react-router-dom";
+import { Form } from "react-router-dom";
 
 export default function Register (props) {
   return (
@@ -66,41 +66,3 @@ export default function Register (props) {
     </main>
   );
 };
-export async function redirectOnRegisterSuccess({ request }) {
-  const user = await request.body;
-  console.log(user);
-  return;
-}
-
-export async function handleAction({ request }) {
-  const formData = await request.formData();
-  const user = Object.fromEntries(formData);
-  const newUser = {
-    name: {
-      first: user.firstName,
-      last: user.lastName,
-    },
-    email: user.email,
-    password: user.password,
-    shop_name: user.shop_name,
-  };
-
-  return createNewUser(newUser).catch((e) => console.log(e.message));
-}
-
-async function createNewUser(userObj) {
-  const res = await fetch("/api/register/user", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(userObj),
-  });
-
-  if (!res.ok) {
-    throw await res.json();
-  }
-
-  console.log('new user created successfully')
-  return redirect("/login");
-}
