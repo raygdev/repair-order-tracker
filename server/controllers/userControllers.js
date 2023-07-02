@@ -11,7 +11,6 @@ exports.getUser = (req,res, next) => {
 
     return res.status(200).json({
         ...user._doc,
-        token: generateToken(user._id)
     })
   })
 }
