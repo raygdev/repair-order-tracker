@@ -36,14 +36,12 @@ export async function createNewUser(userObj) {
   return redirect("/login");
 }
 
-export async function deleteRepairOrder(ids) {
-  const res = await fetch("/repairorder", {
+export async function deleteRepairOrder(id, userId) {
+  const res = await fetch(`/repairorder/${id}`, {
     method: "delete",
     headers: {
-      "Content-Type": "application/json",
       Authorization: `Bearer ${getToken()}`,
     },
-    body: JSON.stringify(ids),
   });
 
   if (!res.ok) {
@@ -55,7 +53,7 @@ export async function deleteRepairOrder(ids) {
     }
   }
 
-  return redirect(`/user/${ids.userId}`);
+  return redirect(`/user/${userId}`);
 }
 
 export async function createRO(ro, userId) {
