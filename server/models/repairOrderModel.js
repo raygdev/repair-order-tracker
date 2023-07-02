@@ -19,7 +19,7 @@ const RepairOrderSchema = new mongoose.Schema({
   },
   created_on: { type: Date, default: new Date() },
   notes: { type: String, default: "" },
-});
+},{ toJSON: { virtuals: true } });
 
 //create a model for the repair order
 const RepairOrders = mongoose.model(

@@ -33,8 +33,7 @@ const UserSchema = new mongoose.Schema({
   },
   shop_name: { type: String },
   repairOrders:[{ type: mongoose.Schema.Types.ObjectId, ref:'RepairOrders'}]
-});
-
+}, { toJSON: { virtuals: true } });
 
 
 const User = mongoose.model("users", UserSchema, "users");
