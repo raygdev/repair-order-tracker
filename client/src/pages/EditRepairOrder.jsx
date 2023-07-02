@@ -16,7 +16,8 @@ export default function EditRepairOrder() {
         <Form method='put' action={`../repairorders/edit/${repairId}`} className='flex flex-col p-4  w-5/6  sm:w-1/2  md:w-1/3 m-auto min-h-screen justify-between bg-[#fffff2] shadow-2xl my-4'>
             <h1 className='text-4xl text-center p-5'>Edit</h1>
             <div className='flex flex-col'>
-                <input type="hidden" name="_id" value={repairOrder._id} />
+                <input type="hidden" name="id" value={repairOrder.id} />
+                <input type="hidden" name="userId" value={repairOrder.userId} />
                 <label htmlFor="ro_number" className='font-semibold'>RO Number</label>
                 <input
                     className='p-2 rounded focus:border-b focus:border-b-slate-400 focus:outline-none'
