@@ -10,7 +10,7 @@ exports.getUser = (req,res, next) => {
     if(!user) return res.status(404).json({message:`Can't seem to find that user`});
 
     return res.status(200).json({
-        ...user._doc,
+        ...user.toJSON()
     })
   })
 }
