@@ -14,17 +14,7 @@ import {
 export async function registerAction({ request }) {
     const formData = await request.formData();
     const user = Object.fromEntries(formData);
-    const newUser = {
-      name: {
-        first: user.firstName,
-        last: user.lastName,
-      },
-      email: user.email,
-      password: user.password,
-      shop_name: user.shop_name,
-    };
-  
-    return createNewUser(newUser).catch((e) => console.log(e.message));
+    return createNewUser(user).catch((e) => console.log(e.message));
   }
 
   export async function loginAction({ request }) {

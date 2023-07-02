@@ -37,7 +37,7 @@ export default function Register (props) {
               id='shopName'
               className="p-1 rounded"
               type="text"
-              name="shop_name"
+              name="shopName"
               placeholder="Shop Name"
             />
             <label htmlFor="email">Email <span>*</span></label>
