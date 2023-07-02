@@ -25,11 +25,12 @@ export default function EditRepairOrder() {
     }
 
      return (
-        <Form method='put' action={`../repairorders/edit/${repairId}`} className='flex flex-col p-4 bg-sky-700 w-5/6  sm:w-1/2  md:w-1/3 lg:w-1/4 m-auto min-h-screen justify-between'>
+        <Form method='put' action={`../repairorders/edit/${repairId}`} className='flex flex-col p-4  w-5/6  sm:w-1/2  md:w-1/3 m-auto min-h-screen justify-between bg-[#fffff2] shadow-2xl my-4'>
+            <h1 className='text-4xl text-center p-5'>Edit</h1>
             <div className='flex flex-col'>
-                <label htmlFor="ro_number" className='text-white font-semibold'>RO Number</label>
+                <label htmlFor="ro_number" className='font-semibold'>RO Number</label>
                 <input
-                    className='p-1 rounded'
+                    className='p-2 rounded focus:border-b focus:border-b-slate-400 focus:outline-none'
                     type="text" 
                     id="ro_number"
                     name={'ro_number'}
@@ -38,9 +39,9 @@ export default function EditRepairOrder() {
                 />
             </div>
             <div className='flex flex-col'>
-                <label htmlFor="vin" className='text-white font-semibold'>VIN*</label>
+                <label htmlFor="vin" className='font-semibold'>VIN*</label>
                 <input 
-                    className='p-1 rounded'
+                    className='p-2 rounded focus:outline-none focus:border-b focus:border-b-slate-400'
                     type="text" 
                     id="vin"
                     name='vin'
@@ -49,9 +50,9 @@ export default function EditRepairOrder() {
                 />
             </div>
             <div className='flex flex-col'>
-                <label htmlFor="created_on" className='text-white font-semibold'>Created On</label>
+                <label htmlFor="created_on" className='font-semibold'>Created On</label>
                 <input 
-                    className='p-1 rounded'
+                    className='p-2 rounded focus:outline-none focus:border-b focus:border-b-slate-400'
                     type="date" 
                     id="created_on"
                     name='created_on'
@@ -60,8 +61,8 @@ export default function EditRepairOrder() {
                 />
             </div>
             <div className='flex w-full'>
-                <div className='flex basis-1/2 justify-between '>
-                <label htmlFor="isWarranty" className='text-white font-semibold'>Warranty</label>
+                <div className='flex gap-7 justify-between max-w-fit'>
+                <label htmlFor="isWarranty" className='font-semibold'>Warranty</label>
                 <input 
                     type="checkbox" 
                     id="isWarranty"
@@ -73,9 +74,9 @@ export default function EditRepairOrder() {
                 </div>
             </div>
             <div className='flex flex-col'>
-                <label htmlFor="notes" className='text-white font-semibold'>Notes</label>
+                <label htmlFor="notes" className='font-semibold'>Notes</label>
                 <textarea
-                    className='bg-inherit text-white p-1 rounded'
+                    className='bg-inherit p-1 rounded'
                     name="notes" 
                     id="notes" 
                     value={repairInfo.notes}
