@@ -3,10 +3,10 @@ const router = express.Router()
 const ROcontrollers = require('../controllers/repairOrderControllers')
 const {isAuthenticated} = require('../controllers/middleware/authMiddleware')
 
-router.route('/')
-    .post(isAuthenticated, ROcontrollers.createRepairOrder)
-    .delete(isAuthenticated, ROcontrollers.deletRepairOrderById)
-    .put(isAuthenticated, ROcontrollers.updateOneRepairOrderById)
+router
+    .post("/repairorder",isAuthenticated, ROcontrollers.createRepairOrder)
+    .delete("/repairorder/:id",isAuthenticated, ROcontrollers.deletRepairOrderById)
+    .put("/repairorder/:id",isAuthenticated, ROcontrollers.updateOneRepairOrderById)
 
 
 module.exports = router
