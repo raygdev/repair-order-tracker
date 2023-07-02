@@ -64,7 +64,7 @@ export async function editRepairOrderAction({request,params}){
     const userId = await params.userId
     const updatedRO = {
         ...ro,
-        isWarranty: ro.isWarranty ? true: false,
+        isWarranty: Boolean(ro.isWarranty),
         created_on: ro.created_on.replace(/-/g,'/')
     }
 
