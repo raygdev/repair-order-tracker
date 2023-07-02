@@ -4,8 +4,8 @@ const mongoose = require('mongoose')
 const vehicleModel = require("../models/vehicleModel.js")
 
 function createRepairOrder(req,res,next){
-    let userObj = req.body
     let userId = req.user.id
+    let userObj = { ...req.body, userId }
 
     if(!userObj.created_on){
         userObj.created_on = Date.now()
