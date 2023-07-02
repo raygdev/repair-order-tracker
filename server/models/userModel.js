@@ -5,10 +5,8 @@ const emailValidate =
   /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
 
 const UserSchema = new mongoose.Schema({
-  name: {
-    first: {type:String, required:true},
-    last: {type:String, required:true},
-  },
+  firstName: {type:String, required:true},
+  lastName: {type:String, required:true},
   email: {
     type: String,
     unique: true,
