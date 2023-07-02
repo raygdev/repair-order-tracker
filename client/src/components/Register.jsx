@@ -14,50 +14,55 @@ export default function Register (props) {
               <h2 className="text-2xl mb-1 self-center bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent font-extrabold">Please Register!</h2>
               <p className="text-sm self-center font-medium">It's <span>Free</span>!</p>
             </div>
-            <label htmlFor="firstName">First Name <span>*</span></label>
-            <input
-              id='firstName'
-              className="p-1 rounded"
-              type="text"
-              name="firstName"
-              required={true}
-              placeholder="First Name"
-            />
-            <label htmlFor="lastName">Last Name <span>*</span></label>
-            <input
-              id='lastName'
-              className="p-1 rounded"
-              type="text"
-              name="lastName"
-              required={true}
-              placeholder="Last Name"
-            />
-            <label htmlFor="shopName">Shop Name</label>
-            <input
-              id='shopName'
-              className="p-1 rounded"
-              type="text"
-              name="shopName"
-              placeholder="Shop Name"
-            />
-            <label htmlFor="email">Email <span>*</span></label>
-            <input
-              id='email'
-              className="p-1 rounded"
-              type="email"
-              name="email"
-              required={true}
-              placeholder="Email"
-            />
-            <label htmlFor="password">Password <span>*</span></label>
-            <input
-              id='password'
-              className="p-1 rounded"
-              type="password"
-              name="password"
-              placeholder="Password"
-              required={true}
-            />
+            <label className="flex flex-col gap-1 my-1">First Name
+              <input
+                id='firstName'
+                className="p-2 rounded border border-slate-400"
+                type="text"
+                name="firstName"
+                required={true}
+                placeholder="First Name"
+              />
+            </label>
+            <label className="flex flex-col gap-1 my-1">Last Name
+              <input
+                id='lastName'
+                className="p-2 rounded border border-slate-400"
+                type="text"
+                name="lastName"
+                required={true}
+                placeholder="Last Name"
+              />
+            </label>
+            <label className="flex flex-col gap-1 my-1">Shop Name (optional)
+              <input
+                id='shopName'
+                className="p-2 rounded border border-slate-400"
+                type="text"
+                name="shopName"
+                placeholder="Shop Name"
+              />
+            </label>
+            <label className="flex flex-col gap-1 my-1">Email
+              <input
+                id='email'
+                className="p-2 rounded border border-slate-400"
+                type="email"
+                name="email"
+                required={true}
+                placeholder="Email"
+              />
+            </label>
+            <label className="flex flex-col gap-1 my-1">Password
+              <input
+                id='password'
+                className="p-2 rounded border border-slate-400"
+                type="password"
+                name="password"
+                placeholder="Password"
+                required={true}
+              />
+            </label>
             <button className="text-white bg-sky-700 self-center px-1 py-1 rounded mt-4">
               Submit
             </button>
