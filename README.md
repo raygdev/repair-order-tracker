@@ -89,6 +89,20 @@ the user needs to input a few pieces of information.
 ## Future Features
 
 - [ ] Implement a lookup by VIN
-    - allow other users to look up the VIN and view the notes and repairs from previous visits.
-    - this feature is needed to confirm previous repairs when the repair is unknown to the customer
-    - helps to guide the technician to a possible repeat failure or causal failure from a previous repair
+    - allow other users to look up the VIN and view the notes and repairs from previous visits at other shops.
+        - some information may need to be redacted if the requesting user didn't create the repair.
+    - this feature is needed to confirm previous repairs when the repair is unknown to the customer.
+    - helps to guide the technician to a possible repeat failure or causal failure from a previous repair.
+- [ ] Data visualization
+    - Let users visualize their hours on a daily, weekly, monthly, and annual basis.
+        - set up aggregations to perform calculations for this feature.
+    - Implement a sales amount per repiar order.
+        - should have an aggregate for average sales per ticket.
+        - should have total sales for day, week, month, and year.
+            - helps to keep track of how much they  are making their employer.
+- [ ] Image storage
+    - should allow image storage for the user to attach images related to the repair.
+        - to disk or not to disk... that is the question
+- [ ] Setup email password recovery
+    - currently no way to recover password.
+    - should also implement an update user page for a similar purpose
