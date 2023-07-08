@@ -1,3 +1,5 @@
+import { FormValidator } from "../formValidator"
+
 export const loginFormValidations = [
     {
         field: "email",
@@ -25,3 +27,5 @@ export const loginFormValidations = [
         message: "A password must be provided"
     }
 ]
+
+export const loginFormValidator = new FormValidator(loginFormValidations)

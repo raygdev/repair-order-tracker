@@ -1,3 +1,5 @@
+import { FormValidator } from "../formValidator"
+
 export const registerFormValidations = [
     {
         field: "email",
@@ -78,3 +80,5 @@ export const registerFormValidations = [
         message: "A password must be provided"
     }
 ]
+
+export const registerFormValidator = new FormValidator(registerFormValidations)

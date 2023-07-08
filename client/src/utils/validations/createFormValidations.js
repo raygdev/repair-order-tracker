@@ -1,3 +1,5 @@
+import { FormValidator } from "../formValidator"
+
 export const createFormValidations = [
     {
         field: "ro_number",
@@ -32,3 +34,5 @@ export const createFormValidations = [
         message: "VIN must have only alphanumeric characters with no \"o's\""
     }
 ]
+
+export const createFormValidator = new FormValidator(createFormValidations)
