@@ -1,4 +1,4 @@
-export const registerFormValidationInit = [
+export const registerFormValidations = [
     {
         field: "email",
         method: "isEmail",
