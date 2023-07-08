@@ -60,7 +60,7 @@ export const registerFormValidationInit = [
     {
         field: "shopName",
         method: "matches",
-        args: [/^[a-zA-Z'\s]{0,50}$/],
+        args: [/^[a-zA-Z0-9'\s]{0,50}$/g],
         validWhen: true,
         message: "No special characters other than \"'\" are allowed"
     }
