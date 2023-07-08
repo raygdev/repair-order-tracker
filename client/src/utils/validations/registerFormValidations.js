@@ -63,5 +63,18 @@ export const registerFormValidationInit = [
         args: [/^[a-zA-Z0-9'\s]{0,50}$/g],
         validWhen: true,
         message: "No special characters other than \"'\" are allowed"
+    },
+    {
+        field: "password",
+        method: "isStrongPassword",
+        args: [{ minLength: 8, minLowercase:1, minUppercase: 1, minNumbers: 1, minSymbols: 0}],
+        validWhen: true,
+        message: `Password must contain the following:\n\tMust be 8 characters long\n\tMust contain a lowercase letter\n\tMust contain an uppercase letter\n\tMust contain 1 number`
+    },
+    {
+        field: "password",
+        method: "isEmpty",
+        validWhen: false,
+        message: "A password must be provided"
     }
 ]
