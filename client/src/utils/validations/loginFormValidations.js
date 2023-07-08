@@ -13,8 +13,8 @@ export const loginFormValidations = [
     },
     {
         field: "password",
-        method: "isStrongPassword",
-        args: [{ minLength: 8 }],
+        method: "isLength",
+        args: [{ min: 8 }],
         validWhen: true,
         message: "Password must be at least 8 characters long"
     },
