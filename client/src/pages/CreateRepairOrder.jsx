@@ -1,5 +1,5 @@
 import React from "react";
-import { redirect } from "react-router-dom";
+import { useActionData } from "react-router-dom";
 import { faExternalLink } from "@fortawesome/free-solid-svg-icons";
 import loadable from "@loadable/component";
 const FontAwesomeIcon = loadable(() => import('@fortawesome/react-fontawesome').then(module => ({default:module.FontAwesomeIcon})))
