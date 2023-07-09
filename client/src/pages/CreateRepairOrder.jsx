@@ -9,6 +9,7 @@ const Form = loadable(() => import('react-router-dom').then(module => ({default:
 //validate input
 
 export default function CreateRepairOrder() {
+  const inputs = useActionData()
   return (
     <div className="flex min-h-screen">
       <Form
