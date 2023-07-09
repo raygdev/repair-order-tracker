@@ -15,9 +15,10 @@ export const registerFormValidations = [
     },
     {
         field: "firstName",
-        method: "isEmpty",
-        validWhen: false,
-        message: "First name is required"
+        method: "isAlpha",
+        args: ["en-US"],
+        validWhen: true,
+        message: "First name must be letters only"
     },
     {
         field: "firstName",
@@ -28,16 +29,16 @@ export const registerFormValidations = [
     },
     {
         field: "firstName",
-        method: "isAlpha",
-        args: ["en-US"],
-        validWhen: true,
-        message: "First name must be letters only"
+        method: "isEmpty",
+        validWhen: false,
+        message: "First name is required"
     },
     {
         field: "lastName",
-        method: "isEmpty",
-        validWhen: false,
-        message: "Last name is required"
+        method: "isAlpha",
+        validWhen: true,
+        args: ["en-US"],
+        message: "Last name must be letters only"
     },
     {
         field: "lastName",
@@ -48,10 +49,9 @@ export const registerFormValidations = [
     },
     {
         field: "lastName",
-        method: "isAlpha",
-        validWhen: true,
-        args: ["en-US"],
-        message: "Last name must be letters only"
+        method: "isEmpty",
+        validWhen: false,
+        message: "Last name is required"
     },
     {
         field: "shopName",
