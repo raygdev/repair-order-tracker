@@ -29,6 +29,7 @@ export default function CreateRepairOrder() {
             placeholder="Enter Your RO Number "
             className={`p-1 rounded w-full ${(inputs && inputs?.ro_number.isInvalid) ? "border-2 border-red-600": "border border-slate-400"}`}
           />
+          {inputs && inputs.ro_number.isInvalid && <span className="text-red-600">{inputs.ro_number.message}</span>}
         </div>
         <div>
           <label htmlFor="vin" className="text-white font-medium">
@@ -41,6 +42,7 @@ export default function CreateRepairOrder() {
             type="text"
             placeholder="Enter your VIN"
           />
+          {inputs && inputs.vin.isInvalid && <span className="text-red-600">{inputs.vin.message}</span>}
         </div>
         <div className="flex w-2/4 justify-between items-center">
           <label htmlFor="isWarranty" className="text-white font-medium">
