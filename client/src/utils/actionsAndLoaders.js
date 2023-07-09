@@ -9,11 +9,16 @@ import {
     getUser,
     getVehicle
 } from './crud'
+import { registerFormValidator } from "./validations/registerFormValidations"
 
 
 export async function registerAction({ request }) {
     const formData = await request.formData();
     const user = Object.fromEntries(formData);
+    let inputs = registerFormValidator.validate(user)
+    if(!inputs.isValid){
+      return inputs
+    }
     return createNewUser(user).catch((e) => console.log(e.message));
   }
 
