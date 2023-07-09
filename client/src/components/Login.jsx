@@ -53,7 +53,7 @@ export default function Login(){
           </button>
         </Form>
       </div>
-      {error && (
+      {error && (typeof error === "string") && (
         <span className="p-6 mt-6 text-center text-red-500">{error}</span>
       )}
     </main>
