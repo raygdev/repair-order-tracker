@@ -48,6 +48,11 @@ export async function createROAction({ request, params }) {
       ...roData,
       isWarranty: Boolean(roData.isWarranty),
     };
+    let inputs = createFormValidator.validate(ro)
+
+    if(!inputs.isValid){
+      return inputs
+    }
   
     return await createRO(ro, params.userId);
   }
