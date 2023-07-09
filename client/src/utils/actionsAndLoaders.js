@@ -10,6 +10,7 @@ import {
     getVehicle
 } from './crud'
 import { registerFormValidator } from "./validations/registerFormValidations"
+import { loginFormValidator } from "./validations/loginFormValidations"
 
 
 export async function registerAction({ request }) {
