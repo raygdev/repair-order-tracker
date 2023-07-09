@@ -21,7 +21,6 @@ export default function Register (props) {
                 className="peer p-2 rounded border border-slate-400"
                 type="text"
                 name="firstName"
-                required={true}
                 placeholder="First Name"
               />
               <div className="hidden peer-placeholder-shown:!hidden peer-invalid:block text-red-600">First Name Required</div>
@@ -32,7 +31,6 @@ export default function Register (props) {
                 className="peer p-2 rounded border border-slate-400"
                 type="text"
                 name="lastName"
-                required={true}
                 placeholder="Last Name"
               />
               <div className="hidden peer-placeholder-shown:!hidden peer-invalid:block text-red-600">Last Name Required</div>
@@ -50,9 +48,8 @@ export default function Register (props) {
               <input
                 id='email'
                 className="peer p-2 rounded border border-slate-400"
-                type="email"
+                type="text"
                 name="email"
-                required={true}
                 placeholder="Email"
               />
               <div className="hidden peer-placeholder-shown:!hidden peer-invalid:block text-red-600">Email Required</div>
@@ -64,7 +61,6 @@ export default function Register (props) {
                 type="password"
                 name="password"
                 placeholder="Password"
-                required={true}
               />
               <div className="hidden peer-placeholder-shown:!hidden peer-invalid:block text-red-600">Password must be 8 characters and contain special characters</div>
             </label>
