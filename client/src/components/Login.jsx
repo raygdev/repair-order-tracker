@@ -6,6 +6,7 @@ const Form = loadable(() =>
 );
 
 export default function Login(){
+
   const navigation = useNavigation();
   const error = useActionData();
   return (
@@ -22,20 +23,26 @@ export default function Login(){
           <label htmlFor="email">Email</label>
           <input
             className={`p-1 rounded ${
+              error && error.email?.isInvalid && "border-2 border-red-600"
             }`}
             type="text"
             name="email"
             placeholder="Email"
           />
+          {error && error.email?.isInvalid && (
+            <span className="text-red-600">{error.email.message}</span>
           )}
           <label htmlFor="password">Password</label>
           <input
             className={`p-1 rounded ${
+              error && error.password?.isInvalid && "border-2 border-red-600"
             }`}
             type="password"
             name="password"
             placeholder="Password"
           />
+          {error && error.password?.isInvalid && (
+            <span className="text-red-600">{error.password.message}</span>
           )}
           <button
             className="text-white min-h-max mt-5 disabled:bg-sky-500 bg-sky-700 self-center px-2 py-1 rounded  hover:bg-sky-900  active:bg-sky-300 active:text-slate-700 focus:outline-none focus:ring-4 focus:ring-sky-300"
