@@ -15,10 +15,11 @@ export default function Register (props) {
               <h2 className="text-2xl mb-1 self-center bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent font-extrabold">Please Register!</h2>
               <p className="text-sm self-center font-medium">It's <span>Free</span>!</p>
             </div>
+            {inputs && !inputs.isValid && <span className="text-red-700">Please check your information!</span>}
             <label className="flex flex-col gap-1 my-1">First Name
               <input
                 id='firstName'
-                className="peer p-2 rounded border border-slate-400"
+                className={`p-2 rounded ${(inputs && inputs.firstName.isInvalid)? "border-2 border-red-600": "border border-slate-400"}`}
                 type="text"
                 name="firstName"
                 placeholder="First Name"
@@ -28,7 +29,7 @@ export default function Register (props) {
             <label className="flex flex-col gap-1 my-1">Last Name
               <input
                 id='lastName'
-                className="peer p-2 rounded border border-slate-400"
+                className={`p-2 rounded ${(inputs && inputs.lastName.isInvalid)? "border-2 border-red-600": "border border-slate-400"}`}
                 type="text"
                 name="lastName"
                 placeholder="Last Name"
@@ -38,7 +39,7 @@ export default function Register (props) {
             <label className="flex flex-col gap-1 my-1">Shop Name (optional)
               <input
                 id='shopName'
-                className="p-2 rounded border border-slate-400"
+                className={`p-2 rounded ${(inputs && inputs.shopName.isInvalid)? "border-2 border-red-600": "border border-slate-400"}`}
                 type="text"
                 name="shopName"
                 placeholder="Shop Name"
@@ -47,7 +48,7 @@ export default function Register (props) {
             <label className="flex flex-col gap-1 my-1">Email
               <input
                 id='email'
-                className="peer p-2 rounded border border-slate-400"
+                className={`p-2 rounded ${(inputs && inputs.email.isInvalid)? "border-2 border-red-600": "border border-slate-400"}`}
                 type="text"
                 name="email"
                 placeholder="Email"
@@ -57,7 +58,7 @@ export default function Register (props) {
             <label className="flex flex-col gap-1 my-1">Password
               <input
                 id='password'
-                className="peer p-2 rounded border border-slate-400"
+                className={`p-2 rounded ${(inputs && inputs.password.isInvalid)? "border-2 border-red-600": "border border-slate-400"}`}
                 type="password"
                 name="password"
                 placeholder="Password"
