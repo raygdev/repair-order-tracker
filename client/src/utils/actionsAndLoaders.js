@@ -11,6 +11,7 @@ import {
 } from './crud'
 import { registerFormValidator } from "./validations/registerFormValidations"
 import { loginFormValidator } from "./validations/loginFormValidations"
+import { createFormValidator } from "./validations/createFormValidations"
 
 
 export async function registerAction({ request }) {
