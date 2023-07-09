@@ -22,7 +22,6 @@ export default function Register (props) {
                 name="firstName"
                 required={true}
                 placeholder="First Name"
-                minLength={2}
               />
               <div className="hidden peer-placeholder-shown:!hidden peer-invalid:block text-red-600">First Name Required</div>
             </label>
@@ -34,7 +33,6 @@ export default function Register (props) {
                 name="lastName"
                 required={true}
                 placeholder="Last Name"
-                minLength={3}
               />
               <div className="hidden peer-placeholder-shown:!hidden peer-invalid:block text-red-600">Last Name Required</div>
             </label>
@@ -66,7 +64,6 @@ export default function Register (props) {
                 name="password"
                 placeholder="Password"
                 required={true}
-                minLength={8}
               />
               <div className="hidden peer-placeholder-shown:!hidden peer-invalid:block text-red-600">Password must be 8 characters and contain special characters</div>
             </label>
