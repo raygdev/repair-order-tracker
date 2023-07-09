@@ -1,7 +1,8 @@
 import React from "react";
-import { Form } from "react-router-dom";
+import { Form, useActionData } from "react-router-dom";
 
 export default function Register (props) {
+  const inputs = useActionData()
   return (
     <main className=" flex w-full flex-col min-h-screen bg-gradient-to-br from-blue-800 via-sky-300">
         <div className="w-full xs:max-w-md m-auto">
