@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import loadable from "@loadable/component";
 import { useNavigation, useActionData } from "react-router-dom";
 const Form = loadable(() =>
@@ -6,21 +6,9 @@ const Form = loadable(() =>
 );
 
 export default function Login(){
-  const [input, setInput] = useState({
-    email: "",
-    password: "",
-  });
+
   const navigation = useNavigation();
   const error = useActionData();
-
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setInput((prevInput) => ({
-      ...prevInput,
-      [name]: value,
-    }));
-  }
-
   return (
     <main className="h-screen bg-gradient-to-tl from-blue-300 to-violet-200 flex flex-col w-full justify-center items-center">
       <div className="w-full px-4 xs:max-w-md min-w-max">
@@ -35,30 +23,26 @@ export default function Login(){
           <label htmlFor="email">Email</label>
           <input
             className={`p-1 rounded ${
-              error && !input.email && "border-2 border-red-400"
+              error && error.email?.isInvalid && "border-2 border-red-600"
             }`}
-            type="email"
+            type="text"
             name="email"
-            value={input.email}
             placeholder="Email"
-            onChange={handleChange}
           />
-          {error && !input.email && (
-            <span className="text-red-500">Email required</span>
+          {error && error.email?.isInvalid && (
+            <span className="text-red-600">{error.email.message}</span>
           )}
           <label htmlFor="password">Password</label>
           <input
             className={`p-1 rounded ${
-              error && !input.password && "border-2 border-red-400"
+              error && error.password?.isInvalid && "border-2 border-red-600"
             }`}
             type="password"
             name="password"
-            value={input.password}
             placeholder="Password"
-            onChange={handleChange}
           />
-          {error && !input.password && (
-            <span className="text-red-500">Password required</span>
+          {error && error.password?.isInvalid && (
+            <span className="text-red-600">{error.password.message}</span>
           )}
           <button
             className="text-white min-h-max mt-5 disabled:bg-sky-500 bg-sky-700 self-center px-2 py-1 rounded  hover:bg-sky-900  active:bg-sky-300 active:text-slate-700 focus:outline-none focus:ring-4 focus:ring-sky-300"
@@ -69,7 +53,7 @@ export default function Login(){
           </button>
         </Form>
       </div>
-      {error && (
+      {error && (typeof error === "string") && (
         <span className="p-6 mt-6 text-center text-red-500">{error}</span>
       )}
     </main>
