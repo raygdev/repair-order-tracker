@@ -25,7 +25,7 @@ export default function CreateRepairOrder() {
           <input
             id="ro_number"
             name="ro_number"
-            type="number"
+            type="text"
             placeholder="Enter Your RO Number "
             className="p-1 rounded w-full"
           />
