@@ -17,6 +17,7 @@ export default function CreateRepairOrder() {
         action="../create-repair-order"
         method="POST"
       >
+        {inputs && !inputs.isValid && <span className="text-red-600">Please check the highlighted fields</span>}
         <div>
           <label htmlFor="ro_number" className="text-white font-medium">
             RO Number*
