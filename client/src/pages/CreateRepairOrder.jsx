@@ -68,30 +68,3 @@ export default function CreateRepairOrder() {
     </div>
   );
 }
-
-export async function createROActionLoader({ request, params }) {
-  const formData = await request.formData();
-  const roData = Object.fromEntries(formData);
-  let ro = {
-    ...roData,
-    isWarranty: roData.isWarranty ? true : false,
-    userId: params.userId,
-  };
-
-  return await createRO(ro, params.userId);
-}
-
-async function createRO(ro, userId) {
-  const res = await fetch("/repairorder", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(ro),
-  });
-
-  if (!res.ok) {
-    throw await res.json();
-  }
-  return redirect(`/user/${userId}`);
-}
