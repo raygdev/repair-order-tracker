@@ -27,7 +27,7 @@ export default function CreateRepairOrder() {
             name="ro_number"
             type="text"
             placeholder="Enter Your RO Number "
-            className="p-1 rounded w-full"
+            className={`p-1 rounded w-full ${(inputs && inputs?.ro_number.isInvalid) ? "border-2 border-red-600": "border border-slate-400"}`}
           />
         </div>
         <div>
@@ -35,7 +35,7 @@ export default function CreateRepairOrder() {
             VIN*
           </label>
           <input
-            className="p-1 rounded w-full"
+            className={`p-1 rounded w-full ${(inputs && inputs?.vin.isInvalid) ? "border-2 border-red-600": "border border-slate-600" }`}
             id="vin"
             name="vin"
             type="text"
