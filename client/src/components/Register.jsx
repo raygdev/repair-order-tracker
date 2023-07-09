@@ -24,7 +24,7 @@ export default function Register (props) {
                 name="firstName"
                 placeholder="First Name"
               />
-              <div className="hidden peer-placeholder-shown:!hidden peer-invalid:block text-red-600">First Name Required</div>
+              {inputs && inputs.firstName.isInvalid && <div className=" text-red-600">{inputs.firstName.message}</div>}
             </label>
             <label className="flex flex-col gap-1 my-1">Last Name
               <input
@@ -34,7 +34,7 @@ export default function Register (props) {
                 name="lastName"
                 placeholder="Last Name"
               />
-              <div className="hidden peer-placeholder-shown:!hidden peer-invalid:block text-red-600">Last Name Required</div>
+              {inputs && inputs.lastName.isInvalid && <div className="text-red-600">{inputs.lastName.message}</div>}
             </label>
             <label className="flex flex-col gap-1 my-1">Shop Name (optional)
               <input
@@ -45,6 +45,7 @@ export default function Register (props) {
                 placeholder="Shop Name"
               />
             </label>
+            {inputs && inputs.shopName.isInvalid && <div className="text-red-600">{inputs.shopName.message}</div>}
             <label className="flex flex-col gap-1 my-1">Email
               <input
                 id='email'
@@ -53,7 +54,7 @@ export default function Register (props) {
                 name="email"
                 placeholder="Email"
               />
-              <div className="hidden peer-placeholder-shown:!hidden peer-invalid:block text-red-600">Email Required</div>
+              {inputs && inputs.email.isInvalid && <div className="text-red-600">{inputs.email.message}</div>}
             </label>
             <label className="flex flex-col gap-1 my-1">Password
               <input
@@ -63,7 +64,7 @@ export default function Register (props) {
                 name="password"
                 placeholder="Password"
               />
-              <div className="hidden peer-placeholder-shown:!hidden peer-invalid:block text-red-600">Password must be 8 characters and contain special characters</div>
+              {inputs && inputs.password.isInvalid && <div className="whitespace-pre-wrap text-red-600">{inputs.password.message}</div>}
             </label>
             <button className="text-white bg-sky-700 self-center px-1 py-1 rounded mt-4">
               Submit
