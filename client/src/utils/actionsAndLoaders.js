@@ -26,6 +26,10 @@ export async function registerAction({ request }) {
   export async function loginAction({ request }) {
     const formData = await request.formData();
     const userObj = Object.fromEntries(formData);
+    let inputs = loginFormValidator.validate(userObj)
+    if(!inputs.isValid){
+      return inputs
+    }
     return await verifyUser(userObj).catch((e) => e.message);
   }
 
