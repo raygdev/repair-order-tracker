@@ -9,6 +9,7 @@ export default function EditRepairOrder() {
     const { repairOrders } = useRouteLoaderData('root')
     const { repairId } = useParams()
     const repairOrder = repairOrders.find(ro => ro._id === repairId)
+    const inputs = useActionData()
     
     const date = toLocalDateString(repairOrder.created_on)
 
