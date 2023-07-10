@@ -81,10 +81,6 @@ export const router = createBrowserRouter([
                         path:'repairorder/delete/:repairId',
                         action: deleteRepairOrderAction
                     },
-                    {
-                        path:'repairorders/edit/:repairId',
-                        action: editRepairOrderAction
-                    },
                 ]
             }
         ]
