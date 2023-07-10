@@ -19,9 +19,10 @@ export default function EditRepairOrder() {
             <div className='flex flex-col'>
                 <input type="hidden" name="id" value={repairOrder.id} />
                 <input type="hidden" name="userId" value={repairOrder.userId} />
+                {inputs && <span className='text-red-600'>Please check the highlighted fields!</span>}
                 <label htmlFor="ro_number" className='font-semibold'>RO Number</label>
                 <input
-                    className='p-2 rounded focus:border-b focus:border-b-slate-400 focus:outline-none'
+                    className={`p-2 rounded focus:border-b focus:border-b-slate-400 focus:outline-none ${inputs?.ro_number.isInvalid ? "border-2 border-red-600": "border border-slate-400"}`}
                     type="text" 
                     id="ro_number"
                     name={'ro_number'}
@@ -31,7 +32,7 @@ export default function EditRepairOrder() {
             <div className='flex flex-col'>
                 <label htmlFor="vin" className='font-semibold'>VIN*</label>
                 <input 
-                    className='p-2 rounded focus:outline-none focus:border-b focus:border-b-slate-400'
+                    className={`p-2 rounded focus:outline-none focus:border-b focus:border-b-slate-400 ${inputs?.vin.isInvalid ? "border-2 border-red-600":"border border-slat-400"}`}
                     type="text" 
                     id="vin"
                     name='vin'
