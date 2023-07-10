@@ -65,6 +65,10 @@ export async function editRepairOrderAction({request,params}){
         isWarranty: Boolean(ro.isWarranty),
         created_on: ro.created_on.replace(/-/g,'/')
     }
+    let inputs = createFormValidator.validate(updatedRO)
+    if(!inputs.isValid){
+      return inputs
+    }
 
         return await editRO(updatedRO)
 }
