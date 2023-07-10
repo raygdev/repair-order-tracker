@@ -69,7 +69,8 @@ export const router = createBrowserRouter([
                     },
                     {
                         path:'editrepairorder/:repairId',
-                        element: <EditRepairOrder />
+                        element: <EditRepairOrder />,
+                        action: editRepairOrderAction
                     },
                     {
                         path:'repairorder/:repairId',
