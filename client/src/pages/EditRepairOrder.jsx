@@ -28,6 +28,7 @@ export default function EditRepairOrder() {
                     name={'ro_number'}
                     defaultValue={repairOrder.ro_number}
                 />
+                {inputs && inputs.ro_number.isInvalid && <span className='text-red-600'>{inputs.ro_number.message}</span>}
             </div>
             <div className='flex flex-col'>
                 <label htmlFor="vin" className='font-semibold'>VIN*</label>
@@ -38,6 +39,7 @@ export default function EditRepairOrder() {
                     name='vin'
                     defaultValue={repairOrder.vin}
                 />
+                {inputs && inputs.vin.isInvalid && <span className='text-red-600'>{inputs.vin.message}</span>}
             </div>
             <div className='flex flex-col'>
                 <label htmlFor="created_on" className='font-semibold'>Created On</label>
