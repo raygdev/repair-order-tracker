@@ -44,7 +44,7 @@ export default function EditRepairOrder() {
             <div className='flex flex-col'>
                 <label htmlFor="created_on" className='font-semibold'>Created On</label>
                 <input 
-                    className='p-2 rounded focus:outline-none focus:border-b focus:border-b-slate-400'
+                    className='p-2 rounded border border-slate-400 focus:outline-none focus:border-b focus:border-b-slate-400'
                     type="date" 
                     id="created_on"
                     name='created_on'
