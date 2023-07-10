@@ -14,7 +14,7 @@ export default function EditRepairOrder() {
     const date = toLocalDateString(repairOrder.created_on)
 
      return (
-        <Form method='put' action={`../repairorders/edit/${repairId}`} className='flex flex-col p-4  w-5/6  sm:w-1/2  md:w-1/3 m-auto min-h-screen justify-between bg-[#fffff2] shadow-2xl my-4'>
+        <Form method='put' action={`../editrepairorder/${repairId}`} className='flex flex-col p-4  w-5/6  sm:w-1/2  md:w-1/3 m-auto min-h-screen justify-between bg-[#fffff2] shadow-2xl my-4'>
             <h1 className='text-4xl text-center p-5'>Edit</h1>
             <div className='flex flex-col'>
                 <input type="hidden" name="id" value={repairOrder.id} />
