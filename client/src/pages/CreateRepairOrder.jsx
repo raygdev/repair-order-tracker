@@ -1,5 +1,5 @@
 import React from "react";
-import { redirect } from "react-router-dom";
+import { useActionData } from "react-router-dom";
 import { faExternalLink } from "@fortawesome/free-solid-svg-icons";
 import loadable from "@loadable/component";
 const FontAwesomeIcon = loadable(() => import('@fortawesome/react-fontawesome').then(module => ({default:module.FontAwesomeIcon})))
@@ -9,6 +9,7 @@ const Form = loadable(() => import('react-router-dom').then(module => ({default:
 //validate input
 
 export default function CreateRepairOrder() {
+  const inputs = useActionData()
   return (
     <div className="flex min-h-screen">
       <Form
@@ -16,6 +17,7 @@ export default function CreateRepairOrder() {
         action="../create-repair-order"
         method="POST"
       >
+        {inputs && !inputs.isValid && <span className="text-red-600">Please check the highlighted fields</span>}
         <div>
           <label htmlFor="ro_number" className="text-white font-medium">
             RO Number*
@@ -23,22 +25,24 @@ export default function CreateRepairOrder() {
           <input
             id="ro_number"
             name="ro_number"
-            type="number"
+            type="text"
             placeholder="Enter Your RO Number "
-            className="p-1 rounded w-full"
+            className={`p-1 rounded w-full ${(inputs && inputs?.ro_number.isInvalid) ? "border-2 border-red-600": "border border-slate-400"}`}
           />
+          {inputs && inputs.ro_number.isInvalid && <span className="text-red-600">{inputs.ro_number.message}</span>}
         </div>
         <div>
           <label htmlFor="vin" className="text-white font-medium">
             VIN*
           </label>
           <input
-            className="p-1 rounded w-full"
+            className={`p-1 rounded w-full ${(inputs && inputs?.vin.isInvalid) ? "border-2 border-red-600": "border border-slate-600" }`}
             id="vin"
             name="vin"
             type="text"
             placeholder="Enter your VIN"
           />
+          {inputs && inputs.vin.isInvalid && <span className="text-red-600">{inputs.vin.message}</span>}
         </div>
         <div className="flex w-2/4 justify-between items-center">
           <label htmlFor="isWarranty" className="text-white font-medium">
@@ -67,31 +71,4 @@ export default function CreateRepairOrder() {
       </Form>
     </div>
   );
-}
-
-export async function createROActionLoader({ request, params }) {
-  const formData = await request.formData();
-  const roData = Object.fromEntries(formData);
-  let ro = {
-    ...roData,
-    isWarranty: roData.isWarranty ? true : false,
-    userId: params.userId,
-  };
-
-  return await createRO(ro, params.userId);
-}
-
-async function createRO(ro, userId) {
-  const res = await fetch("/repairorder", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(ro),
-  });
-
-  if (!res.ok) {
-    throw await res.json();
-  }
-  return redirect(`/user/${userId}`);
 }

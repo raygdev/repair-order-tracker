@@ -11,6 +11,7 @@ import {
 } from './crud'
 import { registerFormValidator } from "./validations/registerFormValidations"
 import { loginFormValidator } from "./validations/loginFormValidations"
+import { createFormValidator } from "./validations/createFormValidations"
 
 
 export async function registerAction({ request }) {
@@ -47,6 +48,11 @@ export async function createROAction({ request, params }) {
       ...roData,
       isWarranty: Boolean(roData.isWarranty),
     };
+    let inputs = createFormValidator.validate(ro)
+
+    if(!inputs.isValid){
+      return inputs
+    }
   
     return await createRO(ro, params.userId);
   }
@@ -58,6 +64,10 @@ export async function editRepairOrderAction({request,params}){
         ...ro,
         isWarranty: Boolean(ro.isWarranty),
         created_on: ro.created_on.replace(/-/g,'/')
+    }
+    let inputs = createFormValidator.validate(updatedRO)
+    if(!inputs.isValid){
+      return inputs
     }
 
         return await editRO(updatedRO)

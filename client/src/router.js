@@ -69,7 +69,8 @@ export const router = createBrowserRouter([
                     },
                     {
                         path:'editrepairorder/:repairId',
-                        element: <EditRepairOrder />
+                        element: <EditRepairOrder />,
+                        action: editRepairOrderAction
                     },
                     {
                         path:'repairorder/:repairId',
@@ -79,10 +80,6 @@ export const router = createBrowserRouter([
                     {
                         path:'repairorder/delete/:repairId',
                         action: deleteRepairOrderAction
-                    },
-                    {
-                        path:'repairorders/edit/:repairId',
-                        action: editRepairOrderAction
                     },
                 ]
             }
