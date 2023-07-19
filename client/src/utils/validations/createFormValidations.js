@@ -4,9 +4,9 @@ export const createFormValidations = [
     {
         field: "ro_number",
         method: "matches",
-        args: [/^[A-Za-z0-9]{1,20}$/g],
+        args: [/^[0-9]{1,20}$/g],
         validWhen: true,
-        message: "The repair order number can only contain letters and numbers"
+        message: "The repair order number can only contain numbers"
     },
     {
         field: "ro_number",
