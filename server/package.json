@@ -23,6 +23,6 @@
     "helmet": "^6.0.0",
     "jsonwebtoken": ">=9.0.0",
     "mongodb": "^4.10.0",
-    "mongoose": "^6.6.3"
+    "mongoose": "^6.11.3"
   }
 }
