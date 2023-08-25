@@ -26,7 +26,7 @@ export default function RepairOrder() {
             <h2 className='text-lg text'>Repair Order# {repairOrder.ro_number}</h2>
             <p date={date}>Created On {date}</p>
         </div>
-        { data && typeof data !== "string" &&
+        { (data && typeof data !== "string" &&
             <section className='border-b p-4 flex flex-col'>
                 <h2 className='text-lg'>Vehicle Info</h2>
                 <div className='self-center text-slate-500'>
@@ -37,13 +37,13 @@ export default function RepairOrder() {
                     <p className='py-2'>Engine Size: <span className='border py-1 px-4 inline-block'>{data.vehicle.EngineSize}</span></p>
                 </div>
                 <p title='pay type' className='whitespace-pre-wrap'>Pay Type: {repairOrder.isWarranty ? "Warranty":"Customer Pay"}</p>
-            </section>
+            </section>)
             ||  
-            <section className='border-b text-center p-4'>
+            (<section className='border-b text-center p-4'>
                 <p title='vehicle vin number'>VIN# {repairOrder.vin}</p>
                 <p className='text-red-500'>{data}! Please try recreating the repair order and check that the vin is correct!</p>
                 <p title='pay type' className='whitespace-pre-wrap'>Pay Type: {repairOrder.isWarranty ? "Warranty":"Customer Pay"}</p>
-            </section>
+            </section>)
         }
 
         <section className='w-full border-b p-4'>
