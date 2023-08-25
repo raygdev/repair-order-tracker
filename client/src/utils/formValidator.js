@@ -33,7 +33,7 @@ export class FormValidator {
 
     valid(){
         const validation = {}
-        this.validations.map(rule => {
+        this.validations.forEach(rule => {
             validation[rule.field] = { isInvalid: false, message: "" }
         })
         return { isValid: true, ...validation}
