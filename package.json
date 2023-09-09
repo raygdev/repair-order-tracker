@@ -1,5 +1,17 @@
 {
-  "dependencies": {
+  "name": "repair-order-tracker",
+  "version": "1.0.0",
+  "description": "to run the application open two terminals\r in the first terminal run \r ```console\r cd server && npm run dev\r ```\r This will start the server instance.",
+  "main": "index.js",
+  "scripts": {
+    "start:client": "cd client && npm start",
+    "start:server": "cd server && npm run dev",
+    "dev": "concurrently npm:start:*"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
     "concurrently": "^8.2.1"
   }
 }
