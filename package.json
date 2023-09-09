@@ -1,0 +1,12 @@
+{
+  "name": "repair-order-tracker",
+  "version": "1.0.0",
+  "description": "to run the application open two terminals\r in the first terminal run \r ```console\r cd server && npm run dev\r ```\r This will start the server instance.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
