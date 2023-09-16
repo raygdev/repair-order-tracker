@@ -2,6 +2,12 @@ import { redirect } from "react-router-dom";
 import { getToken, setToken, clearToken } from "./token"
 import { handleNotOK } from "./handleNotOK"
 
+function authHeaders() {
+  return {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${getToken()}`
+  }
+}
 
 export async function verifyUser(userObject) {
   const res = await fetch("/api/login", {
