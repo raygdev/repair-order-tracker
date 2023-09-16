@@ -22,7 +22,15 @@ export async function registerAction({ request }) {
     if(!inputs.isValid){
       return inputs
     }
-    return createNewUser(user).catch((e) => console.log(e.message));
+
+   try {
+    const createdSuccessfully = createNewUser(user)
+    if(createdSuccessfully) return redirect("/login");
+    return null
+   }
+   catch(e) {
+    throw e
+   }
   }
 
   export async function loginAction({ request }) {
@@ -48,7 +56,15 @@ export async function registerAction({ request }) {
   export async function deleteRepairOrderAction({params}){
     const id = await params.repairId
     const userId = await params.userId
-    return await deleteRepairOrder(id, userId)
+    try {
+      const deleted = await deleteRepairOrder(id)
+      if(deleted) return redirect(`/user/${userId}`)
+      return redirect('/login?message=You must log in first!')
+    }
+    catch(e) {
+      throw e
+    }
+
 }
 
 
@@ -64,11 +80,17 @@ export async function createROAction({ request, params }) {
     if(!inputs.isValid){
       return inputs
     }
-  
-    return await createRO(ro, params.userId);
+    try {
+      const wasVehicleCreated = createRO(ro)
+      if(wasVehicleCreated) return redirect(`/user/${ro.userId}`);
+    }
+    catch(e) {
+      throw e
+    }
   }
 
-export async function editRepairOrderAction({request,params}){
+export async function editRepairOrderAction({request}){
+    const from = new URL(request.url).pathname
     const formData = await request.formData()
     const ro = Object.fromEntries(formData)
     const updatedRO = {
@@ -81,11 +103,28 @@ export async function editRepairOrderAction({request,params}){
       return inputs
     }
 
-        return await editRO(updatedRO)
+    try {
+      let edited = await editRO(updatedRO)
+      if(edited) return  redirect(
+        `/user/${updatedRO.userId}/repairorder/${updatedRO.id}?vin=${updatedRO.vin}`
+      )
+      return redirect(`/login?message=You must log in first!&from=${from}`)
+    }
+    catch(e) {
+      throw e
+    }
+
 }
 
 export async function userLoader({params}){
-    return await getUser(params.userId)
+  try {
+    const user = await getUser(params.userId)
+    if(!user) return redirect('/login')
+    return user
+  }
+  catch(e) {
+    throw e
+  }
 }
 
 export function logoutAction(){

@@ -1,20 +1,26 @@
-import { redirect } from "react-router-dom";
-import { getToken, setToken, clearToken } from "./token";
+import { getToken, setToken, clearToken } from "./token"
+import { handleNotOK } from "./handleNotOK"
 
+function authHeaders() {
+  return {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${getToken()}`
+  }
+}
 
 export async function verifyUser(userObject) {
   const res = await fetch("/api/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(userObject),
-  });
+    body: JSON.stringify(userObject)
+  })
 
   if (!res.ok) {
-    throw await res.json();
+    throw await res.json()
   }
-  const user = await res.json();
+  const user = await res.json()
 
-  setToken(user.token);
+  setToken(user.token)
 
   return user
 }
@@ -23,121 +29,88 @@ export async function createNewUser(userObj) {
   const res = await fetch("/api/register/user", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "application/json"
     },
-    body: JSON.stringify(userObj),
-  });
-
+    body: JSON.stringify(userObj)
+  })
+  const success = await res.json()
   if (!res.ok) {
-    throw await res.json();
+    return handleNotOK(res, success)
   }
-
-  console.log("new user created successfully");
-  return redirect("/login");
+  return true
 }
 
-export async function deleteRepairOrder(id, userId) {
+export async function deleteRepairOrder(id) {
   const res = await fetch(`/repairorder/${id}`, {
     method: "delete",
-    headers: {
-      Authorization: `Bearer ${getToken()}`,
-    },
-  });
-
+    headers: authHeaders()
+  })
+  const success = await res.json()
   if (!res.ok) {
-    if(res.status === 401) {
-      clearToken()
-      return
-    } else {
-      throw res;
-    }
+    return handleNotOK(res, success)
   }
-
-  return redirect(`/user/${userId}`);
+  return true
 }
 
-export async function createRO(ro, userId) {
+export async function createRO(ro) {
   const res = await fetch("/repairorder", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${getToken()}`,
-    },
-    body: JSON.stringify(ro),
-  });
+    headers: authHeaders(),
+    body: JSON.stringify(ro)
+  })
+  const data = await res.json()
 
   if (!res.ok) {
-    if(res.status === 401){
-      clearToken()
-      return;
-    }
-    throw await res.json();
+    return handleNotOK(res, data)
   }
-  return redirect(`/user/${ro.userId}`);
+  return true
 }
 
-export async function editRO(updatedRO, userId) {
+export async function editRO(updatedRO) {
   const res = await fetch(`/repairorder/${updatedRO.id}`, {
     method: "put",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${getToken()}`,
-    },
-    body: JSON.stringify(updatedRO),
-  });
+    headers: authHeaders(),
+    body: JSON.stringify(updatedRO)
+  })
+  const data = await res.json()
 
   if (!res.ok) {
-    if(res.status === 401){
-      clearToken()
-      return
-    } else {
-      throw res;
-    }
+    return handleNotOK(res, data)
   }
 
-  return redirect(`/user/${updatedRO.userId}/repairorder/${updatedRO.id}?vin=${updatedRO.vin}`);
+  return true
 }
 
 export async function getUser(userId) {
   const res = await fetch(`/api/user/${userId}`, {
-    headers: {
-      Authorization: `Bearer ${getToken()}`,
-    },
-  });
+    headers: authHeaders()
+  })
+  const user = await res.json()
 
   if (!res.ok) {
-    if (res.status === 401) {
-      clearToken()
-      return redirect("/login");
-    } else {
-      throw await res.json();
-    }
+    return handleNotOK(res, user)
   }
-
-  const user = await res.json();
-  return user;
+  return user
 }
 
-export async function getVehicle(vin){
+export async function getVehicle(vin) {
   let res = await fetch(`/api/vehicle/${vin}`)
-  let vehicle =  await res.json()
-  if(!res.ok){
+  let vehicle = await res.json()
+  if (!res.ok) {
     return vehicle.message
   }
   return vehicle
 }
 
 export async function verifyToken() {
-  if(!getToken()) return false
+  if (!getToken()) return false
 
-  const res = await fetch("/verify-token",{
+  const res = await fetch("/verify-token", {
     method: "POST",
-    headers: {
-      Authorization: `Bearer ${getToken()}`
-    }
+    headers: authHeaders()
   })
 
-  if(!res.ok){
+  if (!res.ok) {
     clearToken()
     return false
   }
