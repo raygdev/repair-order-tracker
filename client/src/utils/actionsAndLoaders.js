@@ -94,6 +94,7 @@ export function logoutAction(){
 }
 
 export async function repairOrderLoader({request}){
+  await requireAuth(request)
   let url = new URL(request.url).searchParams
   let vin = url.get("vin")
   return await getVehicle(vin)
