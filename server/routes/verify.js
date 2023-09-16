@@ -9,7 +9,7 @@ const verify = require("../controllers/verifyController")
  * cookies or sessions used. I'd like to follow with jwt and keep the
  * server as stateless as possible. Hacky for sure... this endpoint may get
  * bombarded considering that each RR loader runs concurrently. Wonder what 
- * kind of bottneck could happend?
+ * kind of bottleneck could happend?
  */
 
 
