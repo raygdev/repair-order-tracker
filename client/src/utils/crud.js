@@ -1,5 +1,6 @@
 import { redirect } from "react-router-dom";
-import { getToken, setToken, clearToken } from "./token";
+import { getToken, setToken, clearToken } from "./token"
+import { handleNotOK } from "./handleNotOK"
 
 
 export async function verifyUser(userObject) {
