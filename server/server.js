@@ -10,6 +10,7 @@ const loginRoute = require('./routes/login.js')
 const userRoutes = require('./routes/user.js')
 const repairOrderRoutes = require('./routes/repairOrderRoutes')
 const vehicleRoutes = require("./routes/vehicle.js")
+const verify = require("./routes/verify.js")
 
 const port = process.env.PORT
 const uri = process.env.MONGO_URI
@@ -25,7 +26,7 @@ app.use(cors())
 app.use(helmet())
 app.use(express.urlencoded({extended:false}))
 app.use(express.json())
-
+app.use(verify)
 app.use(registerRoute)
 app.use(loginRoute)
 app.use(userRoutes)
