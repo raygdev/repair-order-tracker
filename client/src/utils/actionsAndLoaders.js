@@ -117,7 +117,14 @@ export async function editRepairOrderAction({request}){
 }
 
 export async function userLoader({params}){
-    return await getUser(params.userId)
+  try {
+    const user = await getUser(params.userId)
+    if(!user) return redirect('/login')
+    return user
+  }
+  catch(e) {
+    throw e
+  }
 }
 
 export function logoutAction(){

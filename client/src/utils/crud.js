@@ -84,22 +84,14 @@ export async function editRO(updatedRO) {
 
 export async function getUser(userId) {
   const res = await fetch(`/api/user/${userId}`, {
-    headers: {
-      Authorization: `Bearer ${getToken()}`,
-    },
-  });
+    headers: authHeaders()
+  })
+  const user = await res.json()
 
   if (!res.ok) {
-    if (res.status === 401) {
-      clearToken()
-      return redirect("/login");
-    } else {
-      throw await res.json();
-    }
+    return handleNotOK(res, user)
   }
-
-  const user = await res.json();
-  return user;
+  return user
 }
 
 export async function getVehicle(vin){
