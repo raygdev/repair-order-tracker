@@ -1,6 +1,7 @@
 import loadable from '@loadable/component'
 import { createBrowserRouter} from "react-router-dom";
 import { AuthProvider } from './provider/useAuthProvider';
+import { requireAuth } from "./utils/requireAuth"
 import {
     createROAction,
     deleteRepairOrderAction,
@@ -64,12 +65,14 @@ export const router = createBrowserRouter([
                     },
                     {
                      path:'create-repair-order',
+                     loader: async ({ request }) => await requireAuth(request),
                      action:createROAction,
                      element: <CreateRepairOrder />
                     },
                     {
                         path:'editrepairorder/:repairId',
                         element: <EditRepairOrder />,
+                        loader: async ({ request }) => await requireAuth(request),
                         action: editRepairOrderAction
                     },
                     {
