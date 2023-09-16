@@ -13,15 +13,15 @@ export async function verifyUser(userObject) {
   const res = await fetch("/api/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(userObject),
-  });
+    body: JSON.stringify(userObject)
+  })
 
   if (!res.ok) {
-    throw await res.json();
+    throw await res.json()
   }
-  const user = await res.json();
+  const user = await res.json()
 
-  setToken(user.token);
+  setToken(user.token)
 
   return user
 }
