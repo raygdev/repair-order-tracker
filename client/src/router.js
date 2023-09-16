@@ -51,6 +51,7 @@ export const router = createBrowserRouter([
             {
                 path: 'login',
                 element: <Login />,
+                loader: ({request}) => new URL(request.url).searchParams.get("message"),
                 action:loginAction
             },
             {
