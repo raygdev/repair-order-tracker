@@ -15,7 +15,6 @@ export default function Login(){
         <h3 className={`text-red-600 text-center text-2xl mb-4 ${!message ? "hidden": ""}`}>{message}</h3>
         <Form
           className="m-auto h-72 rounded bg-sky-200 flex flex-col px-8 py-6 justify-evenly shadow-lg shadow-slate-500"
-          action="../login"
           method="POST"
           replace
         >
