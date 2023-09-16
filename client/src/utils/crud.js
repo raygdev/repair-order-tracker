@@ -94,26 +94,24 @@ export async function getUser(userId) {
   return user
 }
 
-export async function getVehicle(vin){
+export async function getVehicle(vin) {
   let res = await fetch(`/api/vehicle/${vin}`)
-  let vehicle =  await res.json()
-  if(!res.ok){
+  let vehicle = await res.json()
+  if (!res.ok) {
     return vehicle.message
   }
   return vehicle
 }
 
 export async function verifyToken() {
-  if(!getToken()) return false
+  if (!getToken()) return false
 
-  const res = await fetch("/verify-token",{
+  const res = await fetch("/verify-token", {
     method: "POST",
-    headers: {
-      Authorization: `Bearer ${getToken()}`
-    }
+    headers: authHeaders()
   })
 
-  if(!res.ok){
+  if (!res.ok) {
     clearToken()
     return false
   }
