@@ -1,21 +1,23 @@
 import React from "react";
 import loadable from "@loadable/component";
-import { useNavigation, useActionData } from "react-router-dom";
+import { useNavigation, useActionData, useLoaderData } from "react-router-dom";
 const Form = loadable(() =>
   import("react-router-dom").then((module) => ({ default: module.Form }))
 );
 
 export default function Login(){
-
+  const message = useLoaderData()
   const navigation = useNavigation();
   const error = useActionData();
   return (
     <main className="h-screen bg-gradient-to-tl from-blue-300 to-violet-200 flex flex-col w-full justify-center items-center">
       <div className="w-full px-4 xs:max-w-md min-w-max">
+        <h3 className={`text-red-600 text-center text-2xl mb-4 ${!message ? "hidden": ""}`}>{message}</h3>
         <Form
           className="m-auto h-72 rounded bg-sky-200 flex flex-col px-8 py-6 justify-evenly shadow-lg shadow-slate-500"
           action="../login"
           method="POST"
+          replace
         >
         <h2 className="text-4xl text-center text-transparent uppercase font-bold self-center mb-4 bg-clip-text bg-gradient-to-r from-sky-900 to-sky-500">
           Please log in!
