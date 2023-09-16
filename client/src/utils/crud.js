@@ -126,3 +126,21 @@ export async function getVehicle(vin){
   }
   return vehicle
 }
+
+export async function verifyToken() {
+  if(!getToken()) return false
+
+  const res = await fetch("/verify-token",{
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${getToken()}`
+    }
+  })
+
+  if(!res.ok){
+    clearToken()
+    return false
+  }
+
+  return true
+}
