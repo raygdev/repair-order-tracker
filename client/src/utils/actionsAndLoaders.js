@@ -56,7 +56,15 @@ export async function registerAction({ request }) {
   export async function deleteRepairOrderAction({params}){
     const id = await params.repairId
     const userId = await params.userId
-    return await deleteRepairOrder(id, userId)
+    try {
+      const deleted = await deleteRepairOrder(id)
+      if(deleted) return redirect(`/user/${userId}`)
+      return redirect('/login?message=You must log in first!')
+    }
+    catch(e) {
+      throw e
+    }
+
 }
 
 

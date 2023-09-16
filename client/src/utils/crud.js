@@ -41,24 +41,16 @@ export async function createNewUser(userObj) {
   return true
 }
 
-export async function deleteRepairOrder(id, userId) {
+export async function deleteRepairOrder(id) {
   const res = await fetch(`/repairorder/${id}`, {
     method: "delete",
-    headers: {
-      Authorization: `Bearer ${getToken()}`,
-    },
-  });
-
+    headers: authHeaders()
+  })
+  const success = await res.json()
   if (!res.ok) {
-    if(res.status === 401) {
-      clearToken()
-      return
-    } else {
-      throw res;
-    }
+    return handleNotOK(res, success)
   }
-
-  return redirect(`/user/${userId}`);
+  return true
 }
 
 export async function createRO(ro, userId) {
