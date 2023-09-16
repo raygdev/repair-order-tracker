@@ -22,7 +22,15 @@ export async function registerAction({ request }) {
     if(!inputs.isValid){
       return inputs
     }
-    return createNewUser(user).catch((e) => console.log(e.message));
+
+   try {
+    const createdSuccessfully = createNewUser(user)
+    if(createdSuccessfully) return redirect("/login");
+    return null
+   }
+   catch(e) {
+    throw e
+   }
   }
 
   export async function loginAction({ request }) {

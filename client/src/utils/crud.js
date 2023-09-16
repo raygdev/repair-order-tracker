@@ -30,17 +30,15 @@ export async function createNewUser(userObj) {
   const res = await fetch("/api/register/user", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "application/json"
     },
-    body: JSON.stringify(userObj),
-  });
-
+    body: JSON.stringify(userObj)
+  })
+  const success = await res.json()
   if (!res.ok) {
-    throw await res.json();
+    return handleNotOK(res, success)
   }
-
-  console.log("new user created successfully");
-  return redirect("/login");
+  return true
 }
 
 export async function deleteRepairOrder(id, userId) {
