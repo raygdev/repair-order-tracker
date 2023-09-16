@@ -16,7 +16,7 @@ export async function verifyUser(userObject) {
 
   setToken(user.token);
 
-  return redirect(`/user/${user._id}`);
+  return user
 }
 
 export async function createNewUser(userObj) {
