@@ -16,7 +16,7 @@ export async function verifyUser(userObject) {
 
   setToken(user.token);
 
-  return redirect(`/user/${user._id}`);
+  return user
 }
 
 export async function createNewUser(userObj) {
@@ -125,4 +125,22 @@ export async function getVehicle(vin){
     return vehicle.message
   }
   return vehicle
+}
+
+export async function verifyToken() {
+  if(!getToken()) return false
+
+  const res = await fetch("/verify-token",{
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${getToken()}`
+    }
+  })
+
+  if(!res.ok){
+    clearToken()
+    return false
+  }
+
+  return true
 }
