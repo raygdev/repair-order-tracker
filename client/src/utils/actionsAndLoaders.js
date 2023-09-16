@@ -89,7 +89,8 @@ export async function createROAction({ request, params }) {
     }
   }
 
-export async function editRepairOrderAction({request,params}){
+export async function editRepairOrderAction({request}){
+    const from = new URL(request.url).pathname
     const formData = await request.formData()
     const ro = Object.fromEntries(formData)
     const updatedRO = {
@@ -102,7 +103,17 @@ export async function editRepairOrderAction({request,params}){
       return inputs
     }
 
-        return await editRO(updatedRO)
+    try {
+      let edited = await editRO(updatedRO)
+      if(edited) return  redirect(
+        `/user/${updatedRO.userId}/repairorder/${updatedRO.id}?vin=${updatedRO.vin}`
+      )
+      return redirect(`/login?message=You must log in first!&from=${from}`)
+    }
+    catch(e) {
+      throw e
+    }
+
 }
 
 export async function userLoader({params}){

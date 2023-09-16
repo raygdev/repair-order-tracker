@@ -67,26 +67,19 @@ export async function createRO(ro) {
   return true
 }
 
-export async function editRO(updatedRO, userId) {
+export async function editRO(updatedRO) {
   const res = await fetch(`/repairorder/${updatedRO.id}`, {
     method: "put",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${getToken()}`,
-    },
-    body: JSON.stringify(updatedRO),
-  });
+    headers: authHeaders(),
+    body: JSON.stringify(updatedRO)
+  })
+  const data = await res.json()
 
   if (!res.ok) {
-    if(res.status === 401){
-      clearToken()
-      return
-    } else {
-      throw res;
-    }
+    return handleNotOK(res, data)
   }
 
-  return redirect(`/user/${updatedRO.userId}/repairorder/${updatedRO.id}?vin=${updatedRO.vin}`);
+  return true
 }
 
 export async function getUser(userId) {
