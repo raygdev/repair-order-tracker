@@ -1,5 +1,6 @@
 
 import { redirect } from 'react-router-dom';
+import { requireAuth } from "./requireAuth"
 import {
     createNewUser,
     verifyUser,
@@ -25,13 +26,23 @@ export async function registerAction({ request }) {
   }
 
   export async function loginAction({ request }) {
+    const from = new URL(request.url).searchParams.get("from")
     const formData = await request.formData();
     const userObj = Object.fromEntries(formData);
     let inputs = loginFormValidator.validate(userObj)
     if(!inputs.isValid){
       return inputs
     }
-    return await verifyUser(userObj).catch((e) => e.message);
+
+    try {
+     const user = await verifyUser(userObj);
+     const redirectTo = from || `/user/${user._id}`
+     return redirect(redirectTo);
+    }
+    catch(e) {
+      console.log(e)
+      return e.message
+    }
   }
 
   export async function deleteRepairOrderAction({params}){
