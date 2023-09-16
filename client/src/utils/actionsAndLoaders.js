@@ -80,8 +80,13 @@ export async function createROAction({ request, params }) {
     if(!inputs.isValid){
       return inputs
     }
-  
-    return await createRO(ro, params.userId);
+    try {
+      const wasVehicleCreated = createRO(ro)
+      if(wasVehicleCreated) return redirect(`/user/${ro.userId}`);
+    }
+    catch(e) {
+      throw e
+    }
   }
 
 export async function editRepairOrderAction({request,params}){
