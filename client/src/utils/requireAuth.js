@@ -3,7 +3,6 @@ import { verifyToken } from "./crud";
 
 export async function requireAuth(req) {
     const url = new URL(req.url)
-    console.log(`require auth fired from ${url.pathname}`)
     const location = url.pathname + url.search || ""
     const verified = await verifyToken()
     if(!verified) {
