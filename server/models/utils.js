@@ -22,7 +22,7 @@ function transformVehicleData(data){
         if(name === "Model Year"){
             accu["Year"] = val.Value
         } else if(name === "Displacement (L)"){
-            accu["EngineSize"] = `${val.Value}L`
+            accu["EngineSize"] = `${parseFloat(val.Value).toFixed(1)}L`
         } else {
             accu[name] = val.Value
         }
