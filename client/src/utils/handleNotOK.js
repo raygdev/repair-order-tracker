@@ -14,7 +14,7 @@ export function handleNotOK(res,data) {
       } else {
         throw {
           status: res.status,
-          text: res.statusText,
+          statusText: res.statusText,
           message: data.message
         }
       }
