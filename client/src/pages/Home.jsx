@@ -31,7 +31,7 @@ export default function Home() {
            {highlightsData.map(highlights => {
                 const  {id, icon, highlight} = highlights
                 return (
-                    <div key={id} className='border rounded p-4 flex flex-col justify-evenly shadow-md shadow-slate-500 '>
+                    <div key={id} className='rounded p-4 flex flex-col justify-evenly gap-8 shadow-slate-300 shadow '>
                         < FontAwesomeIcon className='text-4xl text-violet-500' icon={icon}/>
                         <p>{highlight}</p>
                     </div>
