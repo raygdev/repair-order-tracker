@@ -10,7 +10,7 @@ const Form = loadable(() => import('react-router-dom').then(module => ({default:
 
 export default function CreateRepairOrder() {
   const inputs = useActionData()
-  const data = useRouteLoaderData('root')
+  const user = useRouteLoaderData('root')
   return (
     <div className="flex min-h-screen">
       <Form
@@ -19,7 +19,7 @@ export default function CreateRepairOrder() {
       >
         {inputs && !inputs.isValid && <span className="text-red-600">Please check the highlighted fields</span>}
         <div>
-          <input type="hidden" name="userId" value={data._id} />
+          <input type="hidden" name="userId" value={user._id} />
           <label htmlFor="ro_number" className="text-white font-medium">
             RO Number*
           </label>
