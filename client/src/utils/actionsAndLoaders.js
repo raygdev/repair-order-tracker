@@ -81,7 +81,7 @@ export async function createROAction({ request, params }) {
       return inputs
     }
     try {
-      const wasVehicleCreated = createRO(ro)
+      const wasVehicleCreated = await createRO(ro)
       if(wasVehicleCreated) return redirect(`/user/${ro.userId}`);
     }
     catch(e) {
