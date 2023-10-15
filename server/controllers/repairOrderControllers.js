@@ -80,13 +80,27 @@ function deletRepairOrderById(req,res,next){
 
 function updateOneRepairOrderById(req, res, next){
     const roId = req.params.roId
+    const vin = req.body.vin
     repairOrderModel.updateOneRepairOrder(roId, req.body, (err,ro)=> {
 
-        if(err) return res.status(404).json({message:'Something went wrong updating the RO'})
-
-        if(!ro) return res.status(404).json({message:'Could not find that RO'})
-
-        return res.json({message:'success', ro})
+        vehicleModel.getVehicle(vin, (vehicleError, vehicle) => {
+            if(vehicleError) console.log(vehicleError)
+            if(!vehicle) {
+                console.log(vehicle)
+                vehicleModel.createVehicle(vin, (createError) =>{
+                    if(createError) console.log(createError)
+                        if(err) return res.status(404).json({message:'Something went wrong updating the RO'})
+                        if(!ro) return res.status(404).json({message:'Could not find that RO'})
+                        return res.json({message:'success', ro})
+                    
+                })
+            } else {
+                if(err) return res.status(404).json({message:'Something went wrong updating the RO'})
+                if(!ro) return res.status(404).json({message:'Could not find that RO'})
+                return res.json({message:'success', ro})
+            }
+        })
+        
     })
 }
 
