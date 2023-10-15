@@ -28,7 +28,7 @@ function createRepairOrder(req,res,next){
                     //create a new vehicle
                     vehicleModel.createVehicle(userObj.vin,(newVehicleError, newVehicle) => {
                         //if there's an error creating the vehicle... respond with the error
-                        if(newVehicleError) return res.status(409).json({message: newVehicleError})
+                        if(newVehicleError) console.log(newVehicleError) /*res.status(409).json({message: newVehicleError})*/
                         //else finally save the repair order
                         repairOrder.save((repairOrderSaveError) => {
                             //if there is an error saving... response with an error message
