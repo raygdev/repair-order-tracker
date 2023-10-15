@@ -19,6 +19,7 @@ export default function CreateRepairOrder() {
       >
         {inputs && !inputs.isValid && <span className="text-red-600">Please check the highlighted fields</span>}
         <div>
+          <input type="hidden" name="userId" value={data._id} />
           <label htmlFor="ro_number" className="text-white font-medium">
             RO Number*
           </label>
