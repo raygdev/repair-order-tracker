@@ -1,5 +1,5 @@
 import React from "react";
-import { useActionData } from "react-router-dom";
+import { useActionData, useRouteLoaderData } from "react-router-dom";
 import { faExternalLink } from "@fortawesome/free-solid-svg-icons";
 import loadable from "@loadable/component";
 const FontAwesomeIcon = loadable(() => import('@fortawesome/react-fontawesome').then(module => ({default:module.FontAwesomeIcon})))
@@ -10,6 +10,7 @@ const Form = loadable(() => import('react-router-dom').then(module => ({default:
 
 export default function CreateRepairOrder() {
   const inputs = useActionData()
+  const data = useRouteLoaderData('root')
   return (
     <div className="flex min-h-screen">
       <Form
