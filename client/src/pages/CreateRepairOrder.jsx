@@ -15,7 +15,6 @@ export default function CreateRepairOrder() {
     <div className="flex min-h-screen">
       <Form
         className="p-4 bg-sky-500 flex flex-col sm:h-5/6 min-h-[450px] sm:w-2/4 w-4/6 md:w-1/3 justify-between m-auto rounded shadow-lg shadow-slate-500"
-        action="../create-repair-order"
         method="POST"
       >
         {inputs && !inputs.isValid && <span className="text-red-600">Please check the highlighted fields</span>}
