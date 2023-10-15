@@ -1,5 +1,5 @@
 import React from "react";
-import { useActionData } from "react-router-dom";
+import { useActionData, useRouteLoaderData } from "react-router-dom";
 import { faExternalLink } from "@fortawesome/free-solid-svg-icons";
 import loadable from "@loadable/component";
 const FontAwesomeIcon = loadable(() => import('@fortawesome/react-fontawesome').then(module => ({default:module.FontAwesomeIcon})))
@@ -10,15 +10,16 @@ const Form = loadable(() => import('react-router-dom').then(module => ({default:
 
 export default function CreateRepairOrder() {
   const inputs = useActionData()
+  const user = useRouteLoaderData('root')
   return (
     <div className="flex min-h-screen">
       <Form
         className="p-4 bg-sky-500 flex flex-col sm:h-5/6 min-h-[450px] sm:w-2/4 w-4/6 md:w-1/3 justify-between m-auto rounded shadow-lg shadow-slate-500"
-        action="../create-repair-order"
         method="POST"
       >
         {inputs && !inputs.isValid && <span className="text-red-600">Please check the highlighted fields</span>}
         <div>
+          <input type="hidden" name="userId" value={user._id} />
           <label htmlFor="ro_number" className="text-white font-medium">
             RO Number*
           </label>
