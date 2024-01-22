@@ -13,7 +13,7 @@ src/test-utils.jsx
 
 
 # production
-/build
+/dist
 
 # misc
 .DS_Store

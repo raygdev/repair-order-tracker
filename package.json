@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "install": "cd client && npm install && cd ../server && npm install ",
-    "start:client": "cd client && npm start",
+    "start:client": "cd client && npm run dev",
     "start:server": "cd server && npm run dev",
     "dev": "concurrently --names \"CLIENT,SERVER\" -c \"bgBlue.bold,bgMagenta.bold\" \"npm:start:client\" \"npm:start:server\""
   },
