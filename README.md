@@ -2,23 +2,34 @@
 
 ## A CRA Application
 
-to run the application open two terminals
-in the first terminal run 
-```console
+Install the packages from the root directory
+```bash
+npm install
+```
+to run the server and client separately, open two terminals and run:
+
+```bash
 cd server && npm run dev
 ```
 This will start the server instance.
 
 In the second terminal run
-```console
+```bash
 cd client && npm start
 ```
-this will start the client application
+this will start the client application.
+
+If you would like to start them both at the same time, then from the root directory run:
+
+```bash
+npm run dev
+```
+This will start both the client and server in a single terminal.
 
 ## Environment
 
 Environment variables are as follows
-```
+```shell
 PORT=<port-to-listen-on>
 MONGO_URI=<Your-mongodb-uri>
 JWT_SECRET=<super-secret-hash>
