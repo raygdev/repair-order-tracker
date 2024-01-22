@@ -15,7 +15,7 @@ This will start the server instance.
 
 In the second terminal run
 ```bash
-cd client && npm start
+cd client && npm run dev
 ```
 this will start the client application.
 
