@@ -102,6 +102,20 @@ exports.deleteOneRepairOrderById = function (repairOrderId, done) {
   });
 };
 
+//TODO: Change name once verified functional
+
+exports.deleteRepairById = async function (repairOrderId) {
+  try {
+    const deletedRepairOrder =  await RepairOrders.findByIdAndDelete(repairOrderId).exec()
+    if(!deletedRepairOrder) {
+      return null
+    }
+    return deletedRepairOrder
+  } catch (e) {
+    throw e
+  }
+}
+
 /**
  * 
  * @param {string} tech_id is the technicians user id from the user's doc
