@@ -48,6 +48,20 @@ exports.findUserRepairOrders = function (userId, done) {
   });
 };
 
+//TODO: Change name once verified functional
+
+exports.userRepairOrders = async function (userId) {
+  try {
+    const repairOrders = await RepairOrders.find({ userId }).exec()
+    if(!repairOrders) {
+      return null
+    }
+    return repairOrders
+  } catch(e) {
+    throw e
+  }
+}
+
 /**
  * 
  * @param {Object} repairOrderObject an object passed to create the repair order
