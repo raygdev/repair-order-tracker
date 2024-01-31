@@ -143,3 +143,19 @@ exports.updateOneRepairOrder = function(ro_id, updateObj, done){
     return done(null, ro)
   })
 }
+
+//TODO: Change name once verified functional
+
+exports.updateRepairOrder = async function (repairOrderId, repairToUpdate) {
+
+  try {
+    const repairOrder =  await RepairOrders.findByIdAndUpdate(repairOrderId, repairToUpdate).exec()
+    if(!repairOrder) {
+      return null
+    }
+    return repairOrder
+  } catch (e) {
+    throw e
+  }
+
+}
