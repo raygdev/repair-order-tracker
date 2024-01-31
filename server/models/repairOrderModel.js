@@ -73,6 +73,17 @@ exports.createRepairOrder = function (repairOrderObject, done) {
   return done(repairOrders);
 };
 
+//TODO: Change name once verified functional
+exports.create = async function (repairOrderObject) {
+  try {
+    const repairOrder = new RepairOrders(repairOrderObject)
+    await repairOrder.save()
+    return repairOrder
+  } catch (e) {
+    throw e
+  }
+}
+
 /**
  * 
  * @param {string} repairOrderId the repair order id to be deleted
