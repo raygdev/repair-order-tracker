@@ -52,6 +52,20 @@ exports.createVehicle = (vin, done) => {
     })
 }
 
+exports.getAndCreateVehicleInfo = async function (vin) {
+    try {
+        const vehicleInfo = await getVehicleInfo(vin)
+        if(vehicleInfo === 'string') {
+            return null
+        }
+        const insertedVehicle = new Vehicles(vehicleInfo)
+        await insertedVehicle.save()
+        return insertedVehicle
+    } catch (e) {
+        throw e
+    }
+}
+
 exports.getVehicle = (vin, done) => {
     Vehicles.findOne({VIN: vin}, (err, vehicle) => {
         if(err) return done(err)
