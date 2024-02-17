@@ -93,6 +93,18 @@ exports.findUserByEmail = function (emailObj, done) {
       });
 };
 
+exports.findByEmail = async function (emailObj) {
+  try {
+    const foundUser = User.findOne(emailObj).populate('repairOrders').exec()
+    if(!foundUser) {
+      return null
+    }
+    return foundUser
+  } catch (e) {
+    throw e
+  }
+}
+
 
 /**
  * 
