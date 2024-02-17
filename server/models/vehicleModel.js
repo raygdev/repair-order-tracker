@@ -28,6 +28,17 @@ async function getVehicleData(vin, callback){
     }
 }
 
+async function getVehicleInfo (vin) {
+    try {
+        let res = await axios.get(`https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVin/${vin}?format=json`)
+        let vehicleInfo = transformVehicleData(res.data.Results)
+        return vehicleInfo
+    } catch (e) {
+        console.log('error from [getVehicleInfo]',e)
+        throw e
+    }
+}
+
 exports.createVehicle = (vin, done) => {
     getVehicleData(vin, (err, vehicleInfo) => {
         if(err) return done(err)
