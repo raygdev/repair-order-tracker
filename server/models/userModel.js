@@ -162,4 +162,15 @@ exports.findUserAndPushRepairOrder = function(userId,roId,done){
   })
 }
 
+exports.findAndPushRepairOrder = async function (userId,repairId) {
+  try{
+    const user = await User.findOne({_id: userId}).exec()
+    user.repairOrders.push(repairId)
+    await user.save()
+    return user
+  } catch (e) {
+    throw e
+  }
+}
+
 exports.User = User;
