@@ -73,3 +73,16 @@ exports.getVehicle = (vin, done) => {
         return done(null, vehicle)
     })
 }
+
+exports.findVehicleByVin = async function (vin) {
+    try {
+        const foundVehicle = Vehicles.findOne({ VIN: vin }).exec()
+        if(!foundVehicle) {
+            return null
+        }
+        return foundVehicle
+    } catch (e) {
+        console.log(e)
+        throw e
+    }
+}
