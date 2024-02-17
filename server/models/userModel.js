@@ -126,6 +126,18 @@ exports.findUserById = function (userId,done){
       })
 }
 
+exports.findById = function (userId) {
+  try {
+    const user = User.findById(userId).populate('repairOrders').select('-password').exec()
+    if(!user) {
+      return null
+    }
+    return user
+  } catch (e) {
+    throw e
+  }
+}
+
 /**
  * 
  * @param {string} userId the user's id
