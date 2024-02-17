@@ -121,7 +121,6 @@ exports.deleteRepairById = async function (repairOrderId) {
  * @param {string} tech_id is the technicians user id from the user's doc
  * @param {callback} done return the error or the count of all the docs deleted
  */
-// add a comment
 exports.deleteAllRepairOrders = function(tech_id,done){
 
   RepairOrders.deleteMany({tech_id:tech_id}, (err,doc) => {
