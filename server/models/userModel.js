@@ -59,6 +59,20 @@ exports.createAndSaveUser = function (userObj, done) {
   });
 };
 
+exports.createUser = async function (newUser) {
+  try {
+    const userToCreate = {
+      ...newUser,
+      password: bcrypt.hashSync(newUser.password, 10)
+    }
+    const user = new User(userToCreate)
+    await user.save()
+    return user
+  } catch (e) {
+    throw e
+  }
+}
+
 /**
  * 
  * @param {Object} emailObj object containing the users email
