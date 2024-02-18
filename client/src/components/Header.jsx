@@ -1,11 +1,14 @@
 import React from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import Logout from "./Logout";
+import { useAuth } from "../hooks/useAuth";
 
 export default function Header(props) {
   const { userId } = useParams();
   const location = useLocation();
-  let toggleLogin = !localStorage.getItem("token") ? (
+  const auth = useAuth()
+
+  let toggleLogin = !auth ? (
     <Link
       to="login"
       className={`p-4 ${
@@ -17,7 +20,7 @@ export default function Header(props) {
   ) : (
     <Logout />
   );
-  let toggleHome = localStorage.getItem("token") ? `user/${userId}` : "/";
+  let toggleHome = auth ? `user/${userId}` : "/";
 
   return (
     <header className="p-4 bg-sky-700 flex sticky top-0 min-w-max text-white font-semibold">
