@@ -20,6 +20,15 @@ function App() {
     setLoading(false)
   },[])
 
+  if(loading) {
+    return(
+      <div>
+        <Header />
+        ...loading
+      </div>
+    )
+  }
+
   return (
     <div className='app font-mono w-full'>
       <Header />
