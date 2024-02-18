@@ -6,6 +6,10 @@ import { useAuth } from "../hooks/useAuth";
 export default function Header(props) {
   const auth = useAuth()
 
+  function activeLink({ isActive }) {
+    return isActive ? 'p-4 underline underline-offset-4' : 'p-4'
+  }
+
   let toggleLogin = !auth ? (
     <Link
       to="login"
