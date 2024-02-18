@@ -11,12 +11,12 @@ export default function Header(props) {
   }
 
   let toggleLogin = !auth ? (
-    <Link
+    <NavLink
       to="login"
       className={activeLink}
     >
       Login
-    </Link>
+    </NavLink>
   ) : (
     <Logout />
   );
@@ -25,27 +25,27 @@ export default function Header(props) {
   return (
     <header className="p-4 bg-sky-700 flex sticky top-0 min-w-max text-white font-semibold">
       <nav className="flex basis-full justify-around">
-        <Link
+        <NavLink
           to={toggleHome}
           className={activeLink}
         >
           Home
-        </Link>
+        </NavLink>
         {toggleLogin}
-        {!localStorage.getItem("token") && (
-          <Link
+        {!auth && (
+          <NavLink
             to="register"
             className={activeLink}
           >
             Register
-          </Link>
+          </NavLink>
         )}
-        <Link
+        <NavLink
           to="about"
           className={activeLink}
         >
           About
-        </Link>
+        </NavLink>
       </nav>
     </header>
   );
