@@ -10,6 +10,16 @@ function App() {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(true)
 
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    let decoded;
+  if(token) {
+    decoded = jwtDecode(token)
+    navigate(`user/${decoded.id}`)
+  }
+    setLoading(false)
+  },[])
+
   return (
     <div className='app font-mono w-full'>
       <Header />
