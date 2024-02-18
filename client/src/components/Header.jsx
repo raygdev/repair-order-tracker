@@ -4,8 +4,6 @@ import Logout from "./Logout";
 import { useAuth } from "../hooks/useAuth";
 
 export default function Header(props) {
-  const { userId } = useParams();
-  const location = useLocation();
   const auth = useAuth()
 
   let toggleLogin = !auth ? (
@@ -20,7 +18,7 @@ export default function Header(props) {
   ) : (
     <Logout />
   );
-  let toggleHome = auth ? `user/${userId}` : "/";
+  let toggleHome = auth ? `user/${auth.id}` : "/";
 
   return (
     <header className="p-4 bg-sky-700 flex sticky top-0 min-w-max text-white font-semibold">
