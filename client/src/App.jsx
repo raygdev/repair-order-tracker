@@ -15,7 +15,7 @@ function App() {
     let decoded;
   if(token) {
     decoded = jwtDecode(token)
-    navigate(`user/${decoded.id}`)
+    navigate(`user/${decoded.id}`, { replace: true })
   }
     setLoading(false)
   },[])
