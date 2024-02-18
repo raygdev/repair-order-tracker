@@ -7,6 +7,8 @@ const Header = loadable(() => import('./components/Header'))
 const Outlet = loadable(() => import('react-router-dom').then(module => ({default : module.Outlet})))
 
 function App() {
+  const navigate = useNavigate()
+  const [loading, setLoading] = useState(true)
 
   return (
     <div className='app font-mono w-full'>
