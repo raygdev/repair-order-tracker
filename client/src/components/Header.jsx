@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Logout from "./Logout";
 import { useAuth } from "../hooks/useAuth";
 
@@ -13,9 +13,7 @@ export default function Header(props) {
   let toggleLogin = !auth ? (
     <Link
       to="login"
-      className={`p-4 ${
-        location.pathname === "/login" ? "underline underline-offset-4" : ""
-      }`}
+      className={activeLink}
     >
       Login
     </Link>
@@ -29,9 +27,7 @@ export default function Header(props) {
       <nav className="flex basis-full justify-around">
         <Link
           to={toggleHome}
-          className={`p-4 ${
-            location.pathname === "/" ? "underline underline-offset-4" : ""
-          }`}
+          className={activeLink}
         >
           Home
         </Link>
@@ -39,20 +35,14 @@ export default function Header(props) {
         {!localStorage.getItem("token") && (
           <Link
             to="register"
-            className={`p-4 ${
-              location.pathname === "/register"
-                ? "underline underline-offset-4"
-                : ""
-            }`}
+            className={activeLink}
           >
             Register
           </Link>
         )}
         <Link
           to="about"
-          className={`p-4 ${
-            location.pathname === "/about" ? "underline underline-offset-4" : ""
-          }`}
+          className={activeLink}
         >
           About
         </Link>
