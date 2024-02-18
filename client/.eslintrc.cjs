@@ -16,5 +16,8 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    'react/prop-types': [1, { skipUndeclared: true}],
+    'no-unused-vars': ['error', { args: 'none', varsIgnorePattern: '[rR]eact'}],
+    'react/no-unescaped-entities': ['error', { forbid: ['>', '"', '}']}]
   },
 }
