@@ -9,7 +9,7 @@ const userRoutes = require('./routes/user.js')
 const repairOrderRoutes = require('./routes/repairOrderRoutes')
 const vehicleRoutes = require("./routes/vehicle.js")
 const verify = require("./routes/verify.js")
-const origin = NODE_ENV === 'production' ? 'https://repair-order-tracker.vercel.app' : 'http://localhost:5173'
+const origin = process.env.NODE_ENV === 'production' ? 'https://repair-order-tracker.vercel.app' : 'http://localhost:5173'
 
 module.exports = {
     initApp(app, express){
