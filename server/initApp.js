@@ -9,11 +9,12 @@ const userRoutes = require('./routes/user.js')
 const repairOrderRoutes = require('./routes/repairOrderRoutes')
 const vehicleRoutes = require("./routes/vehicle.js")
 const verify = require("./routes/verify.js")
+const origin = NODE_ENV === 'production' ? 'https://repair-order-tracker.vercel.app' : 'http://localhost:5173'
 
 module.exports = {
     initApp(app, express){
         app.use(express.static(path.join(__dirname, 'build',)))
-        app.use(cors())
+        app.use(cors({ origin }))
         app.use(helmet())
         app.use(express.urlencoded({extended:false}))
         app.use(express.json())
