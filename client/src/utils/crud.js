@@ -1,5 +1,6 @@
 import { getToken, setToken, clearToken } from "./token"
 import { handleNotOK } from "./handleNotOK"
+import { url } from './url'
 
 function authHeaders() {
   return {
@@ -9,7 +10,7 @@ function authHeaders() {
 }
 
 export async function verifyUser(userObject) {
-  const res = await fetch("/api/login", {
+  const res = await fetch(`${url}/api/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(userObject)
@@ -26,7 +27,7 @@ export async function verifyUser(userObject) {
 }
 
 export async function createNewUser(userObj) {
-  const res = await fetch("/api/register/user", {
+  const res = await fetch(`${url}/api/register/user`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -41,7 +42,7 @@ export async function createNewUser(userObj) {
 }
 
 export async function deleteRepairOrder(id) {
-  const res = await fetch(`/repairorder/${id}`, {
+  const res = await fetch(`${url}/repairorder/${id}`, {
     method: "delete",
     headers: authHeaders()
   })
@@ -53,7 +54,7 @@ export async function deleteRepairOrder(id) {
 }
 
 export async function createRO(ro) {
-  const res = await fetch("/repairorder", {
+  const res = await fetch(`${url}/repairorder`, {
     method: "POST",
     headers: authHeaders(),
     body: JSON.stringify(ro)
@@ -67,7 +68,7 @@ export async function createRO(ro) {
 }
 
 export async function editRO(updatedRO) {
-  const res = await fetch(`/repairorder/${updatedRO.id}`, {
+  const res = await fetch(`${url}/repairorder/${updatedRO.id}`, {
     method: "put",
     headers: authHeaders(),
     body: JSON.stringify(updatedRO)
@@ -82,7 +83,7 @@ export async function editRO(updatedRO) {
 }
 
 export async function getUser(userId) {
-  const res = await fetch(`/api/user/${userId}`, {
+  const res = await fetch(`${url}/api/user/${userId}`, {
     headers: authHeaders()
   })
   const user = await res.json()
@@ -94,7 +95,7 @@ export async function getUser(userId) {
 }
 
 export async function getVehicle(vin) {
-  let res = await fetch(`/api/vehicle/${vin}`)
+  let res = await fetch(`${url}/api/vehicle/${vin}`)
   let vehicle = await res.json()
   if (!res.ok) {
     return vehicle.message
@@ -105,7 +106,7 @@ export async function getVehicle(vin) {
 export async function verifyToken() {
   if (!getToken()) return false
 
-  const res = await fetch("/verify-token", {
+  const res = await fetch(`${url}/verify-token`, {
     method: "POST",
     headers: authHeaders()
   })
