@@ -40,12 +40,13 @@ export default function Header(props) {
             Register
           </NavLink>
         )}
-        <NavLink
+        {!auth && (<NavLink
           to="about"
           className={activeLink}
         >
           About
         </NavLink>
+        )}
       </nav>
     </header>
   );
