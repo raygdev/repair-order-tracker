@@ -59,6 +59,20 @@ exports.createAndSaveUser = function (userObj, done) {
   });
 };
 
+exports.createUser = async function (newUser) {
+  try {
+    const userToCreate = {
+      ...newUser,
+      password: bcrypt.hashSync(newUser.password, 10)
+    }
+    const user = new User(userToCreate)
+    await user.save()
+    return user
+  } catch (e) {
+    throw e
+  }
+}
+
 /**
  * 
  * @param {Object} emailObj object containing the users email
@@ -79,6 +93,18 @@ exports.findUserByEmail = function (emailObj, done) {
       });
 };
 
+exports.findByEmail = async function (emailObj) {
+  try {
+    const foundUser = User.findOne(emailObj).populate('repairOrders').exec()
+    if(!foundUser) {
+      return null
+    }
+    return foundUser
+  } catch (e) {
+    throw e
+  }
+}
+
 
 /**
  * 
@@ -98,6 +124,18 @@ exports.findUserById = function (userId,done){
 
           return done(null, user)
       })
+}
+
+exports.findById = function (userId) {
+  try {
+    const user = User.findById(userId).populate('repairOrders').select('-password').exec()
+    if(!user) {
+      return null
+    }
+    return user
+  } catch (e) {
+    throw e
+  }
 }
 
 /**
@@ -122,6 +160,17 @@ exports.findUserAndPushRepairOrder = function(userId,roId,done){
 
     })
   })
+}
+
+exports.findAndPushRepairOrder = async function (userId,repairId) {
+  try{
+    const user = await User.findOne({_id: userId}).exec()
+    user.repairOrders.push(repairId)
+    await user.save()
+    return user
+  } catch (e) {
+    throw e
+  }
 }
 
 exports.User = User;

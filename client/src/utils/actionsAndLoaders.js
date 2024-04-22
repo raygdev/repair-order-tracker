@@ -1,4 +1,4 @@
-
+/* eslint-disable no-useless-catch */
 import { redirect } from 'react-router-dom';
 import { requireAuth } from "./requireAuth"
 import {

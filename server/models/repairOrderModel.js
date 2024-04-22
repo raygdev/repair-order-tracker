@@ -48,6 +48,20 @@ exports.findUserRepairOrders = function (userId, done) {
   });
 };
 
+//TODO: Change name once verified functional
+
+exports.userRepairOrders = async function (userId) {
+  try {
+    const repairOrders = await RepairOrders.find({ userId }).exec()
+    if(!repairOrders) {
+      return null
+    }
+    return repairOrders
+  } catch(e) {
+    throw e
+  }
+}
+
 /**
  * 
  * @param {Object} repairOrderObject an object passed to create the repair order
@@ -58,6 +72,17 @@ exports.createRepairOrder = function (repairOrderObject, done) {
   const repairOrders = new RepairOrders(repairOrderObject);
   return done(repairOrders);
 };
+
+//TODO: Change name once verified functional
+exports.create = async function (repairOrderObject) {
+  try {
+    const repairOrder = new RepairOrders(repairOrderObject)
+    await repairOrder.save()
+    return repairOrder
+  } catch (e) {
+    throw e
+  }
+}
 
 /**
  * 
@@ -77,12 +102,25 @@ exports.deleteOneRepairOrderById = function (repairOrderId, done) {
   });
 };
 
+//TODO: Change name once verified functional
+
+exports.deleteRepairById = async function (repairOrderId) {
+  try {
+    const deletedRepairOrder =  await RepairOrders.findByIdAndDelete(repairOrderId).exec()
+    if(!deletedRepairOrder) {
+      return null
+    }
+    return deletedRepairOrder
+  } catch (e) {
+    throw e
+  }
+}
+
 /**
  * 
  * @param {string} tech_id is the technicians user id from the user's doc
  * @param {callback} done return the error or the count of all the docs deleted
  */
-
 exports.deleteAllRepairOrders = function(tech_id,done){
 
   RepairOrders.deleteMany({tech_id:tech_id}, (err,doc) => {
@@ -104,3 +142,20 @@ exports.updateOneRepairOrder = function(ro_id, updateObj, done){
     return done(null, ro)
   })
 }
+
+//TODO: Change name once verified functional
+
+exports.updateRepairOrder = async function (repairOrderId, repairToUpdate) {
+
+  try {
+    const repairOrder =  await RepairOrders.findByIdAndUpdate(repairOrderId, repairToUpdate).exec()
+    if(!repairOrder) {
+      return null
+    }
+    return repairOrder
+  } catch (e) {
+    throw e
+  }
+
+}
+// "Weeks of programming can save you hours of planning. - Unknown"

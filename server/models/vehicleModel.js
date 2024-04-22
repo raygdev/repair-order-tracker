@@ -28,6 +28,17 @@ async function getVehicleData(vin, callback){
     }
 }
 
+async function getVehicleInfo (vin) {
+    try {
+        let res = await axios.get(`https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVin/${vin}?format=json`)
+        let vehicleInfo = transformVehicleData(res.data.Results)
+        return vehicleInfo
+    } catch (e) {
+        console.log('error from [getVehicleInfo]',e)
+        throw e
+    }
+}
+
 exports.createVehicle = (vin, done) => {
     getVehicleData(vin, (err, vehicleInfo) => {
         if(err) return done(err)
@@ -41,10 +52,37 @@ exports.createVehicle = (vin, done) => {
     })
 }
 
+exports.getAndCreateVehicleInfo = async function (vin) {
+    try {
+        const vehicleInfo = await getVehicleInfo(vin)
+        if(vehicleInfo === 'string') {
+            return null
+        }
+        const insertedVehicle = new Vehicles(vehicleInfo)
+        await insertedVehicle.save()
+        return insertedVehicle
+    } catch (e) {
+        throw e
+    }
+}
+
 exports.getVehicle = (vin, done) => {
     Vehicles.findOne({VIN: vin}, (err, vehicle) => {
         if(err) return done(err)
         if(!vehicle) return done(null, false)
         return done(null, vehicle)
     })
+}
+
+exports.findVehicleByVin = async function (vin) {
+    try {
+        const foundVehicle = Vehicles.findOne({ VIN: vin }).exec()
+        if(!foundVehicle) {
+            return null
+        }
+        return foundVehicle
+    } catch (e) {
+        console.log(e)
+        throw e
+    }
 }
