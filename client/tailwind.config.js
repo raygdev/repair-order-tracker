@@ -27,6 +27,9 @@ module.exports = {
           form: '0 4px 16px -2px rgba(0,0,0,0.1)'
         }
       },
+      backgroundImage: {
+        'vehicle-mobile': "url('/src/assets/vehicle-mobile.png')"
+      }
     },
     screens:{
       'xs':'500px',
