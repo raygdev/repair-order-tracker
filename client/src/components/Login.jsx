@@ -11,7 +11,7 @@ export default function Login(){
   const error = useActionData();
   return (
     <main className="h-screen bg-gradient-to-tl from-blue-300 to-violet-200 flex flex-col w-full justify-center items-center">
-      <div className="w-full px-4 xs:max-w-md min-w-max">
+      <div className="w-full px-4 xs:max-w-md md:min-w-max">
         <h3 className={`text-red-600 text-center text-2xl mb-4 ${!message ? "hidden": ""}`}>{message}</h3>
         <Form
           className="m-auto h-72 rounded bg-sky-200 flex flex-col px-8 py-6 justify-evenly shadow-lg shadow-slate-500"
