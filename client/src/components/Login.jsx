@@ -23,8 +23,8 @@ export default function Login(){
         </h2>
           <label htmlFor="email">Email</label>
           <input
-            className={`p-1 rounded border-2 border-ro-slate-300 ${
-              error && error.email?.isInvalid && "border-2 border-red-600"
+            className={`p-1 rounded ${
+              error && error.email?.isInvalid ? "border-2 border-red-600" : "border-2 border-ro-slate-300"
             }`}
             type="text"
             name="email"
@@ -35,8 +35,8 @@ export default function Login(){
           )}
           <label htmlFor="password">Password</label>
           <input
-            className={`p-1 rounded border-2 border-ro-slate-300 ${
-              error && error.password?.isInvalid && "border-2 border-red-600"
+            className={`p-1 rounded ${
+              error && error.password?.isInvalid ? "border-2 border-red-600" : "border-2 border-ro-slate-300"
             }`}
             type="password"
             name="password"
