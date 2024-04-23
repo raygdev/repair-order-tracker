@@ -10,20 +10,20 @@ export default function Login(){
   const navigation = useNavigation();
   const error = useActionData();
   return (
-    <main className="h-screen bg-gradient-to-tl from-blue-300 to-violet-200 flex flex-col w-full justify-center items-center">
+    <main className="h-screen flex flex-col w-full justify-center items-center text-ro-slate-900">
       <div className="w-full px-4 xs:max-w-md md:min-w-max">
         <h3 className={`text-red-600 text-center text-2xl mb-4 ${!message ? "hidden": ""}`}>{message}</h3>
         <Form
-          className="m-auto h-72 rounded bg-sky-200 flex flex-col px-8 py-6 justify-evenly shadow-lg shadow-slate-500"
+          className="m-auto min-h-max rounded flex flex-col px-8 py-6 justify-evenly shadow-form"
           method="POST"
           replace
         >
-        <h2 className="text-4xl text-center text-transparent uppercase font-bold self-center mb-4 bg-clip-text bg-gradient-to-r from-sky-900 to-sky-500">
-          Please log in!
+        <h2 className="text-4xl text-center uppercase font-bold self-center mb-4">
+          Sign In
         </h2>
           <label htmlFor="email">Email</label>
           <input
-            className={`p-1 rounded ${
+            className={`p-1 rounded border-2 border-ro-slate-300 ${
               error && error.email?.isInvalid && "border-2 border-red-600"
             }`}
             type="text"
@@ -35,7 +35,7 @@ export default function Login(){
           )}
           <label htmlFor="password">Password</label>
           <input
-            className={`p-1 rounded ${
+            className={`p-1 rounded border-2 border-ro-slate-300 ${
               error && error.password?.isInvalid && "border-2 border-red-600"
             }`}
             type="password"
@@ -46,7 +46,7 @@ export default function Login(){
             <span className="text-red-600">{error.password.message}</span>
           )}
           <button
-            className="text-white min-h-max mt-5 disabled:bg-sky-500 bg-sky-700 self-center px-2 py-1 rounded  hover:bg-sky-900  active:bg-sky-300 active:text-slate-700 focus:outline-none focus:ring-4 focus:ring-sky-300"
+            className="text-ro-slate-100 min-h-max mt-5 disabled:bg-ro-link-disable bg-ro-link-primary self-center px-6 py-1 rounded  hover:bg-sky-900  active:bg-sky-300 active:text-slate-700 focus:outline-none focus:ring-4 focus:ring-sky-300"
             type="submit"
             disabled={navigation.state !== "idle"}
           >
@@ -59,4 +59,4 @@ export default function Login(){
       )}
     </main>
   );
-};
+}
