@@ -29,7 +29,8 @@ module.exports = {
             900:  '#060820'
           },
           'link-primary': '#110372',
-          'link-disable': '#3820E1'
+          'link-disable': '#3820E1',
+          'link-hover': '#3e3295'
         }
       },
       boxShadow: {
