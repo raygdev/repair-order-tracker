@@ -19,13 +19,23 @@ module.exports = {
         },
         status: {
           completed: '#5CB85C'
+        },
+        ro: {
+          slate: {
+            100: '#EEEFF2',
+            300: '#BBBCC3',
+            500: '#70717B',
+            700: '#373848',
+            900:  '#060820'
+          },
+          'link-primary': '#110372',
+          'link-disable': '#3820E1',
+          'link-hover': '#3e3295'
         }
       },
       boxShadow: {
-        repair:{
           card: '0 4px 16px -2px rgba(0,0,0,0.1)',
-          form: '0 4px 16px -2px rgba(0,0,0,0.1)'
-        }
+          form: '0 4px 16px -2px rgba(0,0,0,0.25)'
       },
       backgroundImage: {
         'vehicle-mobile': "url('/src/assets/vehicle-mobile.png')"

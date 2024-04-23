@@ -23,7 +23,7 @@ export default function Header(props) {
   let toggleHome = auth ? `user/${auth.id}` : "/";
 
   return (
-    <header className="p-4 bg-sky-700 flex sticky top-0 min-w-max text-white font-semibold">
+    <header className="p-4 bg-ro-slate-900 flex sticky top-0 min-w-max text-ro-slate-100 font-semibold">
       <nav className="flex basis-full justify-around">
         <NavLink
           to={toggleHome}
