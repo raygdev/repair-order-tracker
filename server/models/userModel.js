@@ -114,7 +114,13 @@ exports.findByEmail = async function (emailObj) {
 
 exports.findUserById = function (userId,done){
   User.findById(userId)
-      .populate('repairOrders')
+      .populate({
+        path: 'repairOrders',
+        populate: {
+          path: 'vehicle',
+          select: '-id -_id -__v'
+        }
+      })
       .select("-password")
       .exec( (err, user) => {
 
