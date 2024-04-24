@@ -144,7 +144,7 @@ exports.updateOneRepairOrder = function(ro_id, updateObj, done){
 
     if(err) return done(err)
 
-    if(!ro) return done(nll,false)
+    if(!ro) return done(null,false)
     
     return done(null, ro)
   })
