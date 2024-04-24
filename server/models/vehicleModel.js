@@ -8,9 +8,9 @@ const VehicleSchema = new mongoose.Schema({
     Year: { type: String, required: true },
     EngineSize: { type: String, required: true },
     VIN: { type: String, required: true, uppercase: true, unique: true }
-})
+}, {toJSON: { virtuals: true }, toObject: { virtuals: true}})
 
-const Vehicles = mongoose.model("vehicles",VehicleSchema)
+const Vehicles = mongoose.model("vehicles",VehicleSchema, 'vehicles')
 
 async function getVehicleData(vin, callback){
     try{
