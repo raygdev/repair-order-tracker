@@ -4,6 +4,7 @@ import loadable from "@loadable/component";
 const AddRepairButton = loadable(() => import('./AddRepairButton'))
 const CreateFirstRepair = loadable(() => import('./CreateFirstRepair'))
 const RepairOrderListItems = loadable(() => import('./RepairOrderListItems'))
+const RepairOrderCard = loadable(() => import('./RepairOrderCard'))
 
 export default function RepairOrders({ repairOrders, userId }) {
 
@@ -13,23 +14,18 @@ export default function RepairOrders({ repairOrders, userId }) {
       .sort((a, b) => a._id < b._id ? 1 : -1 )
       .map((ro) => {
         return (
-          <RepairOrderListItems
-            key={ro._id}
-            id={ro._id}
-            ro_number={ro.ro_number}
-            vin={ro.vin}
-          />
+          <RepairOrderCard key={ro.id} repairOrder={ro} />
         );
       });
 
   return (
-    <div className="bg-sky-700 h-screen text-white text-xl flex flex-col align-center mt-6 p-6 m-auto w-full rounded-lg md:w-2/4 xs:w-3/4">
+    <div className="h-screen text-ro-slate-900 text-xl flex flex-col align-center mt-6 p-6 m-auto w-full rounded-lg container">
       <h2 className="font-bold self-center">
         Repair Orders
       </h2>
       {sortedOrders.length && <AddRepairButton />}
       {sortedOrders.length ? (
-        <ul className="text-lg">
+        <ul className=" mx-auto grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {sortedOrders}
         </ul>
       ) : (
