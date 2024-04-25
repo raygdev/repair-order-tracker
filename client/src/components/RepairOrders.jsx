@@ -19,13 +19,13 @@ export default function RepairOrders({ repairOrders, userId }) {
       });
 
   return (
-    <div className="h-screen text-ro-slate-900 text-xl flex flex-col align-center mt-6 p-6 m-auto w-full rounded-lg container">
+    <div className="min-h-screen text-ro-slate-900 text-xl flex flex-col align-center mt-6 pt-6 m-auto w-full rounded-lg container">
       <h2 className="font-bold self-center">
         Repair Orders
       </h2>
       {sortedOrders.length && <AddRepairButton />}
       {sortedOrders.length ? (
-        <ul className=" mx-auto grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <ul className="px-4 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {sortedOrders}
         </ul>
       ) : (
