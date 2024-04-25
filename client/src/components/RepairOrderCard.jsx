@@ -4,6 +4,7 @@ import loadable from '@loadable/component'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashCan, faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import { toLocalDateString } from '../utils/datesHelpers'
+import { useSubmit } from 'react-router-dom'
 const Link = loadable(() => 
   import('react-router-dom').then(module => ({ default: module.Link}))
 )
@@ -13,8 +14,9 @@ function RepairOrderCard({ repairOrder }) {
   const { ro_number, id, created_on, vehicle:roVehicle } = repairOrder
   const vehicle = roVehicle[0]
   const date = toLocalDateString(created_on)
+  const submit = useSubmit()
   return (
-    <li className='rounded max-w-[356px]'>
+    <li className='rounded'>
       <div className='text-ro-slate-900 rounded overflow-hidden shadow-card'>
           <div className='bg-ro-header text-ro-slate-100 px-3 py-1 flex justify-between'>
             <Link 
@@ -27,6 +29,7 @@ function RepairOrderCard({ repairOrder }) {
               <button 
                 aria-label='delete repair order'
                 className='hover:text-red-400 active:text-red-700'
+                onClick={() => submit(null, {method: 'post', action: `repairorder/delete/${id}`})}
               >
                 <FontAwesomeIcon aria-hidden icon={faTrashCan} />
               </button>
