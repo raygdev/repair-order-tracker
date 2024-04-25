@@ -53,19 +53,16 @@ function deletRepairOrderById(req,res,next){
 
     repairOrderModel.deleteOneRepairOrderById(roId, (err, doc) => {
 
+        if(doc.userId !== userId){
+            console.log(`[roId]: ${roId}\n[userId]: ${userId}\n[docUserId]: ${doc.userId}`)
+            return res.status(409).json({message:'This RO doesn\'t belong to this user'})
+        }
+
         if(err) return res.status(409).json({message:'Something went wrong deleting the repair order'})
 
         if(!doc) return res.status(404).json({message: `repair order with id ${roId} does not exist`})
 
-        userModel.User.findOneAndUpdate({_id:userId},{$pull:{repairOrders: mongoose.Types.ObjectId(roId)}},function (err,user){
-
-            if(err) return console.log(err)
-
-            if(!user) return console.log(`couldn't find user`)
-
-            console.log(`repair order removed from user with id: ${user._id}`)
-
-            })
+        console.log(`repair order removed from user with id: ${userId}`)
 
         res.json({message: `repiar order ${doc.ro_number} successfuly deleted`})
 
