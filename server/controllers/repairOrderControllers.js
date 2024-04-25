@@ -1,6 +1,4 @@
 const repairOrderModel = require('../models/repairOrderModel')
-const userModel = require('../models/userModel.js')
-const mongoose = require('mongoose')
 const vehicleModel = require("../models/vehicleModel.js")
 
 function createRepairOrder(req,res,next){
