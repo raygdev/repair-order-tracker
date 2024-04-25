@@ -13,7 +13,7 @@ const FontAwesomeIcon = loadable(() =>
 export default function CreateFirstRepair({ userId }) {
   return (
     <>
-      <h3 className="text-white text-lg font-bold self-center m-auto hover:text-cyan-100">
+      <h3 className="text-ro-slate-900 text-lg font-bold self-center m-auto hover:text-cyan-100">
         <Link to={`/user/${userId}/create-repair-order`}>
           <FontAwesomeIcon icon={faLink} /> Let's Create a Repair Order!
         </Link>
