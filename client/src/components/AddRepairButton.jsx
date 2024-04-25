@@ -12,12 +12,12 @@ const FontAwesomeIcon = loadable(() =>
 
 export default function AddRepairButton() {
   return (
-    <div className="flex justify-center py-5 underline font-semibold text-lg">
+    <div className="flex justify-center py-5 font-semibold text-lg">
       <Link
         to="create-repair-order"
-        className=" hover:text-green-300 transition-all"
+        className=" hover:text-ro-link-hover hover:underline transition-all"
       >
-        Add <FontAwesomeIcon icon={faAdd} />
+        Create New <FontAwesomeIcon icon={faAdd} />
       </Link>
     </div>
   );

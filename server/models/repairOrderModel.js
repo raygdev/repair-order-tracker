@@ -19,7 +19,14 @@ const RepairOrderSchema = new mongoose.Schema({
   },
   created_on: { type: Date, default: new Date() },
   notes: { type: String, default: "" },
-},{ toJSON: { virtuals: true } });
+},{ toJSON: { virtuals: true }, toObject: { virtuals: true} });
+
+RepairOrderSchema.virtual('vehicle', {
+  ref: 'vehicles',
+  localField: 'vin',
+  foreignField: 'VIN'
+})
+
 
 //create a model for the repair order
 const RepairOrders = mongoose.model(
@@ -137,7 +144,7 @@ exports.updateOneRepairOrder = function(ro_id, updateObj, done){
 
     if(err) return done(err)
 
-    if(!ro) return done(nll,false)
+    if(!ro) return done(null,false)
     
     return done(null, ro)
   })

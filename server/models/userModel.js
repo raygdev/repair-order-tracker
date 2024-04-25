@@ -31,7 +31,7 @@ const UserSchema = new mongoose.Schema({
   },
   shopName: { type: String },
   repairOrders:[{ type: mongoose.Schema.Types.ObjectId, ref:'RepairOrders'}]
-}, { toJSON: { virtuals: true } });
+}, { toJSON: { virtuals: true }, toObject: { virtuals: true } });
 
 
 const User = mongoose.model("users", UserSchema, "users");
@@ -114,7 +114,13 @@ exports.findByEmail = async function (emailObj) {
 
 exports.findUserById = function (userId,done){
   User.findById(userId)
-      .populate('repairOrders')
+      .populate({
+        path: 'repairOrders',
+        populate: {
+          path: 'vehicle',
+          select: '-id -_id -__v'
+        }
+      })
       .select("-password")
       .exec( (err, user) => {
 

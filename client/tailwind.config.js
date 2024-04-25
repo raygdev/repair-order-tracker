@@ -12,7 +12,9 @@ module.exports = {
       colors: {
         btn: {
           primary: '#110372',
-          secondary: '#0455C0'
+          secondary: '#0455C0',
+          hover: '#1D75EB',
+          disabled: '#6BAAFC'
         },
         form: {
           header: '#0455C0'
@@ -30,7 +32,8 @@ module.exports = {
           },
           'link-primary': '#110372',
           'link-disable': '#3820E1',
-          'link-hover': '#3e3295'
+          'link-hover': '#3e3295',
+          'header': '#373848'
         }
       },
       boxShadow: {
