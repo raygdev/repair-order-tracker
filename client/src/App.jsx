@@ -2,12 +2,14 @@ import { Suspense, useEffect, useState } from 'react'
 import './App.css';
 import loadable from '@loadable/component';
 import { jwtDecode } from 'jwt-decode'
-import { useNavigate } from 'react-router';
+import { useNavigate, useResolvedPath } from 'react-router';
 const Header = loadable(() => import('./components/Header'))
 const Outlet = loadable(() => import('react-router-dom').then(module => ({default : module.Outlet})))
 
 function App() {
   const navigate = useNavigate()
+  const { pathname } = useResolvedPath()
+  const userPath = pathname.includes('user')
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -15,7 +17,8 @@ function App() {
     let decoded;
   if(token) {
     decoded = jwtDecode(token)
-    navigate(`user/${decoded.id}`, { replace: true })
+    const loggedInRoute = userPath ? pathname : `user/${decoded.id}`
+    navigate(loggedInRoute, { replace: true })
   }
     setLoading(false)
   },[])
