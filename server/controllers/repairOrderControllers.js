@@ -15,39 +15,33 @@ function createRepairOrder(req,res,next){
     }
 
     repairOrderModel.createRepairOrder(userObj,(repairOrder) => {
-
-        userModel.findUserAndPushRepairOrder(userId, repairOrder.id,(err,user) => {
-            //if an error pushing the id to the user return error message
-            if(err) return res.status(409).json({message:"couldn't save to user"})
-            //else find the vehicle by vin
-            vehicleModel.getVehicle(userObj.vin,(findVehicleError, foundVehicle) => {
-                //if an error return the error looking for the vehicle
-                if(findVehicleError) return res.status(409).json({message: findVehicleError})
-                // if the vehicle isn't found
-                if(!foundVehicle){
-                    //create a new vehicle
-                    vehicleModel.createVehicle(userObj.vin,(newVehicleError, newVehicle) => {
-                        //if there's an error creating the vehicle... respond with the error
-                        if(newVehicleError) console.log(newVehicleError) /*res.status(409).json({message: newVehicleError})*/
-                        //else finally save the repair order
-                        repairOrder.save((repairOrderSaveError) => {
-                            //if there is an error saving... response with an error message
-                            if(repairOrderSaveError) return res.status(409).json({message: "Something went wrong saving the RO"})
-                            //else response that it was saved successfully
-                            return res.json({message:'RO saved successfully'})
-                        })
-                    })
-                } else {
-                    //else if the vehicle is found save the repair order
+        vehicleModel.getVehicle(userObj.vin,(findVehicleError, foundVehicle) => {
+            //if an error return the error looking for the vehicle
+            if(findVehicleError) return res.status(409).json({message: findVehicleError})
+            // if the vehicle isn't found
+            if(!foundVehicle){
+                //create a new vehicle
+                vehicleModel.createVehicle(userObj.vin,(newVehicleError, newVehicle) => {
+                    //if there's an error creating the vehicle... respond with the error
+                    if(newVehicleError) console.log(newVehicleError) /*res.status(409).json({message: newVehicleError})*/
+                    //else finally save the repair order
                     repairOrder.save((repairOrderSaveError) => {
-                        // if there is an error saving, respond with an error message
+                        //if there is an error saving... response with an error message
                         if(repairOrderSaveError) return res.status(409).json({message: "Something went wrong saving the RO"})
-                        //else respond with a success message
-                        return res.json({message: "RO saved successfully"})
-
+                        //else response that it was saved successfully
+                        return res.json({message:'RO saved successfully'})
                     })
-                }
-            })
+                })
+            } else {
+                //else if the vehicle is found save the repair order
+                repairOrder.save((repairOrderSaveError) => {
+                    // if there is an error saving, respond with an error message
+                    if(repairOrderSaveError) return res.status(409).json({message: "Something went wrong saving the RO"})
+                    //else respond with a success message
+                    return res.json({message: "RO saved successfully"})
+
+                })
+            }
         })
     })
 }
