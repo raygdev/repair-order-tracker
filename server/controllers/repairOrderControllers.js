@@ -1,6 +1,4 @@
 const repairOrderModel = require('../models/repairOrderModel')
-const userModel = require('../models/userModel.js')
-const mongoose = require('mongoose')
 const vehicleModel = require("../models/vehicleModel.js")
 
 function createRepairOrder(req,res,next){
@@ -15,39 +13,33 @@ function createRepairOrder(req,res,next){
     }
 
     repairOrderModel.createRepairOrder(userObj,(repairOrder) => {
-
-        userModel.findUserAndPushRepairOrder(userId, repairOrder.id,(err,user) => {
-            //if an error pushing the id to the user return error message
-            if(err) return res.status(409).json({message:"couldn't save to user"})
-            //else find the vehicle by vin
-            vehicleModel.getVehicle(userObj.vin,(findVehicleError, foundVehicle) => {
-                //if an error return the error looking for the vehicle
-                if(findVehicleError) return res.status(409).json({message: findVehicleError})
-                // if the vehicle isn't found
-                if(!foundVehicle){
-                    //create a new vehicle
-                    vehicleModel.createVehicle(userObj.vin,(newVehicleError, newVehicle) => {
-                        //if there's an error creating the vehicle... respond with the error
-                        if(newVehicleError) console.log(newVehicleError) /*res.status(409).json({message: newVehicleError})*/
-                        //else finally save the repair order
-                        repairOrder.save((repairOrderSaveError) => {
-                            //if there is an error saving... response with an error message
-                            if(repairOrderSaveError) return res.status(409).json({message: "Something went wrong saving the RO"})
-                            //else response that it was saved successfully
-                            return res.json({message:'RO saved successfully'})
-                        })
-                    })
-                } else {
-                    //else if the vehicle is found save the repair order
+        vehicleModel.getVehicle(userObj.vin,(findVehicleError, foundVehicle) => {
+            //if an error return the error looking for the vehicle
+            if(findVehicleError) return res.status(409).json({message: findVehicleError})
+            // if the vehicle isn't found
+            if(!foundVehicle){
+                //create a new vehicle
+                vehicleModel.createVehicle(userObj.vin,(newVehicleError, newVehicle) => {
+                    //if there's an error creating the vehicle... respond with the error
+                    if(newVehicleError) console.log(newVehicleError) /*res.status(409).json({message: newVehicleError})*/
+                    //else finally save the repair order
                     repairOrder.save((repairOrderSaveError) => {
-                        // if there is an error saving, respond with an error message
+                        //if there is an error saving... response with an error message
                         if(repairOrderSaveError) return res.status(409).json({message: "Something went wrong saving the RO"})
-                        //else respond with a success message
-                        return res.json({message: "RO saved successfully"})
-
+                        //else response that it was saved successfully
+                        return res.json({message:'RO saved successfully'})
                     })
-                }
-            })
+                })
+            } else {
+                //else if the vehicle is found save the repair order
+                repairOrder.save((repairOrderSaveError) => {
+                    // if there is an error saving, respond with an error message
+                    if(repairOrderSaveError) return res.status(409).json({message: "Something went wrong saving the RO"})
+                    //else respond with a success message
+                    return res.json({message: "RO saved successfully"})
+
+                })
+            }
         })
     })
 }
@@ -59,19 +51,16 @@ function deletRepairOrderById(req,res,next){
 
     repairOrderModel.deleteOneRepairOrderById(roId, (err, doc) => {
 
+        if(doc.userId !== userId){
+            console.log(`[roId]: ${roId}\n[userId]: ${userId}\n[docUserId]: ${doc.userId}`)
+            return res.status(409).json({message:'This RO doesn\'t belong to this user'})
+        }
+
         if(err) return res.status(409).json({message:'Something went wrong deleting the repair order'})
 
         if(!doc) return res.status(404).json({message: `repair order with id ${roId} does not exist`})
 
-        userModel.User.findOneAndUpdate({_id:userId},{$pull:{repairOrders: mongoose.Types.ObjectId(roId)}},function (err,user){
-
-            if(err) return console.log(err)
-
-            if(!user) return console.log(`couldn't find user`)
-
-            console.log(`repair order removed from user with id: ${user._id}`)
-
-            })
+        console.log(`repair order removed from user with id: ${userId}`)
 
         res.json({message: `repiar order ${doc.ro_number} successfuly deleted`})
 

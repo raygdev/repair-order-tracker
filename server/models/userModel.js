@@ -30,8 +30,13 @@ const UserSchema = new mongoose.Schema({
     required: [true, "Password is required"],
   },
   shopName: { type: String },
-  repairOrders:[{ type: mongoose.Schema.Types.ObjectId, ref:'RepairOrders'}]
 }, { toJSON: { virtuals: true }, toObject: { virtuals: true } });
+
+UserSchema.virtual('repairOrders', {
+  ref: 'RepairOrders',
+  localField: '_id',
+  foreignField: 'userId'
+})
 
 
 const User = mongoose.model("users", UserSchema, "users");
