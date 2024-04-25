@@ -42,7 +42,7 @@ function RepairOrderCard({ repairOrder }) {
               </Link>
             </div>
           </div>
-          <div className='flex gap-4 px-2 py-3'>
+          <div className='flex justify-between px-2 py-3'>
             <div className='flex flex-col'>
               <span className='m-3'>{vehicle.Year}</span>
               <span className='m-3'>{vehicle.Make}</span>
