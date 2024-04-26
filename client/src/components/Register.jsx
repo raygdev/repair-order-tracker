@@ -6,7 +6,7 @@ export default function Register (props) {
   const inputs = useActionData()
   return (
     <main className=" flex w-full flex-col min-h-screen text-ro-slate-900">
-        <div className="w-full xs:max-w-md m-auto">
+        <div className="w-full xs:max-w-md m-auto px-4">
           <Form
             className="p-4 min-h-max flex flex-col justify-between rounded shadow-form"
             method="post"
@@ -68,7 +68,7 @@ export default function Register (props) {
               {inputs && inputs.password.isInvalid && <div className="whitespace-pre-wrap text-red-600">{inputs.password.message}</div>}
             </label>
             <button
-              className="text-ro-slate-100 hover:bg-ro-link-hover disabled:bg-ro-link-disable bg-ro-link-primary self-center px-6 py-2 rounded mt-4"
+              className="text-ro-slate-100 hover:bg-ro-link-hover disabled:bg-ro-link-disable bg-ro-link-primary self-center px-6 py-2 transition-all rounded mt-4 focus:ring-2"
               disabled= {navigation.state !== 'idle'}
             >
               {navigation.state === 'idle' ? "Submit": "Submitting"}
@@ -77,4 +77,4 @@ export default function Register (props) {
       </div>
     </main>
   );
-};
+}
