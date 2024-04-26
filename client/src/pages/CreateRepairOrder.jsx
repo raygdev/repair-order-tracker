@@ -98,7 +98,7 @@ export default function CreateRepairOrder() {
             type="submit"
             disabled={navigation.state !== "idle"}
           >
-            Submit <FontAwesomeIcon icon={faExternalLink} />
+            Submit <FontAwesomeIcon aria-hidden icon={faExternalLink} />
           </button>
         </div>
       </Form>

@@ -87,7 +87,7 @@ export default function EditRepairOrder() {
                         type='submit'
                         disabled={navigation.state !== 'idle'}
                     >
-                        {navigation.state === 'idle' ? 'Submit': 'Submitting'} <FontAwesomeIcon icon={faPenToSquare} />
+                        {navigation.state === 'idle' ? 'Submit': 'Submitting'} <FontAwesomeIcon aria-hidden icon={faPenToSquare} />
                     </button>
                 </div>
             </div>

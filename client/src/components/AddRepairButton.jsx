@@ -17,7 +17,7 @@ export default function AddRepairButton() {
         to="create-repair-order"
         className=" hover:text-ro-link-hover hover:underline transition-all"
       >
-        Create New <FontAwesomeIcon icon={faAdd} />
+        Create New <FontAwesomeIcon aria-hidden icon={faAdd} />
       </Link>
     </div>
   );
