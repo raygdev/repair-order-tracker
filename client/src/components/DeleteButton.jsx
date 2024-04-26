@@ -16,12 +16,12 @@ export default function DeleteButton(props) {
     <>
       <Form method="delete" action={`${props.path}${props.id}`}>
         <button
-          aria-label="delete"
+          aria-label={buttonText || 'delete'}
           type="submit"
           className="transition ease-in-out delay-100 hover:text-red-400 font-semibold"
         >
           {buttonText}
-          <FontAwesomeIcon size={props.size} icon={faTrashCan} />
+          <FontAwesomeIcon aria-hidden size={props.size} icon={faTrashCan} />
         </button>
       </Form>
     </>

@@ -88,12 +88,13 @@ export async function createROAction({ request, params }) {
     }
   }
 
-export async function editRepairOrderAction({request}){
+export async function editRepairOrderAction({request, params}){
     const from = new URL(request.url).pathname
     const formData = await request.formData()
     const ro = Object.fromEntries(formData)
     const updatedRO = {
         ...ro,
+        id: params.repairId,
         isWarranty: Boolean(ro.isWarranty),
         created_on: ro.created_on.replace(/-/g,'/')
     }
@@ -105,7 +106,7 @@ export async function editRepairOrderAction({request}){
     try {
       let edited = await editRO(updatedRO)
       if(edited) return  redirect(
-        `/user/${updatedRO.userId}/repairorder/${updatedRO.id}?vin=${updatedRO.vin}`
+        `/user/${params.userId}/repairorder/${params.repairId}`
       )
       return redirect(`/login?message=You must log in first!&from=${from}`)
     }

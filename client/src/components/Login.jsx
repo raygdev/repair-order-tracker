@@ -46,7 +46,7 @@ export default function Login(){
             <span className="text-red-600">{error.password.message}</span>
           )}
           <button
-            className="text-ro-slate-100 min-h-max mt-5 disabled:bg-ro-link-disable bg-ro-link-primary self-center px-6 py-1 rounded  hover:bg-sky-900  active:bg-sky-300 active:text-slate-700 focus:outline-none focus:ring-4 focus:ring-sky-300"
+            className="text-ro-slate-100 min-h-max mt-5 disabled:bg-ro-link-disable bg-ro-link-primary self-center px-6 py-1 rounded transition-all hover:bg-ro-link-hover focus:outline-none focus:ring-2"
             type="submit"
             disabled={navigation.state !== "idle"}
           >
