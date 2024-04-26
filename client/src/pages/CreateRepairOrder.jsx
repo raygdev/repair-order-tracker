@@ -1,4 +1,3 @@
-import React from "react";
 import {
   useActionData,
   useRouteLoaderData,
@@ -23,9 +22,9 @@ export default function CreateRepairOrder() {
   const user = useRouteLoaderData("root");
   const navigation = useNavigation();
   return (
-    <div className="flex min-h-screen">
+    <div className="min-h-screen px-4">
       <Form
-        className="flex flex-col sm:h-5/6 min-h-[450px] sm:w-2/4 w-4/6 md:w-1/3 justify-between m-auto rounded overflow-hidden shadow-form shadow-slate-500"
+        className="flex flex-col sm:max-w-max mt-11 justify-between m-auto rounded overflow-hidden shadow-form shadow-slate-500"
         method="POST"
       >
         <div className="text-ro-slate-100 bg-btn-secondary py-3 px-2">
