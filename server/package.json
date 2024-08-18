@@ -4,9 +4,16 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js",
+    "test": "jest --watchAll",
+    "dev": "ts-node-dev server.js",
     "start": "node server.js"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "setupFilesAfterEnv": [
+      "./test/setup.ts"
+    ]
   },
   "author": "Raymond Greeley",
   "license": "ISC",
