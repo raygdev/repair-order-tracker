@@ -3,7 +3,9 @@ import mongoose from "mongoose";
 // const mongoose = require("mongoose");
 // const { User } = require('./userModel')
 
-interface RepairOrderAttributes {
+export interface RepairOrderAttributes {
+  _id: string
+  id: string
   ro_number: number
   isWarranty: boolean
   userId: string
@@ -16,7 +18,9 @@ interface RepairOrderModel extends mongoose.Model<RepairOrderDoc>{
   build: (attrs: RepairOrderAttributes) => RepairOrderDoc
 }
 
-interface RepairOrderDoc extends mongoose.Document{
+export interface RepairOrderDoc extends mongoose.Document{
+  _id: string
+  id: string
   ro_number: number
   isWarranty: boolean
   userId: string
@@ -45,7 +49,15 @@ const RepairOrderSchema = new mongoose.Schema({
   },
   created_on: { type: Date, default: new Date() },
   notes: { type: String, default: "" },
-},{ toJSON: { virtuals: true }, toObject: { virtuals: true} });
+},{ 
+  toJSON: { 
+    virtuals: true,
+    transform(doc, ret) {
+      ret.id = ret._id
+    }
+  },
+  toObject: { virtuals: true} 
+});
 
 RepairOrderSchema.virtual('vehicle', {
   ref: 'vehicles',
