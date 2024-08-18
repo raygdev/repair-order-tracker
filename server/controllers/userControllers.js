@@ -1,5 +1,5 @@
-const roModel = require("../models/repairOrderModel.js");
-const userModel = require("../models/userModel.js")
+const roModel = require("../models/repair-order-model");
+const userModel = require("../models/user-model")
 const { generateToken } = require('./middleware/tokenUtil')
 
 exports.getUser = (req,res, next) => {

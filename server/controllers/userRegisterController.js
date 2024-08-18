@@ -1,4 +1,4 @@
-const userModel = require("../models/userModel.js");
+const userModel = require("../models/user-model");
 const { handleRegistrationError } = require("../uitls/utils.js");
 
 exports.userRegitrationController = (req, res, next) => {
