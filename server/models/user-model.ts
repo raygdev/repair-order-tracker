@@ -1,5 +1,34 @@
-const mongoose = require("mongoose")
-const bcrypt = require('bcrypt')
+import  mongoose from 'mongoose'
+import  bcrypt from 'bcrypt'
+import { RepairOrderAttributes } from './repair-order-model'
+
+export interface UserAttributes {
+  _id: string
+  id: string
+  firstName: string
+  lastName: string
+  email: string
+  password: string
+  shopName?: string
+  repairOrders: RepairOrderAttributes[]
+}
+
+interface UserModel extends mongoose.Model<UserDoc> {
+  build: (attrs: UserAttributes) => UserDoc
+}
+
+interface UserDoc {
+  _id: string
+  id: string
+  firstName: string
+  lastName: string
+  email: string
+  password: string
+  shopName?: string
+  repairOrders: RepairOrderAttributes[]
+}
+
+type DoneCallback = (err: mongoose.CallbackError | null, user?: UserAttributes | false | null) => void
 
 const emailValidate =
   /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
@@ -11,10 +40,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     unique: true,
     validate: {
-      validator: function (v) {
+      validator: function (v: string) {
         return emailValidate.test(v);
       },
-      message: function (props) {
+      message: function () {
         return "Email is invalid";
       },
     },
@@ -23,14 +52,22 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     validator: {
-      message: function (props) {
+      message: function () {
         return "Password is Required";
       },
     },
     required: [true, "Password is required"],
   },
-  shopName: { type: String },
-}, { toJSON: { virtuals: true }, toObject: { virtuals: true } });
+  shopName: { type: String, default: '' },
+}, {
+  toJSON: {
+    virtuals: true,
+    transform(doc, ret) {
+      ret.id = ret._id
+    }
+  },
+  toObject: { virtuals: true }
+});
 
 UserSchema.virtual('repairOrders', {
   ref: 'RepairOrders',
@@ -38,8 +75,12 @@ UserSchema.virtual('repairOrders', {
   foreignField: 'userId'
 })
 
+UserSchema.pre('save', function(){
+  this.password = bcrypt.hashSync(this.password, 10)
+})
 
-const User = mongoose.model("users", UserSchema, "users");
+
+const User = mongoose.model<UserDoc, UserModel>("users", UserSchema, "users");
 /**
  *
  * @param {Object} userObj takes in a user object to create a new user
@@ -47,11 +88,11 @@ const User = mongoose.model("users", UserSchema, "users");
  *
  */
 
-exports.createAndSaveUser = function (userObj, done) {
-  const newUser = {
-    ...userObj,
-    password: bcrypt.hashSync(userObj.password,10)
-  }
+export const createAndSaveUser = function (newUser:UserAttributes, done: DoneCallback) {
+  // const newUser = {
+  //   ...userObj,
+  //   password: bcrypt.hashSync(userObj.password,10)
+  // }
 
   const user = new User(newUser);
 
@@ -64,7 +105,7 @@ exports.createAndSaveUser = function (userObj, done) {
   });
 };
 
-exports.createUser = async function (newUser) {
+export const createUser = async function (newUser: UserAttributes) {
   try {
     const userToCreate = {
       ...newUser,
@@ -80,12 +121,12 @@ exports.createUser = async function (newUser) {
 
 /**
  * 
- * @param {Object} emailObj object containing the users email
+ * @param {Object} email object containing the users email
  * @param {callback} done callback returns either error or user
  */
 
-exports.findUserByEmail = function (emailObj, done) {
-  User.findOne(emailObj)
+export const findUserByEmail = function (email: { email: string }, done: DoneCallback) {
+  User.findOne(email)
       .populate('repairOrders')
       .exec(function (err, user) {
 
@@ -98,9 +139,9 @@ exports.findUserByEmail = function (emailObj, done) {
       });
 };
 
-exports.findByEmail = async function (emailObj) {
+export const findByEmail = async function (email: { email: string }) {
   try {
-    const foundUser = User.findOne(emailObj).populate('repairOrders').exec()
+    const foundUser = User.findOne(email).populate('repairOrders').exec()
     if(!foundUser) {
       return null
     }
@@ -117,7 +158,7 @@ exports.findByEmail = async function (emailObj) {
  * @param {callback} done callback returns either error or user
  */
 
-exports.findUserById = function (userId,done){
+export const findUserById = function (userId: string, done: DoneCallback){
   User.findById(userId)
       .populate({
         path: 'repairOrders',
@@ -137,7 +178,7 @@ exports.findUserById = function (userId,done){
       })
 }
 
-exports.findById = function (userId) {
+export const findById = function (userId: string) {
   try {
     const user = User.findById(userId).populate('repairOrders').select('-password').exec()
     if(!user) {
@@ -156,15 +197,15 @@ exports.findById = function (userId) {
  * @param {callback} done callback that returns either error or user
  */
 
-exports.findUserAndPushRepairOrder = function(userId,roId,done){
-   User.findOne({_id:userId},function (err,user){
+export const findUserAndPushRepairOrder = function(userId: string,roId:any,done: DoneCallback){
+   User.findOne({_id:userId},function (err: mongoose.CallbackError,user: any){
 
     if(err) return done(err)
     if(!user) return done(null,false)
 
-    user.repairOrders.push(roId)
+    // user.repairOrders.push(roId as RepairOrderAttributes)
 
-    user.save((err) => {
+    user.save((err: mongoose.CallbackError) => {
 
       if(err) return done(err)
       return done(null, user)
@@ -173,15 +214,15 @@ exports.findUserAndPushRepairOrder = function(userId,roId,done){
   })
 }
 
-exports.findAndPushRepairOrder = async function (userId,repairId) {
+export const findAndPushRepairOrder = async function (userId: string,repairId:any) {
   try{
     const user = await User.findOne({_id: userId}).exec()
-    user.repairOrders.push(repairId)
-    await user.save()
+    user?.repairOrders.push(repairId as RepairOrderAttributes)
+    await user?.save()
     return user
   } catch (e) {
     throw e
   }
 }
 
-exports.User = User;
+export { User } 
