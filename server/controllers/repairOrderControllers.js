@@ -1,4 +1,4 @@
-const repairOrderModel = require('../models/repairOrderModel')
+const repairOrderModel = require('../models/repair-order-model')
 const vehicleModel = require("../models/vehicleModel.js")
 
 function createRepairOrder(req,res,next){
