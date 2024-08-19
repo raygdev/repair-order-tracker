@@ -29,7 +29,7 @@ export interface RepairOrderDoc extends mongoose.Document{
   notes?: string
 }
 
-type Done = (err: mongoose.CallbackError, repiarOrder?: RepairOrderDoc | boolean) => void
+type Done = (err: mongoose.CallbackError, repiarOrder?: RepairOrderDoc | false | null) => void
 
 const RepairOrderSchema = new mongoose.Schema({
   ro_number: { type: Number, require: true },

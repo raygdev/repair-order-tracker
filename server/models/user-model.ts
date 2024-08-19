@@ -28,7 +28,7 @@ export interface UserDoc {
   repairOrders: RepairOrderAttributes[]
 }
 
-type DoneCallback = (err: mongoose.CallbackError | null, user?: UserAttributes | false | null) => void
+type DoneCallback = (err:any, user?: any) => void
 
 const emailValidate =
   /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;

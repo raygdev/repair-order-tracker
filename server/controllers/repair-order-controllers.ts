@@ -1,8 +1,19 @@
-const repairOrderModel = require('../models/repair-order-model')
-const vehicleModel = require("../models/vehicleModel.js")
+import { Request, Response, NextFunction } from 'express'
+import { GetAuthInfoRequest } from './middleware/auth'
 
-function createRepairOrder(req,res,next){
-    let userId = req.user.id
+import {
+    RepairOrderAttributes,
+    createRepairOrder as createRepair,
+    deleteOneRepairOrderById,
+    updateOneRepairOrder
+} from '../models/repair-order-model'
+import {
+    getVehicle,
+    createVehicle
+} from "../models/vehicle-model"
+
+export function createRepairOrder(req: GetAuthInfoRequest,res: Response,next: NextFunction){
+    let userId = req.user!.id
     let userObj = { ...req.body, userId }
 
     if(!userObj.created_on){
@@ -12,14 +23,14 @@ function createRepairOrder(req,res,next){
         return res.status(422).json({message: "VIN is required and must be 17 characters in length"})
     }
 
-    repairOrderModel.createRepairOrder(userObj,(repairOrder) => {
-        vehicleModel.getVehicle(userObj.vin,(findVehicleError, foundVehicle) => {
+    createRepair(userObj,(repairOrder) => {
+        getVehicle(userObj.vin,(findVehicleError: string, foundVehicle: any) => {
             //if an error return the error looking for the vehicle
             if(findVehicleError) return res.status(409).json({message: findVehicleError})
             // if the vehicle isn't found
             if(!foundVehicle){
                 //create a new vehicle
-                vehicleModel.createVehicle(userObj.vin,(newVehicleError, newVehicle) => {
+                createVehicle(userObj.vin,(newVehicleError: any, newVehicle: any) => {
                     //if there's an error creating the vehicle... respond with the error
                     if(newVehicleError) console.log(newVehicleError) /*res.status(409).json({message: newVehicleError})*/
                     //else finally save the repair order
@@ -44,12 +55,14 @@ function createRepairOrder(req,res,next){
     })
 }
 
-function deletRepairOrderById(req,res,next){
+export function deletRepairOrderById(req: GetAuthInfoRequest,res: Response,next: NextFunction){
 
     const roId  = req.params.roId
-    const userId = req.user.id
+    const userId = req.user!.id
 
-    repairOrderModel.deleteOneRepairOrderById(roId, (err, doc) => {
+    deleteOneRepairOrderById(roId, (err, doc) => {
+
+        if(!doc) return res.status(404).json({message: `repair order with id ${roId} does not exist`})
 
         if(doc.userId !== userId){
             console.log(`[roId]: ${roId}\n[userId]: ${userId}\n[docUserId]: ${doc.userId}`)
@@ -58,7 +71,6 @@ function deletRepairOrderById(req,res,next){
 
         if(err) return res.status(409).json({message:'Something went wrong deleting the repair order'})
 
-        if(!doc) return res.status(404).json({message: `repair order with id ${roId} does not exist`})
 
         console.log(`repair order removed from user with id: ${userId}`)
 
@@ -67,16 +79,16 @@ function deletRepairOrderById(req,res,next){
     })
 }
 
-function updateOneRepairOrderById(req, res, next){
+export function updateOneRepairOrderById(req: Request, res: Response, next: NextFunction){
     const roId = req.params.roId
     const vin = req.body.vin
-    repairOrderModel.updateOneRepairOrder(roId, req.body, (err,ro)=> {
+    updateOneRepairOrder(roId, req.body, (err,ro)=> {
 
-        vehicleModel.getVehicle(vin, (vehicleError, vehicle) => {
+        getVehicle(vin, (vehicleError: string, vehicle: any) => {
             if(vehicleError) console.log(vehicleError)
             if(!vehicle) {
                 console.log(vehicle)
-                vehicleModel.createVehicle(vin, (createError) =>{
+                createVehicle(vin, (createError: any) =>{
                     if(createError) console.log(createError)
                         if(err) return res.status(404).json({message:'Something went wrong updating the RO'})
                         if(!ro) return res.status(404).json({message:'Could not find that RO'})
@@ -91,10 +103,4 @@ function updateOneRepairOrderById(req, res, next){
         })
         
     })
-}
-
-module.exports = {
-    createRepairOrder,
-    deletRepairOrderById,
-    updateOneRepairOrderById
 }

@@ -1,5 +1,7 @@
-function handleRegistrationError(res, err){
-    const errors = {};
+import { Response } from 'express'
+
+export function handleRegistrationError(res: Response, err:any){
+    const errors = { message: ''};
     if (err.name === "MongoServerError") {
       return res.status(401).send({ error: "User Already Exists" });
     } else if (err.name === "ValidationError") {
@@ -11,5 +13,3 @@ function handleRegistrationError(res, err){
       return res.status(404).send({ error: err.message });
     }
 }
-
-exports.handleRegistrationError = handleRegistrationError

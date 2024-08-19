@@ -1,13 +1,14 @@
-const userModel = require("../models/user-model");
-const bcrypt = require("bcrypt");
-const { generateToken }  = require('./middleware/tokenUtil')
+import { Request, Response, NextFunction } from 'express'
+import { findUserByEmail } from "../models/user-model";
+import  bcrypt from "bcrypt";
+import  { generateToken } from './middleware/token-util'
 
-exports.userLoginController = (req, res, next) => {
+export const userLoginController = (req: Request, res: Response, next: NextFunction) => {
   const { email, password } = req.body;
 
   if(!email || !password) return res.status(404).json({message: 'Both fields  are required'})
 
-  userModel.findUserByEmail({ email: email }, (err, user) => {
+  findUserByEmail({ email: email }, (err, user) => {
 
     if (err) return res.send(err);
 

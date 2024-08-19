@@ -12,7 +12,7 @@ const VehicleSchema = new mongoose.Schema({
 
 const Vehicles = mongoose.model("vehicles",VehicleSchema, 'vehicles')
 
-async function getVehicleData(vin, callback){
+async function getVehicleData(vin: string, callback: (err: string | null | unknown, vehicleInfo?:any) => void){
     try{
         let res = await axios.get(`https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVin/${vin}?format=json`)
         let vehicleInfo = transformVehicleData(res.data.Results)
@@ -28,7 +28,7 @@ async function getVehicleData(vin, callback){
     }
 }
 
-async function getVehicleInfo (vin) {
+async function getVehicleInfo (vin: string) {
     try {
         let res = await axios.get(`https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVin/${vin}?format=json`)
         let vehicleInfo = transformVehicleData(res.data.Results)
@@ -39,12 +39,12 @@ async function getVehicleInfo (vin) {
     }
 }
 
-exports.createVehicle = (vin, done) => {
+export const createVehicle = (vin: string, done: any) => {
     getVehicleData(vin, (err, vehicleInfo) => {
         if(err) return done(err)
         vehicleInfo.VIN = vin
         let vehicle = new Vehicles(vehicleInfo)
-        vehicle.save(error => {
+        vehicle.save((error: any) => {
             if(error) return done(error)
             return done(null, vehicle)
             
@@ -52,7 +52,7 @@ exports.createVehicle = (vin, done) => {
     })
 }
 
-exports.getAndCreateVehicleInfo = async function (vin) {
+export const getAndCreateVehicleInfo = async function (vin: string) {
     try {
         const vehicleInfo = await getVehicleInfo(vin)
         if(vehicleInfo === 'string') {
@@ -66,15 +66,15 @@ exports.getAndCreateVehicleInfo = async function (vin) {
     }
 }
 
-exports.getVehicle = (vin, done) => {
-    Vehicles.findOne({VIN: vin}, (err, vehicle) => {
+export const getVehicle = (vin: string, done: any) => {
+    Vehicles.findOne({VIN: vin}, (err: any, vehicle: any) => {
         if(err) return done(err)
         if(!vehicle) return done(null, false)
         return done(null, vehicle)
     })
 }
 
-exports.findVehicleByVin = async function (vin) {
+export const findVehicleByVin = async function (vin: string) {
     try {
         const foundVehicle = Vehicles.findOne({ VIN: vin }).exec()
         if(!foundVehicle) {
