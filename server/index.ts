@@ -1,22 +1,21 @@
-const express = require('express')
-const mongoose = require('mongoose')
-const chalk = require('chalk')
-require('dotenv').config()
-
-const { initApp } = require('./initApp')
+import { app } from './initApp'
+import mongoose from 'mongoose'
+import chalk from 'chalk'
+import { config } from 'dotenv'
+config()
 
 const log = console.log
 const port = process.env.PORT
-const uri = process.env.MONGO_URI
-const app = express()
+const uri = process.env.MONGO_URI!
 
-initApp(app, express)
+
+
 
 // Quiet mongoose warning
 mongoose.set("strictQuery", true)
 
 // Connect to mongo then listen
-mongoose.connect(uri,{},(err) => {
+mongoose.connect(uri,{},(err: any) => {
     if(err){ 
     // Log error and exit
       log(
