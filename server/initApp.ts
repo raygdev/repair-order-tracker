@@ -5,10 +5,10 @@ import path from 'path'
 
 import { NotFoundError } from './errors/not-found-error'
 
-import { registerRoute } from './routes/register'
-import { loginRoute } from './routes/login'
+import { registerRoute } from './routes/auth/register'
+import { loginRoute } from './routes/auth/login'
 import { userRoutes } from './routes/user'
-import { repairOrderRoutes } from './routes/repair-order-routes'
+import { repairOrderRoutes } from './routes/repair-orders/repair-order-routes'
 import { vehicleRoute } from "./routes/vehicle"
 import { verify } from "./routes/verify"
 import { errorHandler }  from './controllers/middleware/error-handler'
