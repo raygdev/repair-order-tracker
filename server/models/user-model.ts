@@ -17,7 +17,7 @@ interface UserModel extends mongoose.Model<UserDoc> {
   build: (attrs: UserAttributes) => UserDoc
 }
 
-interface UserDoc {
+export interface UserDoc {
   _id: string
   id: string
   firstName: string
