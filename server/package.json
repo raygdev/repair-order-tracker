@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "jest --watchAll",
-    "dev": "ts-node-dev server.js",
-    "start": "node server.js"
+    "dev": "ts-node-dev index.ts",
+    "start": "node index.js"
   },
   "jest": {
     "preset": "ts-jest",
