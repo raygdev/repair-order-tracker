@@ -1,11 +1,7 @@
 import { MongoMemoryServer } from 'mongodb-memory-server'
 import mongoose from 'mongoose'
 import request from 'supertest'
-import express from 'express'
-// @ts-ignore
-const { initApp } = require('../initApp.js')
-const app = express()
-initApp(app,express)
+import { app } from '../initApp'
 
 declare global {
     var signin: () => Promise<string[] | undefined>

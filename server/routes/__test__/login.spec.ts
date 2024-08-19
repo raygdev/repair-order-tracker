@@ -1,11 +1,8 @@
 import request from "supertest";
-//@ts-ignore
-const { initApp } = require("../../initApp.js");
-import express from "express";
+import  { app } from "../../initApp";
 import { User } from "../../models/user-model";
 
-const app = express();
-initApp(app, express);
+
 
 const createUser = async () => {
   const user = {
