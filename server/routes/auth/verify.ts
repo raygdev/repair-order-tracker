@@ -1,7 +1,7 @@
 import express, { RequestHandler } from 'express'
 
-import { isAuthenticated } from "../controllers/middleware/auth"
-import { verifyController } from "../controllers/verify-controller"
+import { isAuthenticated } from "../../controllers/middleware/auth"
+import { verifyController } from "../../controllers/verify-controller"
 
 const router = express.Router()
 /**

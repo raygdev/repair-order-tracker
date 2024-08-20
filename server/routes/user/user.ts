@@ -1,8 +1,8 @@
 import express, { RequestHandler } from 'express'
-import { isAuthenticated } from '../controllers/middleware/auth'
+import { isAuthenticated } from '../../controllers/middleware/auth'
 const router = express.Router()
 
-import { getUser } from '../controllers/user-controllers'
+import { getUser } from '../../controllers/user-controllers'
 
 
 // @ts-ignore

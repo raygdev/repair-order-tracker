@@ -1,21 +1,5 @@
 import request from "supertest";
-import  { app } from "../../initApp";
-import { User } from "../../models/user-model";
-
-
-
-const createUser = async () => {
-  const user = {
-    firstName: "Test",
-    lastName: "Test",
-    email: "test@test.com",
-    password: "password",
-  };
-
-  const newUser = new User(user);
-  await newUser.save();
-  return newUser;
-};
+import  { app } from "../../../initApp";
 
 describe("POST /api/login", () => {
   beforeEach(async () => {

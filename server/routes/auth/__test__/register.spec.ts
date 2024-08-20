@@ -1,5 +1,5 @@
 import requst from 'supertest'
-import { app } from '../../initApp'
+import { app } from '../../../initApp'
 
 
 
