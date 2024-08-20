@@ -2,15 +2,16 @@ import express, { Request, Response } from 'express'
 import helmet from 'helmet'
 import cors from 'cors'
 import path from 'path'
+import 'express-async-errors'
 
 import { NotFoundError } from './errors/not-found-error'
 
 import { registerRoute } from './routes/auth/register'
 import { loginRoute } from './routes/auth/login'
-import { userRoutes } from './routes/user'
+import { userRoutes } from './routes/user/user'
 import { repairOrderRoutes } from './routes/repair-orders/repair-order-routes'
-import { vehicleRoute } from "./routes/vehicle"
-import { verify } from "./routes/verify"
+import { vehicleRoute } from "./routes/vehicle/vehicle"
+import { verify } from "./routes/auth/verify"
 import { errorHandler }  from './controllers/middleware/error-handler'
 const origin = process.env.NODE_ENV === 'production' ? 'https://repair-order-tracker.vercel.app' : 'http://localhost:5173'
 
