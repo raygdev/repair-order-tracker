@@ -6,16 +6,13 @@ import { UserDoc } from '../../models/user-model';
 import { NotAuthorizedError } from '../../errors/not-authorized-error';
 config()
 
-export interface GetAuthInfoRequest extends Request {
-    user: UserDoc
-}
 
 
 
 
 
 
-export const isAuthenticated = async (req: GetAuthInfoRequest, res: Response, next: NextFunction): Promise<void> => {
+export const isAuthenticated = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     let token;
 
   try {  
