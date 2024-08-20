@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { NotFoundError } from "../errors/not-found-error";
 
 // const mongoose = require("mongoose");
 // const { User } = require('./userModel')
@@ -71,7 +72,7 @@ RepairOrderSchema.statics.build = function (attrs: RepairOrderAttributes) {
 
 
 //create a model for the repair order
-const RepairOrders = mongoose.model<RepairOrderDoc,RepairOrderModel>(
+export const RepairOrders = mongoose.model<RepairOrderDoc,RepairOrderModel>(
   "RepairOrders",
   RepairOrderSchema,
   "RepairOrders"
@@ -100,15 +101,11 @@ export const findUserRepairOrders = function (userId: string, done: Done) {
 //TODO: Change name once verified functional
 
 export const userRepairOrders = async function (userId: string) {
-  try {
-    const repairOrders = await RepairOrders.find({ userId }).exec()
-    if(!repairOrders) {
-      return null
-    }
-    return repairOrders
-  } catch(e) {
-    throw e
+  const repairOrders = await RepairOrders.find({ userId }).exec()
+  if(!repairOrders) {
+    throw new NotFoundError()
   }
+  return repairOrders
 }
 
 /**
@@ -186,7 +183,7 @@ export const updateOneRepairOrder = function(ro_id: string, updateObj: RepairOrd
 
 //TODO: Change name once verified functional
 
-export const updateRepairOrder = async function (repairOrderId: string, repairToUpdate:RepairOrderAttributes) {
+export const updateRepairOrder = async function (repairOrderId: string, repairToUpdate:RepairOrderDoc) {
 
     const repairOrder =  await RepairOrders.findByIdAndUpdate(repairOrderId, repairToUpdate).exec()
     if(!repairOrder) {
