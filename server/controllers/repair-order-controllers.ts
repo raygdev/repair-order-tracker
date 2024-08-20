@@ -1,6 +1,4 @@
 import { Request, Response, NextFunction } from 'express'
-import { GetAuthInfoRequest } from './middleware/auth'
-
 import {
     RepairOrderAttributes,
     createRepairOrder as createRepair,
@@ -12,7 +10,7 @@ import {
     createVehicle
 } from "../models/vehicle-model"
 
-export function createRepairOrder(req: GetAuthInfoRequest,res: Response,next: NextFunction){
+export function createRepairOrder(req: Request,res: Response,next: NextFunction){
     let userId = req.user!.id
     let userObj = { ...req.body, userId }
 
@@ -55,7 +53,7 @@ export function createRepairOrder(req: GetAuthInfoRequest,res: Response,next: Ne
     })
 }
 
-export function deletRepairOrderById(req: GetAuthInfoRequest,res: Response,next: NextFunction){
+export function deletRepairOrderById(req: Request,res: Response,next: NextFunction){
 
     const roId  = req.params.roId
     const userId = req.user!.id

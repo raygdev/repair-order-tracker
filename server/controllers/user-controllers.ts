@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from "express";
-import { GetAuthInfoRequest } from "./middleware/auth";
 
 import {
   findUserRepairOrders,
@@ -22,8 +21,8 @@ export const getUser = (req: Request,res: Response, next: NextFunction) => {
   })
 }
 
-export const getAllROs = (req: GetAuthInfoRequest, res: Response, next: NextFunction) => {
-  findUserRepairOrders(req.user.id, (err, repairOrders) => {
+export const getAllROs = (req: Request, res: Response, next: NextFunction) => {
+  findUserRepairOrders(req.user!.id, (err, repairOrders) => {
 
     if (err) return res.status(404).json({ message: `No RO's found for this user` });
 
