@@ -2,10 +2,25 @@ import { MongoMemoryServer } from 'mongodb-memory-server'
 import mongoose from 'mongoose'
 import request from 'supertest'
 import { app } from '../initApp'
+import { User } from '../models/user-model'
 
 declare global {
     var signin: () => Promise<string[] | undefined>
+    var createUser: () => Promise<{firstName: string, lastName: string, email: string, password: string}>
 }
+
+global.createUser = async () => {
+    const user = {
+      firstName: "Test",
+      lastName: "Test",
+      email: "test@test.com",
+      password: "password",
+    };
+  
+    const newUser = new User(user);
+    await newUser.save();
+    return newUser;
+  }
 
 global.signin = async () => {
     const email = 'test@test.com'
