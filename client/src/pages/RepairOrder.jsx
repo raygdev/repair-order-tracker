@@ -17,7 +17,7 @@ export default function RepairOrder() {
     const { repairId, userId } = useParams()
 
     const repairOrder  = repairOrders.find(RO => RO.id === repairId)
-    const vehicle = repairOrder.vehicle[0]
+    const vehicle = repairOrder.vehicle
 
     let date = toLocalDateString(repairOrder.created_on)
 

@@ -1,0 +1,14 @@
+name: server-tests
+
+on:
+  pull_request:
+    paths: 
+      - 'server/**'
+env: 
+  JWT_SECRET: abc123
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: cd server && npm install && npm run test:ci
