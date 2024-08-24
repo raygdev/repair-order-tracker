@@ -11,8 +11,7 @@ const Link = loadable(() =>
 
 
 function RepairOrderCard({ repairOrder }) {
-  const { ro_number, id, created_on, vehicle:roVehicle } = repairOrder
-  const vehicle = roVehicle[0]
+  const { ro_number, id, created_on, vehicle } = repairOrder
   const date = toLocalDateString(created_on)
   const submit = useSubmit()
   return (
