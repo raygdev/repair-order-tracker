@@ -63,7 +63,8 @@ const RepairOrderSchema = new mongoose.Schema({
 RepairOrderSchema.virtual('vehicle', {
   ref: 'vehicles',
   localField: 'vin',
-  foreignField: 'VIN'
+  foreignField: 'VIN',
+  justOne: true,
 })
 
 RepairOrderSchema.statics.build = function (attrs: RepairOrderAttributes) {
