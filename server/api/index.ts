@@ -43,4 +43,4 @@ mongoose.connect(uri,{},(err: any) => {
     )
  })
 
-module.exports = app
+export default app
