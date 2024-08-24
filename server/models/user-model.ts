@@ -25,7 +25,7 @@ export interface UserDoc {
   email: string
   password: string
   shopName?: string
-  repairOrders: RepairOrderAttributes[]
+  repairOrders: mongoose.Types.ObjectId[]
 }
 
 type DoneCallback = (err:any, user?: any) => void
@@ -164,8 +164,8 @@ export const findUserById = function (userId: string, done: DoneCallback){
         path: 'repairOrders',
         populate: {
           path: 'vehicle',
-          select: '-id -_id -__v'
-        }
+          select: '-id -_id -__v',
+        },
       })
       .select("-password")
       .exec( (err, user) => {
@@ -178,9 +178,9 @@ export const findUserById = function (userId: string, done: DoneCallback){
       })
 }
 
-export const findById = function (userId: string) {
+export const findById = async function (userId: string) {
   try {
-    const user = User.findById(userId).populate('repairOrders').select('-password').exec()
+    const user = await User.findById(userId).populate('repairOrders').select('-password').exec()
     if(!user) {
       return null
     }
@@ -197,13 +197,13 @@ export const findById = function (userId: string) {
  * @param {callback} done callback that returns either error or user
  */
 
-export const findUserAndPushRepairOrder = function(userId: string,roId:any,done: DoneCallback){
+export const findUserAndPushRepairOrder = function(userId: string,roId: string,done: DoneCallback){
    User.findOne({_id:userId},function (err: mongoose.CallbackError,user: any){
 
     if(err) return done(err)
     if(!user) return done(null,false)
 
-    // user.repairOrders.push(roId as RepairOrderAttributes)
+    user.repairOrders.push(roId)
 
     user.save((err: mongoose.CallbackError) => {
 
@@ -214,10 +214,10 @@ export const findUserAndPushRepairOrder = function(userId: string,roId:any,done:
   })
 }
 
-export const findAndPushRepairOrder = async function (userId: string,repairId:any) {
+export const findAndPushRepairOrder = async function (userId: string,repairId: mongoose.Types.ObjectId) {
   try{
     const user = await User.findOne({_id: userId}).exec()
-    user?.repairOrders.push(repairId as RepairOrderAttributes)
+    user?.repairOrders.push(repairId)
     await user?.save()
     return user
   } catch (e) {
