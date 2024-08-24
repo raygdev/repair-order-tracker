@@ -4,6 +4,8 @@ on:
   pull_request:
     paths: 
       - 'server/**'
+env: 
+  JWT_SECRET: abc123
 jobs:
   build:
     runs-on: ubuntu-latest
