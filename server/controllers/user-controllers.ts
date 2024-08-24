@@ -8,8 +8,9 @@ import {
 } from "../models/repair-order-model"
 import { findUserById } from "../models/user-model"
 
-export const getUser = (req: Request,res: Response, next: NextFunction) => {
-  findUserById(req.params.userId,(err, user) => {
+export const getUser = async (req: Request,res: Response, next: NextFunction) => {
+  if(req.params.userId! !== req.user!.id) return res.status(401).json({ message: 'Not Authorized' })
+  findUserById(req.params.userId,async (err, user) => {
 
     if(err) return res.status(404).json({message:"something went wrong"});
 
