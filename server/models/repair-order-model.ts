@@ -5,8 +5,6 @@ import { NotFoundError } from "../errors/not-found-error";
 // const { User } = require('./userModel')
 
 export interface RepairOrderAttributes {
-  _id: string
-  id: string
   ro_number: number
   isWarranty: boolean
   userId: string
