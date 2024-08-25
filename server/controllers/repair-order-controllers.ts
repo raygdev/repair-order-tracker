@@ -62,45 +62,49 @@ export async function deleteRepair(req: Request, res: Response) {
     .json({ message: `Repair Order ${repair.ro_number} successfuly deleted` });
 }
 
-        if(!doc) return res.status(404).json({message: `repair order with id ${roId} does not exist`})
+export async function updateRepair(req: Request, res: Response) {
+  const id = req.params.id;
+  const userId = req.user!.id;
 
-        if(doc.userId !== userId){
-            console.log(`[roId]: ${roId}\n[userId]: ${userId}\n[docUserId]: ${doc.userId}`)
-            return res.status(409).json({message:'This RO doesn\'t belong to this user'})
-        }
+  const { vin, created_on, notes, ro_number, isWarranty } =
+    req.body as RepairOrderAttributes;
 
-        if(err) return res.status(409).json({message:'Something went wrong deleting the repair order'})
+  const repair = await RepairOrders.findById(id).exec();
 
+  if (!repair) {
+    throw new NotFoundError();
+  }
 
-        console.log(`repair order removed from user with id: ${userId}`)
+  if (repair.userId !== userId) {
+    throw new NotAuthorizedError();
+  }
 
-        res.json({message: `repiar order ${doc.ro_number} successfuly deleted`})
+  if (notes) {
+    repair.set("notes", notes);
+  }
 
-    })
-}
+  if (created_on) {
+    repair.set("created_on", created_on);
+  }
 
-export function updateOneRepairOrderById(req: Request, res: Response, next: NextFunction){
-    const roId = req.params.roId
-    const vin = req.body.vin
-    updateOneRepairOrder(roId, req.body, (err,ro)=> {
+  repair.set("vin", vin);
+  repair.set("ro_number", ro_number);
+  repair.set("isWarranty", isWarranty);
 
-        getVehicle(vin, (vehicleError: string, vehicle: any) => {
-            if(vehicleError) console.log(vehicleError)
-            if(!vehicle) {
-                console.log(vehicle)
-                createVehicle(vin, (createError: any) =>{
-                    if(createError) console.log(createError)
-                        if(err) return res.status(404).json({message:'Something went wrong updating the RO'})
-                        if(!ro) return res.status(404).json({message:'Could not find that RO'})
-                        return res.json({message:'success', ro})
-                    
-                })
-            } else {
-                if(err) return res.status(404).json({message:'Something went wrong updating the RO'})
-                if(!ro) return res.status(404).json({message:'Could not find that RO'})
-                return res.json({message:'success', ro})
-            }
-        })
-        
-    })
+  await repair.save();
+
+  let vehicle = await findVehicleByVin(vin);
+
+  if (!vehicle) {
+    // I feel like this should really be handled separately
+    // maybe create an endpoint and use an onblur in the client?
+    vehicle = await getAndCreateVehicleInfo(vin).catch(() =>
+      console.log("Something went wrong with creating the vehicle")
+    );
+  }
+
+  res.json({
+    message: "Success",
+    repair,
+  });
 }
