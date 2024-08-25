@@ -29,14 +29,10 @@ async function getVehicleData(vin: string, callback: (err: string | null | unkno
 }
 
 async function getVehicleInfo (vin: string) {
-    try {
-        let res = await axios.get(`https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVin/${vin}?format=json`)
-        let vehicleInfo = transformVehicleData(res.data.Results)
-        return vehicleInfo
-    } catch (e) {
-        console.log('error from [getVehicleInfo]',e)
-        throw e
-    }
+    let res = await axios.get(`https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVin/${vin}?format=json`)
+    let vehicleInfo = transformVehicleData(res.data.Results)
+    vehicleInfo.VIN = vin
+    return vehicleInfo
 }
 
 export const createVehicle = (vin: string, done: any) => {
@@ -53,17 +49,10 @@ export const createVehicle = (vin: string, done: any) => {
 }
 
 export const getAndCreateVehicleInfo = async function (vin: string) {
-    try {
-        const vehicleInfo = await getVehicleInfo(vin)
-        if(vehicleInfo === 'string') {
-            return null
-        }
-        const insertedVehicle = new Vehicles(vehicleInfo)
-        await insertedVehicle.save()
-        return insertedVehicle
-    } catch (e) {
-        throw e
-    }
+    const vehicleInfo = await getVehicleInfo(vin)
+    const vehicle = new Vehicles(vehicleInfo)
+    await vehicle.save()
+    return vehicle
 }
 
 export const getVehicle = (vin: string, done: any) => {
@@ -75,14 +64,10 @@ export const getVehicle = (vin: string, done: any) => {
 }
 
 export const findVehicleByVin = async function (vin: string) {
-    try {
-        const foundVehicle = Vehicles.findOne({ VIN: vin }).exec()
-        if(!foundVehicle) {
-            return null
-        }
-        return foundVehicle
-    } catch (e) {
-        console.log(e)
-        throw e
+    const foundVehicle = await Vehicles.findOne({ VIN: vin }).exec()
+    if(!foundVehicle) {
+        return null
     }
+
+    return foundVehicle
 }
