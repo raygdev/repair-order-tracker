@@ -42,12 +42,25 @@ export async function createRepair(req: Request, res: Response) {
   res.status(200).send(repair);
 }
 
-export function deletRepairOrderById(req: Request,res: Response,next: NextFunction){
+export async function deleteRepair(req: Request, res: Response) {
+  const id = req.params.id as string;
+  const userId = req.user!.id;
 
-    const roId  = req.params.roId
-    const userId = req.user!.id
+  const repair = await RepairOrders.findById(id).exec();
+  if (!repair) {
+    throw new NotFoundError();
+  }
 
-    deleteOneRepairOrderById(roId, (err, doc) => {
+  if (repair.userId !== userId) {
+    throw new NotAuthorizedError();
+  }
+
+  await repair.delete();
+
+  res
+    .status(200)
+    .json({ message: `Repair Order ${repair.ro_number} successfuly deleted` });
+}
 
         if(!doc) return res.status(404).json({message: `repair order with id ${roId} does not exist`})
 
