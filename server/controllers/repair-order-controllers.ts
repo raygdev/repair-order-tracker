@@ -1,10 +1,8 @@
-import { Request, Response, NextFunction } from 'express'
+import { Request, Response, NextFunction } from "express";
 import {
-    RepairOrderAttributes,
-    createRepairOrder as createRepair,
-    deleteOneRepairOrderById,
-    updateOneRepairOrder
-} from '../models/repair-order-model'
+  RepairOrderAttributes,
+  RepairOrders,
+} from "../models/repair-order-model";
 import {
     getVehicle,
     createVehicle
