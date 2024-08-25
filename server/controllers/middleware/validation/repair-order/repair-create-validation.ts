@@ -2,7 +2,7 @@ import { body } from "express-validator";
 
 export const validateRepairOrderCreation = [
   validateVin(),
-  validateRoNumber,
+  validateRoNumber(),
   validateCreatedOn(),
   sanitizeOptionalNotes(),
   validateIsWarranty()
