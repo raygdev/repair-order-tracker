@@ -49,17 +49,10 @@ export const createVehicle = (vin: string, done: any) => {
 }
 
 export const getAndCreateVehicleInfo = async function (vin: string) {
-    try {
-        const vehicleInfo = await getVehicleInfo(vin)
-        if(vehicleInfo === 'string') {
-            return null
-        }
-        const insertedVehicle = new Vehicles(vehicleInfo)
-        await insertedVehicle.save()
-        return insertedVehicle
-    } catch (e) {
-        throw e
-    }
+    const vehicleInfo = await getVehicleInfo(vin)
+    const vehicle = new Vehicles(vehicleInfo)
+    await vehicle.save()
+    return vehicle
 }
 
 export const getVehicle = (vin: string, done: any) => {
@@ -71,14 +64,10 @@ export const getVehicle = (vin: string, done: any) => {
 }
 
 export const findVehicleByVin = async function (vin: string) {
-    try {
-        const foundVehicle = Vehicles.findOne({ VIN: vin }).exec()
-        if(!foundVehicle) {
-            return null
-        }
-        return foundVehicle
-    } catch (e) {
-        console.log(e)
-        throw e
+    const foundVehicle = await Vehicles.findOne({ VIN: vin }).exec()
+    if(!foundVehicle) {
+        return null
     }
+
+    return foundVehicle
 }
