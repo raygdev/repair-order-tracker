@@ -79,27 +79,6 @@ export const RepairOrders = mongoose.model<RepairOrderDoc,RepairOrderModel>(
   "RepairOrders"
 );
 
-// module.exports = RepairOrderSchema;
-
-/**
- * 
- * @param {string} userId the id of the user to find their ROs
- * @param {callback} done returns either error or the array of repair orders found
- */
-
-export const findUserRepairOrders = function (userId: string, done: Done) {
-
-  RepairOrders.find({ userId: userId }, (err: any, repairOrders: RepairOrderDoc) => {
-
-    if (err) return done(err);
-
-    if (!repairOrders) return done(null, false);
-    
-    return done(null, repairOrders);
-  });
-};
-
-//TODO: Change name once verified functional
 
 export const userRepairOrders = async function (userId: string) {
   const repairOrders = await RepairOrders.find({ userId }).exec()
@@ -109,86 +88,24 @@ export const userRepairOrders = async function (userId: string) {
   return repairOrders
 }
 
-/**
- * 
- * @param {Object} repairOrderObject an object passed to create the repair order
- * @param {callback} done return the repairOrder to be saved
- */
-
-export const createRepairOrder = function (repairOrderObject:RepairOrderAttributes, done: (repairOrders: RepairOrderDoc) => void) {
-  const repairOrder = new RepairOrders(repairOrderObject);
-  return done(repairOrder);
-};
-
-//TODO: Change name once verified functional
-export const create = async function (repairOrderObject: RepairOrderAttributes) {
+export const createRepair = async function (repairOrderObject: RepairOrderAttributes) {
   const repairOrder = new RepairOrders(repairOrderObject)
   await repairOrder.save()
   return repairOrder
 }
 
-/**
- * 
- * @param {string} repairOrderId the repair order id to be deleted
- * @param {callback} done return an error or the doc if found
- */
-
-export const deleteOneRepairOrderById = function (repairOrderId: string, done: Done) {
-
-  RepairOrders.findByIdAndDelete(repairOrderId, (err: mongoose.CallbackError ,doc: RepairOrderDoc) => {
-
-    if (err) return done(err);
-
-    if(!doc) return done(null, false);
-
-    return done(null, doc)
-  });
-};
-
-//TODO: Change name once verified functional
-
 export const deleteRepairById = async function (repairOrderId: string) {
   const deletedRepairOrder =  await RepairOrders.findByIdAndDelete(repairOrderId).exec()
   if(!deletedRepairOrder) {
-    return null
+    throw new NotFoundError()
   }
   return deletedRepairOrder
 }
 
-/**
- * 
- * @param {string} tech_id is the technicians user id from the user's doc
- * @param {callback} done return the error or the count of all the docs deleted
- */
-export const deleteAllRepairOrders = function(tech_id: string, done: Done){
-
-  RepairOrders.deleteMany({tech_id:tech_id}, (err:mongoose.CallbackError, doc: any) => {
-
-      if(err) return done(err)
-
-      return done(null, doc.deletedCount)
-  })
-}
-
-export const updateOneRepairOrder = function(ro_id: string, updateObj: RepairOrderDoc, done: Done){
-
-  RepairOrders.findByIdAndUpdate(ro_id,updateObj,function(err: mongoose.CallbackError,ro: RepairOrderDoc){
-
-    if(err) return done(err)
-
-    if(!ro) return done(null,false)
-    
-    return done(null, ro)
-  })
-}
-
-//TODO: Change name once verified functional
-
 export const updateRepairOrder = async function (repairOrderId: string, repairToUpdate:RepairOrderDoc) {
-
     const repairOrder =  await RepairOrders.findByIdAndUpdate(repairOrderId, repairToUpdate).exec()
     if(!repairOrder) {
-      return null
+      throw new NotFoundError()
     }
     return repairOrder
 
