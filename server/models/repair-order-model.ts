@@ -14,7 +14,7 @@ export interface RepairOrderAttributes {
 }
 
 interface RepairOrderModel extends mongoose.Model<RepairOrderDoc>{
-  build: (attrs: RepairOrderAttributes) => RepairOrderDoc
+  build: (attrs: RepairOrderAttributes) => Promise<RepairOrderDoc>
 }
 
 export interface RepairOrderDoc extends mongoose.Document{
@@ -65,9 +65,11 @@ RepairOrderSchema.virtual('vehicle', {
   justOne: true,
 })
 
-RepairOrderSchema.statics.build = function (attrs: RepairOrderAttributes) {
+RepairOrderSchema.statics.build = async function (attrs: RepairOrderAttributes){
   return new RepairOrders(attrs)
 }
+
+
 
 
 //create a model for the repair order
