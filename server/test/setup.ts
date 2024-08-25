@@ -5,7 +5,7 @@ import { app } from '../initApp'
 import { User } from '../models/user-model'
 
 declare global {
-    var signin: () => Promise<string[] | undefined>
+    var signin: () => Promise<string>
     var createUser: () => Promise<{firstName: string, lastName: string, email: string, password: string}>
 }
 
