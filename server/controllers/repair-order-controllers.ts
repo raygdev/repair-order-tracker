@@ -4,51 +4,42 @@ import {
   RepairOrders,
 } from "../models/repair-order-model";
 import {
-    getVehicle,
-    createVehicle
-} from "../models/vehicle-model"
+  findVehicleByVin,
+  getAndCreateVehicleInfo,
+} from "../models/vehicle-model";
+import { NotFoundError } from "../errors/not-found-error";
+import { NotAuthorizedError } from "../errors/not-authorized-error";
 
-export function createRepairOrder(req: Request,res: Response,next: NextFunction){
-    let userId = req.user!.id
-    let userObj = { ...req.body, userId }
+export async function createRepair(req: Request, res: Response) {
+  const userId = req.user!.id;
+  let { ro_number, isWarranty, vin, created_on, notes } =
+    req.body as RepairOrderAttributes;
 
-    if(!userObj.created_on){
-        userObj.created_on = Date.now()
-    }
-    if(!userObj.vin || !/\w{17}/.test(userObj.vin)){ 
-        return res.status(422).json({message: "VIN is required and must be 17 characters in length"})
-    }
+  if (!created_on) {
+    created_on = new Date(Date.now());
+  }
 
-    createRepair(userObj,(repairOrder) => {
-        getVehicle(userObj.vin,(findVehicleError: string, foundVehicle: any) => {
-            //if an error return the error looking for the vehicle
-            if(findVehicleError) return res.status(409).json({message: findVehicleError})
-            // if the vehicle isn't found
-            if(!foundVehicle){
-                //create a new vehicle
-                createVehicle(userObj.vin,(newVehicleError: any, newVehicle: any) => {
-                    //if there's an error creating the vehicle... respond with the error
-                    if(newVehicleError) console.log(newVehicleError) /*res.status(409).json({message: newVehicleError})*/
-                    //else finally save the repair order
-                    repairOrder.save((repairOrderSaveError) => {
-                        //if there is an error saving... response with an error message
-                        if(repairOrderSaveError) return res.status(409).json({message: "Something went wrong saving the RO"})
-                        //else response that it was saved successfully
-                        return res.json({message:'RO saved successfully'})
-                    })
-                })
-            } else {
-                //else if the vehicle is found save the repair order
-                repairOrder.save((repairOrderSaveError) => {
-                    // if there is an error saving, respond with an error message
-                    if(repairOrderSaveError) return res.status(409).json({message: "Something went wrong saving the RO"})
-                    //else respond with a success message
-                    return res.json({message: "RO saved successfully"})
+  let vehicle = await findVehicleByVin(vin);
+  if (!vehicle) {
+    vehicle = getAndCreateVehicleInfo(vin).catch(
+      // fail silently here so ro can still be created with
+      // invalid vin
+      () => console.log("something went wrong creating the vehicle")
+    );
+  }
 
-                })
-            }
-        })
-    })
+  const repair = await RepairOrders.build({
+    ro_number,
+    isWarranty,
+    vin,
+    created_on,
+    notes,
+    userId,
+  });
+
+  await repair.save();
+
+  res.status(200).send(repair);
 }
 
 export function deletRepairOrderById(req: Request,res: Response,next: NextFunction){
