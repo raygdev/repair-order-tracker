@@ -6,7 +6,7 @@ import { validateRequest, validateRepairOrderCreation } from '../../controllers/
 
 const router = express.Router()
 
-router.post('/repairorder',
+router.post('/api/repairorder',
   isAuthenticated,
   validateRepairOrderCreation,
   validateRequest,
