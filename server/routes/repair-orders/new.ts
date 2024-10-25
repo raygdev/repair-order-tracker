@@ -1,16 +1,16 @@
 import express from 'express'
-import { createRepairOrder } from '../../controllers/repair-order-controllers'
+import { createRepair } from '../../controllers/repair-order-controllers'
 import { isAuthenticated } from '../../controllers/middleware/auth'
 import { validateRequest, validateRepairOrderCreation } from '../../controllers/middleware/validation'
 
 
 const router = express.Router()
 
-router.post('/repairorder',
+router.post('/api/repairorder',
   isAuthenticated,
   validateRepairOrderCreation,
   validateRequest,
-  createRepairOrder
+  createRepair
 )
 
 export { router as newRepairOrder }

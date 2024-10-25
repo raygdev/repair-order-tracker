@@ -9,7 +9,7 @@ export default function RepairOrderListItems(props) {
   return (
     <>
       <li className=" flex justify-between p-2 border-b">
-        <Link to={`repairorder/${props.id}?vin=${props.vin}`}>
+        <Link to={`repairorder/${props.id}`}>
           <FontAwesomeIcon icon={faLongArrowAltRight} /> {props.ro_number}
         </Link>
         <DeleteButton 

@@ -55,7 +55,7 @@ export const router = createBrowserRouter([
                 action:loginAction
             },
             {
-                path: 'user/:userId',
+                path: 'dashboard',
                 element:<AuthProvider><UserLayout /></AuthProvider>,
                 loader: userLoader,
                 id:'root',

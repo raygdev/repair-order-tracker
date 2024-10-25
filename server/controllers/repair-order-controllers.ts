@@ -1,104 +1,118 @@
-import { Request, Response, NextFunction } from 'express'
+import { Request, Response } from "express";
 import {
-    RepairOrderAttributes,
-    createRepairOrder as createRepair,
-    deleteOneRepairOrderById,
-    updateOneRepairOrder
-} from '../models/repair-order-model'
+  RepairOrderAttributes,
+  RepairOrders,
+  getUserRepairOrders,
+} from "../models/repair-order-model";
 import {
-    getVehicle,
-    createVehicle
-} from "../models/vehicle-model"
+  findVehicleByVin,
+  getAndCreateVehicleInfo,
+} from "../models/vehicle-model";
+import { NotFoundError } from "../errors/not-found-error";
+import { NotAuthorizedError } from "../errors/not-authorized-error";
 
-export function createRepairOrder(req: Request,res: Response,next: NextFunction){
-    let userId = req.user!.id
-    let userObj = { ...req.body, userId }
+export async function createRepair(req: Request, res: Response) {
+  const userId = req.user!.id;
+  let { ro_number, isWarranty, vin, created_on, notes } =
+    req.body as RepairOrderAttributes;
 
-    if(!userObj.created_on){
-        userObj.created_on = Date.now()
-    }
-    if(!userObj.vin || !/\w{17}/.test(userObj.vin)){ 
-        return res.status(422).json({message: "VIN is required and must be 17 characters in length"})
-    }
+  if (!created_on) {
+    created_on = new Date(Date.now());
+  }
 
-    createRepair(userObj,(repairOrder) => {
-        getVehicle(userObj.vin,(findVehicleError: string, foundVehicle: any) => {
-            //if an error return the error looking for the vehicle
-            if(findVehicleError) return res.status(409).json({message: findVehicleError})
-            // if the vehicle isn't found
-            if(!foundVehicle){
-                //create a new vehicle
-                createVehicle(userObj.vin,(newVehicleError: any, newVehicle: any) => {
-                    //if there's an error creating the vehicle... respond with the error
-                    if(newVehicleError) console.log(newVehicleError) /*res.status(409).json({message: newVehicleError})*/
-                    //else finally save the repair order
-                    repairOrder.save((repairOrderSaveError) => {
-                        //if there is an error saving... response with an error message
-                        if(repairOrderSaveError) return res.status(409).json({message: "Something went wrong saving the RO"})
-                        //else response that it was saved successfully
-                        return res.json({message:'RO saved successfully'})
-                    })
-                })
-            } else {
-                //else if the vehicle is found save the repair order
-                repairOrder.save((repairOrderSaveError) => {
-                    // if there is an error saving, respond with an error message
-                    if(repairOrderSaveError) return res.status(409).json({message: "Something went wrong saving the RO"})
-                    //else respond with a success message
-                    return res.json({message: "RO saved successfully"})
+  let vehicle = await findVehicleByVin(vin);
+  if (!vehicle) {
+    vehicle = await getAndCreateVehicleInfo(vin).catch(
+      // fail silently here so ro can still be created with
+      // invalid vin
+      () => console.log("something went wrong creating the vehicle")
+    );
+  }
 
-                })
-            }
-        })
-    })
+  const repair = await RepairOrders.build({
+    ro_number,
+    isWarranty,
+    vin,
+    created_on,
+    notes,
+    userId,
+  });
+
+  await repair.save();
+
+  res.status(200).send(repair);
 }
 
-export function deletRepairOrderById(req: Request,res: Response,next: NextFunction){
+export async function deleteRepair(req: Request, res: Response) {
+  const id = req.params.id as string;
+  const userId = req.user!.id;
 
-    const roId  = req.params.roId
+  const repair = await RepairOrders.findById(id).exec();
+  if (!repair) {
+    throw new NotFoundError();
+  }
+
+  if (repair.userId !== userId) {
+    throw new NotAuthorizedError();
+  }
+
+  await repair.delete();
+
+  res
+    .status(200)
+    .json({ message: `Repair Order ${repair.ro_number} successfuly deleted` });
+}
+
+export async function updateRepair(req: Request, res: Response) {
+  const id = req.params.id;
+  const userId = req.user!.id;
+
+  const { vin, created_on, notes, ro_number, isWarranty } =
+    req.body as RepairOrderAttributes;
+
+  const repair = await RepairOrders.findById(id).exec();
+
+  if (!repair) {
+    throw new NotFoundError();
+  }
+
+  if (repair.userId !== userId) {
+    throw new NotAuthorizedError();
+  }
+
+  if (notes) {
+    repair.set("notes", notes);
+  }
+
+  if (created_on) {
+    repair.set("created_on", created_on);
+  }
+
+  repair.set("vin", vin);
+  repair.set("ro_number", ro_number);
+  repair.set("isWarranty", isWarranty);
+
+  await repair.save();
+
+  let vehicle = await findVehicleByVin(vin);
+
+  if (!vehicle) {
+    // I feel like this should really be handled separately
+    // maybe create an endpoint and use an onblur in the client?
+    vehicle = await getAndCreateVehicleInfo(vin).catch(() =>
+      console.log("Something went wrong with creating the vehicle")
+    );
+  }
+
+  res.json({
+    message: "Success",
+    repair,
+  });
+}
+
+export async function getUserRepairs(req: Request, res: Response) {
     const userId = req.user!.id
+    const repairs = await getUserRepairOrders(userId)
 
-    deleteOneRepairOrderById(roId, (err, doc) => {
-
-        if(!doc) return res.status(404).json({message: `repair order with id ${roId} does not exist`})
-
-        if(doc.userId !== userId){
-            console.log(`[roId]: ${roId}\n[userId]: ${userId}\n[docUserId]: ${doc.userId}`)
-            return res.status(409).json({message:'This RO doesn\'t belong to this user'})
-        }
-
-        if(err) return res.status(409).json({message:'Something went wrong deleting the repair order'})
-
-
-        console.log(`repair order removed from user with id: ${userId}`)
-
-        res.json({message: `repiar order ${doc.ro_number} successfuly deleted`})
-
-    })
-}
-
-export function updateOneRepairOrderById(req: Request, res: Response, next: NextFunction){
-    const roId = req.params.roId
-    const vin = req.body.vin
-    updateOneRepairOrder(roId, req.body, (err,ro)=> {
-
-        getVehicle(vin, (vehicleError: string, vehicle: any) => {
-            if(vehicleError) console.log(vehicleError)
-            if(!vehicle) {
-                console.log(vehicle)
-                createVehicle(vin, (createError: any) =>{
-                    if(createError) console.log(createError)
-                        if(err) return res.status(404).json({message:'Something went wrong updating the RO'})
-                        if(!ro) return res.status(404).json({message:'Could not find that RO'})
-                        return res.json({message:'success', ro})
-                    
-                })
-            } else {
-                if(err) return res.status(404).json({message:'Something went wrong updating the RO'})
-                if(!ro) return res.status(404).json({message:'Could not find that RO'})
-                return res.json({message:'success', ro})
-            }
-        })
-        
-    })
+    res.json(repairs)
 }

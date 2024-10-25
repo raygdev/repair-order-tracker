@@ -1,6 +1,7 @@
 import  mongoose from 'mongoose'
 import  bcrypt from 'bcrypt'
 import { RepairOrderAttributes } from './repair-order-model'
+import { NotFoundError } from '../errors/not-found-error'
 
 export interface UserAttributes {
   _id: string
@@ -141,7 +142,7 @@ export const findUserByEmail = function (email: { email: string }, done: DoneCal
 
 export const findByEmail = async function (email: { email: string }) {
   try {
-    const foundUser = User.findOne(email).populate('repairOrders').exec()
+    const foundUser = await User.findOne(email).populate('repairOrders').exec()
     if(!foundUser) {
       return null
     }
@@ -151,43 +152,12 @@ export const findByEmail = async function (email: { email: string }) {
   }
 }
 
-
-/**
- * 
- * @param {string} userId the user's id
- * @param {callback} done callback returns either error or user
- */
-
-export const findUserById = function (userId: string, done: DoneCallback){
-  User.findById(userId)
-      .populate({
-        path: 'repairOrders',
-        populate: {
-          path: 'vehicle',
-          select: '-id -_id -__v',
-        },
-      })
-      .select("-password")
-      .exec( (err, user) => {
-
-          if(err) return done(err)
-
-          if(!user) return done(null, false)
-
-          return done(null, user)
-      })
-}
-
-export const findById = async function (userId: string) {
-  try {
-    const user = await User.findById(userId).populate('repairOrders').select('-password').exec()
-    if(!user) {
-      return null
-    }
-    return user
-  } catch (e) {
-    throw e
+export const findUserById = async function (userId: string) {
+  const user = await User.findById(userId).select('-password -__v').exec()
+  if(!user) {
+    throw new NotFoundError()
   }
+  return user
 }
 
 /**

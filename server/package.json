@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "jest --watchAll",
+    "test": "jest --watchAll --verbose",
     "dev": "ts-node-dev api/index.ts",
     "start": "node index.js",
     "test:ci": "jest"

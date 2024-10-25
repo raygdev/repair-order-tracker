@@ -6,26 +6,27 @@ import { toLocalDateString, toISOString } from '../utils/datesHelpers'
 const FontAwesomeIcon = loadable(() => import('@fortawesome/react-fontawesome').then(module => ({default:module.FontAwesomeIcon})))
 
 export default function EditRepairOrder() {
-    const { repairOrders } = useRouteLoaderData('root')
+    const repairs  = useRouteLoaderData('root')
     const { repairId } = useParams()
     const navigation = useNavigation()
-    const repairOrder = repairOrders.find(ro => ro._id === repairId)
+    const repair = repairs?.find(repair => repair._id === repairId)
     const inputs = useActionData()
     
-    const date = toLocalDateString(repairOrder.created_on)
+    const date = toLocalDateString(repair.created_on)
 
      return (
         <main>
 
             <Form
                 method='put'
-                action={`../editrepairorder/${repairId}`}
+                action={`../editrepairorder/${repair.id}`}
                 className='sm:max-w-max m-auto min-h-screen justify-between px-4 mt-4'
             >
                 <div className='shadow-form rounded overflow-hidden pb-4'>
                     <div className='bg-form-header text-ro-slate-100 py-2 pl-4'>
                         <h2 className='text-lg'>Edit Repair</h2>
                     </div>
+                    <input type='hidden' id='id' name='id' value={repair.id} />
                     <div className='flex flex-col justify-between px-4'>
                     <div className='flex flex-col text-ro-slate-900'>
                         {inputs && <span className='text-red-600'>Please check the highlighted fields!</span>}
@@ -35,7 +36,7 @@ export default function EditRepairOrder() {
                             type="text"
                             id="ro_number"
                             name={'ro_number'}
-                            defaultValue={repairOrder.ro_number}
+                            defaultValue={repair.ro_number}
                         />
                         {inputs && inputs.ro_number.isInvalid && <span className='text-red-600'>{inputs.ro_number.message}</span>}
                     </div>
@@ -46,7 +47,7 @@ export default function EditRepairOrder() {
                             type="text"
                             id="vin"
                             name='vin'
-                            defaultValue={repairOrder.vin}
+                            defaultValue={repair.vin}
                         />
                         {inputs && inputs.vin.isInvalid && <span className='text-red-600'>{inputs.vin.message}</span>}
                     </div>
@@ -67,7 +68,7 @@ export default function EditRepairOrder() {
                             type="checkbox"
                             id="isWarranty"
                             name='isWarranty'
-                            defaultChecked={repairOrder.isWarranty}
+                            defaultChecked={repair.isWarranty}
                         />
                         </div>
                     </div>
@@ -77,7 +78,7 @@ export default function EditRepairOrder() {
                             className='bg-inherit p-1 rounded outline-none focus:border focus:border-ro-slate-900'
                             name="notes"
                             id="notes"
-                            defaultValue={repairOrder.notes}
+                            defaultValue={repair.notes}
                             cols="30"
                             rows="10"
                         />

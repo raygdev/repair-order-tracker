@@ -10,43 +10,24 @@ export default function Header(props) {
     return isActive ? 'p-4 underline underline-offset-4' : 'p-4'
   }
 
-  let toggleLogin = !auth ? (
-    <NavLink
-      to="login"
-      className={activeLink}
-    >
-      Login
-    </NavLink>
-  ) : (
-    <Logout />
-  );
-  let toggleHome = auth ? `user/${auth.id}` : "/";
+  const links = [
+    !auth && { to: '/', name: 'Home'},
+    !auth && { to: 'login', name: 'Login'},
+    !auth && { to: 'register', name: 'Register'},
+    !auth && { to: 'about', name: 'About'},
+    auth && { to: 'dashboard', name: 'Home'}
+  ]
 
   return (
     <header className="p-4 bg-ro-slate-900 flex sticky top-0 min-w-max text-ro-slate-100 font-semibold">
       <nav className="flex basis-full justify-around">
-        <NavLink
-          to={toggleHome}
-          className={activeLink}
-        >
-          Home
-        </NavLink>
-        {toggleLogin}
-        {!auth && (
-          <NavLink
-            to="register"
-            className={activeLink}
-          >
-            Register
-          </NavLink>
-        )}
-        {!auth && (<NavLink
-          to="about"
-          className={activeLink}
-        >
-          About
-        </NavLink>
-        )}
+        { links
+            .filter(link => link)
+            .map(
+              (link,i) => <NavLink className={activeLink} to={link.to} key={i}>{link.name}</NavLink>
+            )
+        }
+        { auth && <Logout/> }
       </nav>
     </header>
   );

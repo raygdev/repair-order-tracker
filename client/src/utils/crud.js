@@ -41,20 +41,8 @@ export async function createNewUser(userObj) {
   return true
 }
 
-export async function deleteRepairOrder(id) {
-  const res = await fetch(`${url}/repairorder/${id}`, {
-    method: "delete",
-    headers: authHeaders()
-  })
-  const success = await res.json()
-  if (!res.ok) {
-    return handleNotOK(res, success)
-  }
-  return true
-}
-
 export async function createRO(ro) {
-  const res = await fetch(`${url}/repairorder`, {
+  const res = await fetch(`${url}/api/repairorder`, {
     method: "POST",
     headers: authHeaders(),
     body: JSON.stringify(ro)
@@ -67,23 +55,9 @@ export async function createRO(ro) {
   return true
 }
 
-export async function editRO(updatedRO) {
-  const res = await fetch(`${url}/repairorder/${updatedRO.id}`, {
-    method: "put",
-    headers: authHeaders(),
-    body: JSON.stringify(updatedRO)
-  })
-  const data = await res.json()
-
-  if (!res.ok) {
-    return handleNotOK(res, data)
-  }
-
-  return true
-}
 
 export async function getUser(userId) {
-  const res = await fetch(`${url}/api/user/${userId}`, {
+  const res = await fetch(`${url}/api/user`, {
     headers: authHeaders()
   })
   const user = await res.json()
