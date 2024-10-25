@@ -49,10 +49,13 @@ export async function registerAction({ request }) {
     try {
      await login(credentials);
      const redirectTo = from || `/dashboard`
+     console.log('[REDIRECTING] LOGIN')
      return redirect(redirectTo);
     }
     catch(e) {
-      return e.message
+      console.log('[CATCHING ERROR]: ',e)
+      return null
+      // return e.message
     }
   }
 
@@ -121,6 +124,7 @@ export async function editRepairOrderAction({ request }){
 
 export async function userLoader({ request }){
   try {
+    console.log('[LOADING USER]')
     await requireAuth(request)
     const repairs = await getUserRepairOrders()
     return repairs
