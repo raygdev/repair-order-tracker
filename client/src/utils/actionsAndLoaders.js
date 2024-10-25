@@ -2,16 +2,21 @@
 import { redirect } from 'react-router-dom';
 import { requireAuth } from "./requireAuth"
 import {
+  getUserRepairOrders,
+  editRepair,
+  deleteRepair,
+  createRepair
+} from '../services/api/repair-orders';
+import {
+  login
+} from '../services/auth'
+import {
     createNewUser,
-    verifyUser,
-    deleteRepairOrder,
-    createRO,
-    editRO,
-    getUser,
 } from './crud'
 import { registerFormValidator } from "./validations/registerFormValidations"
 import { loginFormValidator } from "./validations/loginFormValidations"
 import { createFormValidator } from "./validations/createFormValidations"
+import { clearToken } from './token';
 
 
 export async function registerAction({ request }) {
@@ -23,7 +28,7 @@ export async function registerAction({ request }) {
     }
 
    try {
-    const createdSuccessfully = createNewUser(user)
+    const createdSuccessfully = await createNewUser(user)
     if(createdSuccessfully) return redirect("/login");
     return null
    }
@@ -35,29 +40,27 @@ export async function registerAction({ request }) {
   export async function loginAction({ request }) {
     const from = new URL(request.url).searchParams.get("from")
     const formData = await request.formData();
-    const userObj = Object.fromEntries(formData);
-    let inputs = loginFormValidator.validate(userObj)
+    const credentials = Object.fromEntries(formData);
+    let inputs = loginFormValidator.validate(credentials)
     if(!inputs.isValid){
       return inputs
     }
 
     try {
-     const user = await verifyUser(userObj);
-     const redirectTo = from || `/user/${user._id}`
+     await login(credentials);
+     const redirectTo = from || `/dashboard`
      return redirect(redirectTo);
     }
     catch(e) {
-      console.log(e)
       return e.message
     }
   }
 
   export async function deleteRepairOrderAction({params}){
     const id = await params.repairId
-    const userId = await params.userId
     try {
-      const deleted = await deleteRepairOrder(id)
-      if(deleted) return redirect(`/user/${userId}`)
+      const deleted = await deleteRepair(id)
+      if(deleted) return redirect('/dashboard')
       return redirect('/login?message=You must log in first!')
     }
     catch(e) {
@@ -69,44 +72,44 @@ export async function registerAction({ request }) {
 
 export async function createROAction({ request, params }) {
     const formData = await request.formData();
-    const roData = Object.fromEntries(formData);
-    let ro = {
-      ...roData,
-      isWarranty: Boolean(roData.isWarranty),
+    const updatedRepair = Object.fromEntries(formData);
+    let repair = {
+      ...updatedRepair,
+      isWarranty: Boolean(updatedRepair.isWarranty),
     };
-    let inputs = createFormValidator.validate(ro)
+    let inputs = createFormValidator.validate(repair)
 
     if(!inputs.isValid){
       return inputs
     }
     try {
-      const wasVehicleCreated = await createRO(ro)
-      if(wasVehicleCreated) return redirect(`/user/${ro.userId}`);
+      const wasVehicleCreated = await createRepair(repair)
+      if(wasVehicleCreated) return redirect(`/dashboard`);
     }
     catch(e) {
       throw e
     }
   }
 
-export async function editRepairOrderAction({request, params}){
+export async function editRepairOrderAction({ request }){
     const from = new URL(request.url).pathname
     const formData = await request.formData()
     const ro = Object.fromEntries(formData)
-    const updatedRO = {
+    const repair = {
         ...ro,
-        id: params.repairId,
         isWarranty: Boolean(ro.isWarranty),
         created_on: new Date(ro.created_on.replace(/-/g,'/'))
     }
-    let inputs = createFormValidator.validate(updatedRO)
+
+    let inputs = createFormValidator.validate(repair)
     if(!inputs.isValid){
       return inputs
     }
 
     try {
-      let edited = await editRO(updatedRO)
+      let edited = await editRepair(repair)
       if(edited) return  redirect(
-        `/user/${params.userId}/repairorder/${params.repairId}`
+        `/dashboard/repairorder/${repair.id}`
       )
       return redirect(`/login?message=You must log in first!&from=${from}`)
     }
@@ -116,11 +119,11 @@ export async function editRepairOrderAction({request, params}){
 
 }
 
-export async function userLoader({params}){
+export async function userLoader({ request }){
   try {
-    const user = await getUser(params.userId)
-    if(!user) return redirect('/login')
-    return user
+    await requireAuth(request)
+    const repairs = await getUserRepairOrders()
+    return repairs
   }
   catch(e) {
     throw e
@@ -128,7 +131,7 @@ export async function userLoader({params}){
 }
 
 export function logoutAction(){
-  localStorage.removeItem('token')
+  clearToken()
   return redirect('/login')
 }
 
