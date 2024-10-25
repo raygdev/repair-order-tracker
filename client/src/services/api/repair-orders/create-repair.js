@@ -8,7 +8,7 @@ export async function  createRepair(repair) {
     throw res.data
   }
   
-  if(res.statusText !== 'OK') {
+  if(res.status >= 400) {
     throw res.data
   }
 
