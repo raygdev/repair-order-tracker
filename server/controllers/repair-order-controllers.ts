@@ -1,7 +1,8 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 import {
   RepairOrderAttributes,
   RepairOrders,
+  getUserRepairOrders,
 } from "../models/repair-order-model";
 import {
   findVehicleByVin,
@@ -21,7 +22,7 @@ export async function createRepair(req: Request, res: Response) {
 
   let vehicle = await findVehicleByVin(vin);
   if (!vehicle) {
-    vehicle = getAndCreateVehicleInfo(vin).catch(
+    vehicle = await getAndCreateVehicleInfo(vin).catch(
       // fail silently here so ro can still be created with
       // invalid vin
       () => console.log("something went wrong creating the vehicle")
@@ -107,4 +108,11 @@ export async function updateRepair(req: Request, res: Response) {
     message: "Success",
     repair,
   });
+}
+
+export async function getUserRepairs(req: Request, res: Response) {
+    const userId = req.user!.id
+    const repairs = await getUserRepairOrders(userId)
+
+    res.json(repairs)
 }
