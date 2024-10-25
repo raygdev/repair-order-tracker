@@ -3,7 +3,7 @@ const AddRepairButton = loadable(() => import('./AddRepairButton'))
 const CreateFirstRepair = loadable(() => import('./CreateFirstRepair'))
 const RepairOrderCard = loadable(() => import('./RepairOrderCard'))
 
-export default function RepairOrders({ repairOrders, userId }) {
+export default function RepairOrders({ repairOrders }) {
 
   const sortedOrders =
     repairOrders.length &&
@@ -22,11 +22,11 @@ export default function RepairOrders({ repairOrders, userId }) {
       </h2>
       {sortedOrders.length && <AddRepairButton />}
       {sortedOrders.length ? (
-        <ul className="px-4 grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
+        <ul className="px-4 grid auto-rows-fr grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
           {sortedOrders}
         </ul>
       ) : (
-        <CreateFirstRepair userId={userId} />
+        <CreateFirstRepair  />
       )}
     </div>
   );
