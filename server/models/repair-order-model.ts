@@ -108,6 +108,18 @@ export const updateRepairOrder = async function (repairOrderId: string, repairTo
       throw new NotFoundError()
     }
     return repairOrder
+}
 
+export const getUserRepairOrders = (userId: string) => {
+    const repairs = RepairOrders.find({ userId }).populate({
+      path: 'vehicle',
+      select: '-_id -__v -id'
+    }).select('-vehicleId -__v').exec()
+
+    if(!repairs) {
+      throw new NotFoundError()
+    }
+
+    return repairs
 }
 // "Weeks of programming can save you hours of planning. - Unknown"
