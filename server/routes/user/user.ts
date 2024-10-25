@@ -4,6 +4,6 @@ const router = express.Router()
 
 import { getUser } from '../../controllers/user-controllers'
 
-router.get('/api/user/:userId', isAuthenticated,  getUser )
+router.get('/api/user/', isAuthenticated,  getUser )
 
 export { router as userRoutes }
