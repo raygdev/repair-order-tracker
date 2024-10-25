@@ -1,6 +1,7 @@
-import { useRouteLoaderData } from 'react-router-dom'
+import { useRouteLoaderData } from "react-router-dom";
 
 export function useAuth() {
-    const user = useRouteLoaderData('root')
-    return user
+  const user = useRouteLoaderData('root')
+
+  return user
 }
