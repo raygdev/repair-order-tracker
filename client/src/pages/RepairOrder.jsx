@@ -1,61 +1,82 @@
-import React, { useEffect } from 'react'
-import { useRouteLoaderData, useParams, Link } from 'react-router-dom'
-import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
-import loadable from '@loadable/component'
-import { toLocalDateString } from '../utils/datesHelpers'
-const DeleteButton = loadable(() => import('../components/DeleteButton'))
-const FontAwesomeIcon = loadable(() => import('@fortawesome/react-fontawesome').then(module => ({default:module.FontAwesomeIcon})))
-
+import React, { useEffect } from "react";
+import { useRouteLoaderData, useParams, Link } from "react-router-dom";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import loadable from "@loadable/component";
+import { toLocalDateString } from "../utils/datesHelpers";
+const DeleteButton = loadable(() => import("../components/DeleteButton"));
+const FontAwesomeIcon = loadable(() =>
+  import("@fortawesome/react-fontawesome").then((module) => ({
+    default: module.FontAwesomeIcon,
+  }))
+);
+const Vehicle = loadable(() =>
+  import("../components/Vehicle").then((module) => ({
+    default: module.Vehicle,
+  }))
+);
+const InvalidVin = loadable(() =>
+  import("../components/InvalidVin").then((module) => ({
+    default: module.InvalidVin,
+  }))
+);
 
 export default function RepairOrder() {
-    useEffect(() => {
-        document.title='Repair Order'
-    }, [])
+  useEffect(() => {
+    document.title = "Repair Order";
+  }, []);
 
-    const { repairOrders } = useRouteLoaderData('root')
-    // const data = useLoaderData()
-    const { repairId, userId } = useParams()
+  const repairs = useRouteLoaderData("root");
+  // const data = useLoaderData()
+  const { repairId } = useParams();
 
-    const repairOrder  = repairOrders.find(RO => RO.id === repairId)
-    const vehicle = repairOrder.vehicle
+  const repair = repairs.find((RO) => RO.id === repairId);
+  const vehicle = repair.vehicle;
 
-    let date = toLocalDateString(repairOrder.created_on)
+  let date = toLocalDateString(repair.created_on);
 
   return (
-    <main className='items-center pb-4 my-5 mx-auto min-h-max xs: max-w-xl bg-[#fffff2] rounded shadow-lg'>
-        <div  className='shadow-md p-8 flex justify-around'>
-            <h2 className='text-lg text'>Repair Order# {repairOrder.ro_number}</h2>
-            <p>Created On {date}</p>
-        </div>
-        { (vehicle &&
-            <section className='border-b p-4 flex flex-col'>
-                <h2 className='text-lg'>Vehicle Info</h2>
-                <div className='self-center text-slate-500'>
-                    <p title='Vehicle Identification Number'>VIN# {vehicle.VIN}</p>
-                    <p className='py-2'>Year: <span className='border py-1 px-4 inline-block'>{vehicle.Year}</span></p>
-                    <p className='py-2'>Make: <span className='border py-1 px-4 inline-block'>{vehicle.Make}</span></p>
-                    <p className='py-2'>Model: <span className='border py-1 px-4 inline-block'>{vehicle.Model}</span></p>
-                    <p className='py-2'>Engine Size: <span className='border py-1 px-4 inline-block'>{vehicle.EngineSize}</span></p>
-                </div>
-                <p title='pay type' className='whitespace-pre-wrap'>Pay Type: {repairOrder.isWarranty ? "Warranty":"Customer Pay"}</p>
-            </section>)
-            ||  
-            (<section className='border-b text-center p-4'>
-                <p title='vehicle vin number'>VIN# {repairOrder.vin}</p>
-                <p className='text-red-500'>The vehicle doesn't seem to exist! Please try editing the repair order and check that the vin is correct!</p>
-                <p title='pay type' className='whitespace-pre-wrap'>Pay Type: {repairOrder.isWarranty ? "Warranty":"Customer Pay"}</p>
-            </section>)
+    <main className="items-center pb-4 my-5 mx-auto min-h-max xs: max-w-xl bg-[#fffff2] rounded shadow-lg">
+      <div className="shadow-md p-8 flex justify-around">
+        <h2 className="text-lg text">Repair Order# {repair.ro_number}</h2>
+        <p>Created On {date}</p>
+      </div>
+      <section
+        className={
+          vehicle ? "border-b text-center p-4" : "border-b p-4 flex flex-col"
         }
+      >
+        {vehicle ? (
+          <Vehicle vehicle={vehicle} isWarranty={repair.isWarranty} />
+        ) : (
+          <InvalidVin vin={repair.vin} />
+        )}
+        <p title="pay type" className="whitespace-pre-wrap">
+          Pay Type: {repair.isWarranty ? "Warranty" : "Customer Pay"}
+        </p>
+      </section>
 
-        <section className='w-full border-b p-4'>
-            <h2 className='text-lg '>Technician Notes</h2>
-            <p title='technician notes' className='whitespace-pre-line w-full my-6'>{repairOrder.notes}</p>
-        </section>
-        <section className='flex w-full justify-between p-4'>
-            <Link to={`/user/${userId}`} className='underline hover:text-violet-900'>Go to Dashboard</Link>
-            <DeleteButton path={'../repairorder/delete/'}  id={repairOrder._id} text={'Delete'}/>
-            <Link to={`../editrepairorder/${repairId}`} className='transition ease-in-out delay-100 hover:text-green-300 font-semibold'>Edit <FontAwesomeIcon icon={faPenToSquare} /></Link>
-        </section>
+      <section className="w-full border-b p-4">
+        <h2 className="text-lg ">Technician Notes</h2>
+        <p title="technician notes" className="whitespace-pre-line w-full my-6">
+          {repair.notes}
+        </p>
+      </section>
+      <section className="flex w-full justify-between p-4">
+        <Link to={`/dashboard`} className="underline hover:text-violet-900">
+          Go to Dashboard
+        </Link>
+        <DeleteButton
+          path={"../repairorder/delete/"}
+          id={repair.id}
+          text={"Delete"}
+        />
+        <Link
+          to={`../editrepairorder/${repairId}`}
+          className="transition ease-in-out delay-100 hover:text-green-300 font-semibold"
+        >
+          Edit <FontAwesomeIcon icon={faPenToSquare} />
+        </Link>
+      </section>
     </main>
-  )
+  );
 }
