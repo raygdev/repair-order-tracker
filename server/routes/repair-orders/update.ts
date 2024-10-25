@@ -4,7 +4,7 @@ import { isAuthenticated } from '../../controllers/middleware/auth'
 
 const router = express.Router()
 
-router.put('/repairorder/:id',
+router.put('/api/repairorder/:id',
   isAuthenticated,
   updateRepair
 )
