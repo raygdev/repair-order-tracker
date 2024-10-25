@@ -5,8 +5,9 @@ import { setToken } from "../../utils/token";
 
 export async function login(credentials) {
     const res = await client.post('/api/login', credentials)
-
+    console.log('[STATUSTEXT]', res.statusText)
     if(res.statusText !== 'OK') {
+        console.log('[RES NOT OK]')
         throw res.data
     }
     const token = res.data.token
