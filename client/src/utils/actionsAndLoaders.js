@@ -49,13 +49,10 @@ export async function registerAction({ request }) {
     try {
      await login(credentials);
      const redirectTo = from || `/dashboard`
-     console.log('[REDIRECTING] LOGIN')
      return redirect(redirectTo);
     }
     catch(e) {
-      console.log('[CATCHING ERROR]: ',e)
-      return null
-      // return e.message
+      return e.message
     }
   }
 
