@@ -1,7 +1,6 @@
 import { Suspense, useEffect, useState } from 'react'
 import './App.css';
 import loadable from '@loadable/component';
-import { jwtDecode } from 'jwt-decode'
 import { useNavigate, useResolvedPath } from 'react-router';
 const Header = loadable(() => import('./components/Header'))
 const Outlet = loadable(() => import('react-router-dom').then(module => ({default : module.Outlet})))
@@ -9,15 +8,13 @@ const Outlet = loadable(() => import('react-router-dom').then(module => ({defaul
 function App() {
   const navigate = useNavigate()
   const { pathname } = useResolvedPath()
-  const userPath = pathname.includes('user')
+  const userPath = pathname.includes('dashboard')
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const token = localStorage.getItem('token')
-    let decoded;
   if(token) {
-    decoded = jwtDecode(token)
-    const loggedInRoute = userPath ? pathname : `user/${decoded.id}`
+    const loggedInRoute = userPath ? pathname : 'dashboard'
     navigate(loggedInRoute, { replace: true })
   }
     setLoading(false)
