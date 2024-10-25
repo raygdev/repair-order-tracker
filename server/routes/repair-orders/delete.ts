@@ -7,7 +7,7 @@ import { validateRequest } from '../../controllers/middleware/validation'
 
 const router = express.Router()
 
-router.delete('/repairorder/:id',
+router.delete('/api/repairorder/:id',
   isAuthenticated,
   [
     param('id')
