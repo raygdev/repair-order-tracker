@@ -15,8 +15,8 @@ function RepairOrderCard({ repairOrder }) {
   const date = toLocalDateString(created_on)
   const submit = useSubmit()
   return (
-    <li className='rounded'>
-      <div className='text-ro-slate-900 rounded overflow-hidden shadow-card'>
+    <li className='rounded block shadow-card'>
+      <div className='text-ro-slate-900 rounded overflow-hidden'>
           <div className='bg-ro-header text-ro-slate-100 px-3 py-1 flex justify-between'>
             <Link 
               to={`repairorder/${id}`}
@@ -43,9 +43,9 @@ function RepairOrderCard({ repairOrder }) {
           </div>
           <div className='flex justify-between px-2 py-3'>
             <div className='flex flex-col'>
-              <span className='m-3'>{vehicle.Year}</span>
-              <span className='m-3'>{vehicle.Make}</span>
-              <span className='m-3'>{vehicle.Model}</span>
+              <span className='m-3'>{vehicle?.Year || "Please"}</span>
+              <span className='m-3'>{vehicle?.Make || 'Check'}</span>
+              <span className='m-3'>{vehicle?.Model || "VIN"}</span>
             </div>
             <div className='flex flex-col justify-between py-2'>
               <div className='bg-green-500 flex justify-center rounded px-1'>
