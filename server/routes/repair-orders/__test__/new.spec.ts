@@ -8,7 +8,7 @@ describe('POST /repairorder', () => {
         const notes = ''
         const ro_number = '123545'
         await request(app)
-          .post('/repairorder')
+          .post('/api/repairorder')
           .send({
             vin,
             notes,
@@ -22,7 +22,7 @@ describe('POST /repairorder', () => {
       const token = await signin()
 
       const response = await request(app)
-        .post('/repairorder')
+        .post('/api/repairorder')
         .auth(token, { type: 'bearer'})
         .send()
         .expect(400)
@@ -38,7 +38,7 @@ describe('POST /repairorder', () => {
       const token = await signin()
 
       const response = await request(app)
-        .post('/repairorder')
+        .post('/api/repairorder')
         .auth(token, { type: 'bearer' })
         .send({
           vin: '15677890KJkswRt9l',
