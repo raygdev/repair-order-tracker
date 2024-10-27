@@ -6,7 +6,7 @@ import {
   editRepair,
   deleteRepair,
   createRepair
-} from '../services/api/repair-orders';
+} from '@services/api/repair-orders';
 import {
   login
 } from '../services/auth'
