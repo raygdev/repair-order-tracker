@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
-import chart from '../assets/chart.png'
-import diagnostics from '../assets/diagnostics.png'
-import watch from '../assets/watch.png'
+import chart from '@assets/chart.png'
+import diagnostics from '@assets/diagnostics.png'
+import watch from '@assets/watch.png'
 
 export default function About(){
   useEffect(() => {

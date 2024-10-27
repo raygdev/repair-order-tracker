@@ -2,20 +2,20 @@ import React, { useEffect } from "react";
 import { useRouteLoaderData, useParams, Link } from "react-router-dom";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import loadable from "@loadable/component";
-import { toLocalDateString } from "../utils/datesHelpers";
-const DeleteButton = loadable(() => import("../components/DeleteButton"));
+import { toLocalDateString } from "@utils/datesHelpers";
+const DeleteButton = loadable(() => import("@components/DeleteButton"));
 const FontAwesomeIcon = loadable(() =>
   import("@fortawesome/react-fontawesome").then((module) => ({
     default: module.FontAwesomeIcon,
   }))
 );
 const Vehicle = loadable(() =>
-  import("../components/Vehicle").then((module) => ({
+  import("@components/Vehicle").then((module) => ({
     default: module.Vehicle,
   }))
 );
 const InvalidVin = loadable(() =>
-  import("../components/InvalidVin").then((module) => ({
+  import("@components/InvalidVin").then((module) => ({
     default: module.InvalidVin,
   }))
 );

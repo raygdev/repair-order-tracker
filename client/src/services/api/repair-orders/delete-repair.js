@@ -1,4 +1,3 @@
-// import { authHeaders } from "../../../utils/crud";
 import { client } from "../../../utils/url";
 
 export async function deleteRepair(id) {
