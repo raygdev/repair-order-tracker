@@ -1,7 +1,7 @@
 import loadable from '@loadable/component'
 import { createBrowserRouter} from "react-router-dom";
 import { AuthProvider } from './provider/useAuthProvider';
-import { requireAuth } from "./utils/requireAuth"
+import { requireAuth } from "@utils/requireAuth"
 import {
     createROAction,
     deleteRepairOrderAction,
@@ -11,19 +11,19 @@ import {
     loginAction,
     logoutAction,
     repairOrderLoader
-} from "./utils/actionsAndLoaders";
+} from "@utils/actionsAndLoaders";
 
-const UserLayout = loadable(() => import("./pages/UserLayout"))
+const UserLayout = loadable(() => import("@pages/UserLayout"))
 const  App = loadable( () => import('./App'))
-const RepairOrder =  loadable(() => import("./pages/RepairOrder"))
-const Home = loadable(() => import("./pages/Home"))
-const Register = loadable(() => import('./components/Register'))
-const User = loadable(() => import('./pages/User'))
-const NotFound = loadable(() => import('./pages/NotFound'))
-const EditRepairOrder = loadable(() => import('./pages/EditRepairOrder'))
-const CreateRepairOrder = loadable(() => import('./pages/CreateRepairOrder'))
-const Login = loadable(() => import('./components/Login'))
-const About = loadable(() => import('./pages/About'))
+const RepairOrder =  loadable(() => import("@pages/RepairOrder"))
+const Home = loadable(() => import("@pages/Home"))
+const Register = loadable(() => import('@components/Register'))
+const User = loadable(() => import('@pages/User'))
+const NotFound = loadable(() => import('@pages/NotFound'))
+const EditRepairOrder = loadable(() => import('@pages/EditRepairOrder'))
+const CreateRepairOrder = loadable(() => import('@pages/CreateRepairOrder'))
+const Login = loadable(() => import('@components/Login'))
+const About = loadable(() => import('@pages/About'))
 
 export const router = createBrowserRouter([
     {

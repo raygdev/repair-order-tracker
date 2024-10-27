@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-catch */
 import { redirect } from 'react-router-dom';
-import { requireAuth } from "./requireAuth"
+import { requireAuth } from "@utils/requireAuth"
 import {
   getUserRepairOrders,
   editRepair,
@@ -9,13 +9,16 @@ import {
 } from '@services/api/repair-orders';
 import {
   login
-} from '../services/auth'
+} from '@services/auth'
 import {
     createNewUser,
-} from './crud'
-import { registerFormValidator } from "./validations/registerFormValidations"
-import { loginFormValidator } from "./validations/loginFormValidations"
-import { createFormValidator } from "./validations/createFormValidations"
+} from '@utils/crud'
+import {
+  registerFormValidator,
+  loginFormValidator,
+  createFormValidator 
+} from "@utils/validations"
+
 import { clearToken } from './token';
 
 
