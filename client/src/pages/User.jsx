@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useRouteLoaderData } from 'react-router-dom'
 import loadable from '@loadable/component';
-const RepairOrders = loadable(() => import('../components/RepairOrders'))
+const RepairOrders = loadable(() => import('@components/RepairOrders'))
 
 export default function User(props) {
   useEffect(()=> {
