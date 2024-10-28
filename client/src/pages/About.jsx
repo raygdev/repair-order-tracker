@@ -8,7 +8,7 @@ export default function About(){
     document.title = 'About'
   }, [])
   return (
-    <div className='text-[#EEEFF2] flex py-48'>
+    <div className='flex py-48 px-4'>
       <main className='my-9 mx-auto'>
         <h1 className='text-4xl text-center uppercase'>The Tool You Didn't Know you needed</h1>
         <section className='flex flex-col justify-center mt-32 px-4 md:flex-row md:gap-10 md: max-w-3xl'>
