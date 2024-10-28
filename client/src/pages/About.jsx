@@ -5,29 +5,26 @@ import watch from '@assets/watch.png'
 
 export default function About(){
   useEffect(() => {
-    document.body.classList.add('bg-vehicle-mobile', 'bg-no-repeat', 'bg-cover', 'bg-center', 'bg-fixed')
-    return () => {
-      document.body.classList.remove('bg-vehicle-mobile', 'bg-no-repeat', 'bg-cover', 'bg-center', 'bg-fixed')
-    }
+    document.title = 'About'
   }, [])
   return (
-    <div className='text-[#EEEFF2] flex py-48'>
+    <div className='flex py-48 px-4'>
       <main className='my-9 mx-auto'>
         <h1 className='text-4xl text-center uppercase'>The Tool You Didn't Know you needed</h1>
-        <section className='flex flex-col justify-center mt-32 px-4 md:flex-row md:gap-10 md: max-w-3xl'>
+        <section className='shadow-card gap-4 flex flex-col justify-center mt-32 px-4 md:flex-row md:gap-10 md: max-w-3xl'>
           <img src={diagnostics} alt="two men diagnosing a vehicle" />
-          <p className='text-lg text-center mt-5'>Keep track of the vehicles you diagnose and repair</p>
+          <p className='text-lg text-center mb-4 md:mt-4'>Keep track of the vehicles you diagnose and repair</p>
         </section>
-        <section className='flex flex-col justify-center mt-32 px-4 md:flex-row md:gap-10 md: max-w-3xl'>
-          <img src={watch} alt="a person checking thier watch" />
-          <p className='text-lg text-center mt-5'>
+        <section className='shadow-card gap-4 flex flex-col justify-center mt-32 px-4 md:flex-row md:gap-10 md: max-w-3xl'>
+          <img src={watch} alt="a person checking their watch" />
+          <p className='text-lg text-center mb-4 md:mt-4'>
             Time is money, so we keep track of it for you to make
             sure you are getting your max paycheck
           </p>
         </section>
-        <section className='flex flex-col justify-center mt-32 px-4 md:flex-row md:gap-10 md: max-w-3xl'>
+        <section className='shadow-card gap-4 flex flex-col justify-center mt-32 px-4 md:flex-row md:gap-10 md: max-w-3xl'>
           <img src={chart} alt="a chart for tracking metrics" />
-          <p className='text-lg text-center mt-5'>
+          <p className='text-lg text-center mb-4 md:mt-4'>
             See where you stand throughout the year in sales
             and hours to have a metric for raises.
           </p>
