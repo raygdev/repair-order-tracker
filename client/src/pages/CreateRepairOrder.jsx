@@ -24,23 +24,21 @@ export default function CreateRepairOrder() {
   return (
     <div className="min-h-screen px-4">
       <Form
-        className="flex flex-col sm:max-w-max mt-11 justify-between m-auto rounded overflow-hidden shadow-form shadow-slate-500"
+        className="flex flex-col sm:max-w-max mt-11 gap-4 m-auto rounded overflow-hidden shadow-form shadow-slate-500"
         method="POST"
       >
         <div className="text-ro-slate-100 bg-btn-secondary py-3 px-2">
           Create a Repair
         </div>
-        <div className="p-4 flex flex-col text-ro-slate-900 justify-between gap-3">
+        <div className="p-4 flex flex-col text-ro-slate-900 gap-3 font-medium">
           {inputs && !inputs.isValid && (
             <span className="text-red-600">
               Please check the highlighted fields
             </span>
           )}
-          <div>
-            <input type="hidden" name="userId" value={user._id} />
-            <label htmlFor="ro_number" className="font-medium">
-              RO Number*
-            </label>
+          <input type="hidden" name="userId" value={user._id} />
+          <label className="flex flex-col gap-2">
+            RO Number*
             <input
               id="ro_number"
               name="ro_number"
@@ -55,11 +53,9 @@ export default function CreateRepairOrder() {
             {inputs && inputs.ro_number.isInvalid && (
               <span className="text-red-600">{inputs.ro_number.message}</span>
             )}
-          </div>
-          <div>
-            <label htmlFor="vin" className="font-medium">
-              VIN*
-            </label>
+          </label>
+          <label className="font-medium flex flex-col gap-2">
+            VIN*
             <input
               className={`p-1 rounded w-full ${
                 inputs && inputs?.vin.isInvalid
@@ -74,17 +70,13 @@ export default function CreateRepairOrder() {
             {inputs && inputs.vin.isInvalid && (
               <span className="text-red-600">{inputs.vin.message}</span>
             )}
-          </div>
-          <div className="flex w-2/4 justify-between items-center">
-            <label htmlFor="isWarranty" className="font-medium">
-              Warranty
-            </label>
+          </label>
+          <label className="flex justify-items-center gap-6">
+            Warranty
             <input type="checkbox" id="isWarranty" name="isWarranty" />
-          </div>
-          <div>
-            <label htmlFor="notes" className="font-medium">
-              Notes
-            </label>
+          </label>
+          <label className=" flex flex-col gap-2">
+            Notes
             <textarea
               className="p-1 rounded w-full border border-ro-slate-300 focus:outline-ro-slate-500"
               id="notes"
@@ -92,7 +84,7 @@ export default function CreateRepairOrder() {
               rows={5}
               cols={5}
             />
-          </div>
+          </label>
           <button
             className="text-slate-100 rounded bg-btn-secondary hover:bg-btn-hover disabled:bg-btn-disabled mt-5 px-5 self-center py-3"
             type="submit"
