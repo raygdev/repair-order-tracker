@@ -7,7 +7,7 @@ const FontAwesomeIcon = loadable(() => import('@fortawesome/react-fontawesome').
 export default function Home() {
   return (
     <>
-        <main className='min-h-screen w-full flex flex-col justify-center tracking-widest text-center bg-gradient-to-br from-blue-500 via-sky-300 p-10 '>
+        <main className='min-h-screen w-full flex flex-col justify-center tracking-widest text-center'>
             <div className='w-3/4 text-center self-center'>
                 <h1 className='md:text-5xl uppercase py-8 font-extrabold text-2xl'>Welcome to the RO Tracker!</h1>
                 <p className='md:text-lg text-sm font-semibold uppercase'>This is a free service without ads for auto techs by auto techs!</p>
