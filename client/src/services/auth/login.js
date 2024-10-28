@@ -21,15 +21,20 @@ export async function login(credentials) {
 
 class AuthService {
     #listeners = []
+    #user;
     async login(credentials) {
         const res = await client.post('/api/login', credentials)
 
-        if(res.statusText !== 'OK') {
+        if(res.status >= 400) {
             throw res.data
         }
         const token = res.data.token
         setToken(token)
-        client.defaults.headers.common['Authorization'] = `Bearer ${token}`
+        client.interceptors.request.use(config => {
+            config.headers.Authorization = `Bearer ${token}`
+            return config
+        })
+        this.#user = res.data
         this.notifyListeners()
         return res.data
     }
@@ -51,6 +56,7 @@ class AuthService {
 
         if(!token) {
             this.logout()
+            return false
         }
 
     }
