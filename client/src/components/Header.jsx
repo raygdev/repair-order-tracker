@@ -19,8 +19,8 @@ export default function Header(props) {
   ]
 
   return (
-    <header className="p-4 bg-ro-slate-900 flex sticky top-0 min-w-max text-ro-slate-100 font-semibold">
-      <nav className="flex basis-full justify-around">
+    <header className="p-4 bg-ro-slate-900 flex justify-end sticky top-0 min-w-max text-ro-slate-100 font-semibold">
+      <nav className="flex">
         { links
             .filter(link => link)
             .map(
