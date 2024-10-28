@@ -5,10 +5,7 @@ import watch from '@assets/watch.png'
 
 export default function About(){
   useEffect(() => {
-    document.body.classList.add('bg-vehicle-mobile', 'bg-no-repeat', 'bg-cover', 'bg-center', 'bg-fixed')
-    return () => {
-      document.body.classList.remove('bg-vehicle-mobile', 'bg-no-repeat', 'bg-cover', 'bg-center', 'bg-fixed')
-    }
+    document.title = 'About'
   }, [])
   return (
     <div className='text-[#EEEFF2] flex py-48'>
