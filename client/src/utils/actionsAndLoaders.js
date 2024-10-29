@@ -124,7 +124,6 @@ export async function editRepairOrderAction({ request }){
 
 export async function userLoader({ request }){
   try {
-    console.log('[LOADING USER]')
     await requireAuth(request)
     const repairs = await getUserRepairOrders()
     return repairs
