@@ -1,7 +1,8 @@
-import { useRouteLoaderData } from "react-router-dom";
+// import { useRouteLoaderData } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../provider/useAuthProvider";
 
 export function useAuth() {
-  const user = useRouteLoaderData('root')
-
-  return user
+  const { auth } = useContext(AuthContext)
+  return auth
 }

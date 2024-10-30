@@ -21,17 +21,27 @@ export async function login(credentials) {
 
 class AuthService {
     #listeners = []
+    #user = JSON.parse(localStorage.getItem('user'));
     async login(credentials) {
         const res = await client.post('/api/login', credentials)
 
-        if(res.statusText !== 'OK') {
+        if(res.status >= 400) {
             throw res.data
         }
         const token = res.data.token
-        setToken(token)
-        client.defaults.headers.common['Authorization'] = `Bearer ${token}`
+        this.setToken(token)
+        client.interceptors.request.use(config => {
+            config.headers.Authorization = `Bearer ${token}`
+            return config
+        })
+        localStorage.setItem('user', JSON.stringify(res.data))
+        this.#user = res.data
         this.notifyListeners()
         return res.data
+    }
+
+    get user() {
+        return this.#user
     }
 
     notifyListeners() {
@@ -47,16 +57,32 @@ class AuthService {
     }
 
     isLoggedIn() {
-        const token = localStorage.getItem('token')
+        const token = this.getToken()
 
         if(!token) {
-            this.logout()
+            return false
         }
+        const payload =  JSON.parse(atob(token.split('.')[1]))
+        const exp = payload.exp
+        return Date.now() > exp
+    }
 
+    getToken() {
+        return localStorage.getItem('token')
+    }
+
+    setToken(token) {
+        localStorage.setItem('token', token)
+    }
+
+    removeToken() {
+        localStorage.removeItem('token')
     }
 
     logout() {
-        localStorage.removeItem('token')
+        this.removeToken()
+        localStorage.removeItem('user')
+        this.#user = null
         this.notifyListeners()
     }
 }
