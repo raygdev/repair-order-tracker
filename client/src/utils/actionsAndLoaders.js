@@ -8,9 +8,6 @@ import {
   createRepair
 } from '@services/api/repair-orders';
 import {
-  login
-} from '@services/auth'
-import {
     createNewUser,
 } from '@utils/crud'
 import {
@@ -18,8 +15,7 @@ import {
   loginFormValidator,
   createFormValidator 
 } from "@utils/validations"
-
-import { clearToken } from './token';
+import { authService } from '@services/auth';
 
 
 export async function registerAction({ request }) {
@@ -50,7 +46,7 @@ export async function registerAction({ request }) {
     }
 
     try {
-     await login(credentials);
+     await authService.login(credentials);
      const redirectTo = from || `/dashboard`
      return redirect(redirectTo);
     }
@@ -134,7 +130,7 @@ export async function userLoader({ request }){
 }
 
 export function logoutAction(){
-  clearToken()
+  authService.logout()
   return redirect('/login')
 }
 

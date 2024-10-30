@@ -1,6 +1,7 @@
-import { getToken, setToken, clearToken } from "./token"
+import { getToken, setToken } from "./token"
 import { handleNotOK } from "./handleNotOK"
 import { url } from './url'
+import { authService } from "@services/auth"
 
 function authHeaders() {
   return {
@@ -86,7 +87,7 @@ export async function verifyToken() {
   })
 
   if (!res.ok) {
-    clearToken()
+    authService.logout()
     return false
   }
 
