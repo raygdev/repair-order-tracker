@@ -28,7 +28,7 @@ const About = loadable(() => import('@pages/About'))
 export const router = createBrowserRouter([
     {
         path:'/',
-        element: <App />,
+        element: <AuthProvider><App /></AuthProvider>,
         errorElement: <NotFound />,
         children: [
             {
@@ -56,7 +56,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'dashboard',
-                element:<AuthProvider><UserLayout /></AuthProvider>,
+                element:<UserLayout />,
                 loader: userLoader,
                 id:'root',
                 children:[
