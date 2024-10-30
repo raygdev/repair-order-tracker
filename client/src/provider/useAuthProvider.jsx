@@ -1,22 +1,34 @@
-import { createContext, useState } from "react";
-import { redirect } from "react-router";
-import { useAuth } from "../hooks/useAuth";
+import { createContext, useState, useEffect } from "react";
+// import { redirect } from "react-router";
+// import { useAuth } from "../hooks/useAuth";
+import { authService } from "../services/auth";
 
 const AuthContext = createContext()
 
 const AuthProvider = ({ children }) => {
-    const user = useAuth()
     const [ auth, setAuth ] = useState({
-        isAuth: false,
-        token: user
+        isAuth: authService.isLoggedIn(),
+        user: authService.user
     })
+
+    useEffect(() => {
+        const authListener = () => {
+            setAuth({
+                isAuth: authService.isLoggedIn(),
+                user: authService.user
+            })
+        }
+
+        authService.addAuthListener(authListener)
+
+        return () => authService.unsubscribe(authListener)
+    }, [children])
 
     return (
         <AuthContext.Provider value={{
-            ...auth,
-            setAuth
+            auth,
         }}>
-            { auth.token ? children : redirect('/login')}
+            { children }
         </AuthContext.Provider>
     )
 }
