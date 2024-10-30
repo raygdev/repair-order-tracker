@@ -1,6 +1,4 @@
 import { createContext, useState, useEffect } from "react";
-// import { redirect } from "react-router";
-// import { useAuth } from "../hooks/useAuth";
 import { authService } from "../services/auth";
 
 const AuthContext = createContext()
