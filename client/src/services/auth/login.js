@@ -58,13 +58,16 @@ class AuthService {
 
     isLoggedIn() {
         const token = this.getToken()
-
-        if(!token) {
-            return false
+        return !!token && !this.isTokenExpired(token)
+    }
+    isTokenExpired(token) {
+        try {
+            const payload =  JSON.parse(atob(token.split('.')[1]))
+            const exp = payload.exp * 1000
+            return Date.now() > exp 
+        } catch (e) {
+            return true
         }
-        const payload =  JSON.parse(atob(token.split('.')[1]))
-        const exp = payload.exp
-        return Date.now() > exp
     }
 
     getToken() {
