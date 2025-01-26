@@ -82,74 +82,19 @@ UserSchema.pre('save', function(){
 
 
 const User = mongoose.model<UserDoc, UserModel>("users", UserSchema, "users");
-/**
- *
- * @param {Object} userObj takes in a user object to create a new user
- * @param {callback} done callback returns either error or user
- *
- */
-
-export const createAndSaveUser = function (newUser:UserAttributes, done: DoneCallback) {
-  // const newUser = {
-  //   ...userObj,
-  //   password: bcrypt.hashSync(userObj.password,10)
-  // }
-
-  const user = new User(newUser);
-
-  user.save((err) => {
-
-    if (err) return done(err, null);
-
-    return done(null, user);
-
-  });
-};
 
 export const createUser = async function (newUser: UserAttributes) {
-  try {
-    const userToCreate = {
-      ...newUser,
-      password: bcrypt.hashSync(newUser.password, 10)
-    }
-    const user = new User(userToCreate)
-    await user.save()
-    return user
-  } catch (e) {
-    throw e
-  }
+  const user = new User(newUser)
+
+  await user.save()
+
+  return { ...user.toJSON(), password: null }
 }
 
-/**
- * 
- * @param {Object} email object containing the users email
- * @param {callback} done callback returns either error or user
- */
-
-export const findUserByEmail = function (email: { email: string }, done: DoneCallback) {
-  User.findOne(email)
-      .populate('repairOrders')
-      .exec(function (err, user) {
-
-        if(err) return done(err);
-
-        if (!user) return done(null, false);
-        
-        return done(null, user);
-    
-      });
-};
-
 export const findByEmail = async function (email: { email: string }) {
-  try {
-    const foundUser = await User.findOne(email).populate('repairOrders').exec()
-    if(!foundUser) {
-      return null
-    }
-    return foundUser
-  } catch (e) {
-    throw e
-  }
+  const foundUser = await User.findOne({ email }).populate('repairOrders').exec()
+  console.log(`{FOUND_USER}: ${foundUser}`)
+  return foundUser
 }
 
 export const findUserById = async function (userId: string) {
