@@ -82,29 +82,6 @@ UserSchema.pre('save', function(){
 
 
 const User = mongoose.model<UserDoc, UserModel>("users", UserSchema, "users");
-/**
- *
- * @param {Object} userObj takes in a user object to create a new user
- * @param {callback} done callback returns either error or user
- *
- */
-
-export const createAndSaveUser = function (newUser:UserAttributes, done: DoneCallback) {
-  // const newUser = {
-  //   ...userObj,
-  //   password: bcrypt.hashSync(userObj.password,10)
-  // }
-
-  const user = new User(newUser);
-
-  user.save((err) => {
-
-    if (err) return done(err, null);
-
-    return done(null, user);
-
-  });
-};
 
 export const createUser = async function (newUser: UserAttributes) {
   try {
