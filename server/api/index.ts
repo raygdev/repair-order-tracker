@@ -13,18 +13,8 @@ const uri = process.env.MONGO_URI!
 
 // Quiet mongoose warning
 mongoose.set("strictQuery", true)
-
-// Connect to mongo then listen
-mongoose.connect(uri,{},(err: any) => {
-    if(err){ 
-    // Log error and exit
-      log(
-        chalk.redBright.bold('Error connecting to DB:\n', chalk.bgRedBright("%s")),
-        err.reason || err
-        )
-        process.exitCode = 1
-        return;
-    }
+mongoose.connect(uri)
+  .then(() => {
     app.listen(port, () => {
         log(
             chalk.green(
@@ -35,12 +25,22 @@ mongoose.connect(uri,{},(err: any) => {
             process.exitCode = 0
             return
     })
-})
- process.on("exit", (code) => {
+  })
+  .catch(e => {
+   // Log error and exit
+    log(
+    chalk.redBright.bold('Error connecting to DB:\n', chalk.bgRedBright("%s")),
+    e.reason || e
+    )
+    process.exitCode = 1
+    return;
+  })
+
+process.on("exit", (code) => {
     log(
         chalk.bgBlue.bold(`Process exited with code %s`),
         code
     )
- })
+})
 
 export default app
