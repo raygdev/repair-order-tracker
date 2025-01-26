@@ -86,21 +86,15 @@ const User = mongoose.model<UserDoc, UserModel>("users", UserSchema, "users");
 export const createUser = async function (newUser: UserAttributes) {
   const user = new User(newUser)
 
-    await user.save()
+  await user.save()
 
   return { ...user.toJSON(), password: null }
 }
 
 export const findByEmail = async function (email: { email: string }) {
-  try {
-    const foundUser = await User.findOne(email).populate('repairOrders').exec()
-    if(!foundUser) {
-      return null
-    }
-    return foundUser
-  } catch (e) {
-    throw e
-  }
+  const foundUser = await User.findOne({ email }).populate('repairOrders').exec()
+  console.log(`{FOUND_USER}: ${foundUser}`)
+  return foundUser
 }
 
 export const findUserById = async function (userId: string) {
