@@ -50,10 +50,11 @@ beforeAll(async () => {
 })
 
 beforeEach( async () => {
-    const collections = await mongoose.connection.db.collections()
-
-    for(let collection of collections) {
-        await collection.deleteMany({})
+    const collections = await mongoose.connection.db?.collections()
+    if(collections) {
+      for(let collection of collections) {
+          await collection.deleteMany({})
+      }
     }
 })
 
