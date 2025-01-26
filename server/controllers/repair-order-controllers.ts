@@ -56,7 +56,7 @@ export async function deleteRepair(req: Request, res: Response) {
     throw new NotAuthorizedError();
   }
 
-  await repair.delete();
+  await repair.deleteOne();
 
   res
     .status(200)

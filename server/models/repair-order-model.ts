@@ -110,8 +110,8 @@ export const updateRepairOrder = async function (repairOrderId: string, repairTo
     return repairOrder
 }
 
-export const getUserRepairOrders = (userId: string) => {
-    const repairs = RepairOrders.find({ userId }).populate({
+export const getUserRepairOrders = async (userId: string) => {
+    const repairs = await RepairOrders.find({ userId }).populate({
       path: 'vehicle',
       select: '-_id -__v -id'
     }).select('-vehicleId -__v').exec()
