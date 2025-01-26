@@ -84,38 +84,12 @@ UserSchema.pre('save', function(){
 const User = mongoose.model<UserDoc, UserModel>("users", UserSchema, "users");
 
 export const createUser = async function (newUser: UserAttributes) {
-  try {
-    const userToCreate = {
-      ...newUser,
-      password: bcrypt.hashSync(newUser.password, 10)
-    }
-    const user = new User(userToCreate)
+  const user = new User(newUser)
+
     await user.save()
-    return user
-  } catch (e) {
-    throw e
-  }
+
+  return { ...user.toJSON(), password: null }
 }
-
-/**
- * 
- * @param {Object} email object containing the users email
- * @param {callback} done callback returns either error or user
- */
-
-export const findUserByEmail = function (email: { email: string }, done: DoneCallback) {
-  User.findOne(email)
-      .populate('repairOrders')
-      .exec(function (err, user) {
-
-        if(err) return done(err);
-
-        if (!user) return done(null, false);
-        
-        return done(null, user);
-    
-      });
-};
 
 export const findByEmail = async function (email: { email: string }) {
   try {
