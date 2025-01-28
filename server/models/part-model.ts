@@ -2,7 +2,8 @@ import mongoose from 'mongoose'
 
 interface PartsDocument extends mongoose.Document {
     price: number,
-    name: string
+    name: string,
+    jobId: string
 }
 
 const PartsSchema = new mongoose.Schema({
