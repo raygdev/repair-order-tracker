@@ -47,3 +47,5 @@ JobSchema.virtual( 'parts', {
 })
 
 const Job = mongoose.model<JobDocument>('jobs', JobSchema, 'jobs')
+
+export { Job }
