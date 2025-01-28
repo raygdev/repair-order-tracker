@@ -27,3 +27,4 @@ const PartsSchema = new mongoose.Schema({
 
 const Part = mongoose.model<PartsDocument>('parts', PartsSchema, 'parts')
 
+export { Part }
