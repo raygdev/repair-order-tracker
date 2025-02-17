@@ -35,7 +35,12 @@ type Done = (err: mongoose.CallbackError, repiarOrder?: RepairOrderDoc | false |
 const RepairOrderSchema = new mongoose.Schema({
   ro_number: { type: Number, require: true },
   isWarranty: { type: Boolean, required: true },
-  userId: { type: String, required: true },
+  userId: {
+    type: mongoose.Types.ObjectId,
+    ref: 'users',
+    required: true,
+    index: true
+  },
   vin: {
     type: String,
     uppercase: true,
