@@ -72,6 +72,12 @@ RepairOrderSchema.virtual('vehicle', {
   justOne: true,
 })
 
+RepairOrderSchema.virtual('jobs', {
+  ref: 'jobs',
+  localField: '_id',
+  foreignField: 'repairId'
+})
+
 RepairOrderSchema.statics.build = async function (attrs: RepairOrderAttributes){
   return new RepairOrders(attrs)
 }
