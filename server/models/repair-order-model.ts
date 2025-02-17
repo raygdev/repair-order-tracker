@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import { NotFoundError } from "../errors/not-found-error";
+import "./job-model";
+import "./part-model";
 
 // const mongoose = require("mongoose");
 // const { User } = require('./userModel')
