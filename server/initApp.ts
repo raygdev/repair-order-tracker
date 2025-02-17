@@ -13,6 +13,8 @@ import { repairOrderRoutes } from './routes/repair-orders/repair-order-routes'
 import { vehicleRoute } from "./routes/vehicle/vehicle"
 import { verify } from "./routes/auth/verify"
 import { errorHandler }  from './controllers/middleware/error-handler'
+import { jobsRoutes } from './routes/jobs'
+import { partsRoutes } from './routes/parts'
 const origin = process.env.NODE_ENV === 'production' ? 'https://repair-order-tracker.vercel.app' : 'http://localhost:5173'
 
 const app = express()
@@ -29,6 +31,8 @@ app.use(loginRoute)
 app.use(userRoutes)
 app.use(repairOrderRoutes)
 app.use(vehicleRoute)
+app.use(jobsRoutes)
+app.use(partsRoutes)
 app.use('*', (req: Request, res: Response) => {
     throw new NotFoundError()
 })

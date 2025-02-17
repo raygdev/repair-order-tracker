@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import { NotFoundError } from "../errors/not-found-error";
+import "./job-model";
+import "./part-model";
 
 // const mongoose = require("mongoose");
 // const { User } = require('./userModel')
@@ -33,7 +35,12 @@ type Done = (err: mongoose.CallbackError, repiarOrder?: RepairOrderDoc | false |
 const RepairOrderSchema = new mongoose.Schema({
   ro_number: { type: Number, require: true },
   isWarranty: { type: Boolean, required: true },
-  userId: { type: String, required: true },
+  userId: {
+    type: mongoose.Types.ObjectId,
+    ref: 'users',
+    required: true,
+    index: true
+  },
   vin: {
     type: String,
     uppercase: true,
@@ -63,6 +70,12 @@ RepairOrderSchema.virtual('vehicle', {
   localField: 'vin',
   foreignField: 'VIN',
   justOne: true,
+})
+
+RepairOrderSchema.virtual('jobs', {
+  ref: 'jobs',
+  localField: '_id',
+  foreignField: 'repairId'
 })
 
 RepairOrderSchema.statics.build = async function (attrs: RepairOrderAttributes){
@@ -114,7 +127,14 @@ export const getUserRepairOrders = async (userId: string) => {
     const repairs = await RepairOrders.find({ userId }).populate({
       path: 'vehicle',
       select: '-_id -__v -id'
-    }).select('-vehicleId -__v').exec()
+    })
+    .populate({
+      path: 'jobs',
+      populate: {
+        path: 'parts',
+      }
+    })
+    .select('-vehicleId -__v').exec()
 
     if(!repairs) {
       throw new NotFoundError()
