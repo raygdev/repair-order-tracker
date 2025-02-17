@@ -11,11 +11,12 @@ interface Parts {
     name: string
 }
 
-interface JobDocument extends mongoose.Document {
+export interface JobDocument extends mongoose.Document {
+    description: string
     labor: number,
     status: Status,
-    userId: string,
-    repairId: string,
+    userId: mongoose.Types.ObjectId,
+    repairId: mongoose.Types.ObjectId,
     parts?: Parts[]
 }
 
