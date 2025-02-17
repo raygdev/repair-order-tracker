@@ -93,7 +93,6 @@ export const createUser = async function (newUser: UserAttributes) {
 
 export const findByEmail = async function (email: { email: string }) {
   const foundUser = await User.findOne({ email }).populate('repairOrders').exec()
-  console.log(`{FOUND_USER}: ${foundUser}`)
   return foundUser
 }
 
