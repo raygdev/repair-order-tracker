@@ -16,8 +16,10 @@ const PartsSchema = new mongoose.Schema({
         default: 0.00
     },
     jobId: {
-        type: String,
-        required: true
+        type: mongoose.Types.ObjectId,
+        ref: 'jobs',
+        required: true,
+        index: true
     }
 }, {
     toJSON: { virtuals: true },
