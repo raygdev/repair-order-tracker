@@ -127,7 +127,14 @@ export const getUserRepairOrders = async (userId: string) => {
     const repairs = await RepairOrders.find({ userId }).populate({
       path: 'vehicle',
       select: '-_id -__v -id'
-    }).select('-vehicleId -__v').exec()
+    })
+    .populate({
+      path: 'jobs',
+      populate: {
+        path: 'parts',
+      }
+    })
+    .select('-vehicleId -__v').exec()
 
     if(!repairs) {
       throw new NotFoundError()
