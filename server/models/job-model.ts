@@ -27,13 +27,19 @@ const JobSchema = new mongoose.Schema({
       enum: Object.values(Status),
       default: 'pending'
     },
+    description: {
+        type: String,
+        required: true
+    },
     userId: {
-      type: String,
+      type: mongoose.Types.ObjectId,
       required: true
     },
     repairId: {
-        type: String,
-        required: true
+        type: mongoose.Types.ObjectId,
+        ref: "RepairOrders",
+        required: true,
+        index: true
     }
 }, {
     toJSON: { virtuals: true },
