@@ -1,9 +1,9 @@
 import mongoose from 'mongoose'
 
-interface PartsDocument extends mongoose.Document {
+export interface PartsDocument extends mongoose.Document {
     price: number,
     name: string,
-    jobId: string
+    jobId: mongoose.Types.ObjectId
 }
 
 const PartsSchema = new mongoose.Schema({
