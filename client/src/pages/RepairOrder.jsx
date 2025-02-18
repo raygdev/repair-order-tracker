@@ -20,6 +20,14 @@ const InvalidVin = loadable(() =>
   }))
 );
 
+const Job = loadable(() => 
+  import('../features/repair-order/components/job')
+)
+
+const Part = loadable(() => 
+  import('../features/repair-order/components/part')
+)
+
 export default function RepairOrder() {
   useEffect(() => {
     document.title = "Repair Order";
@@ -77,6 +85,21 @@ export default function RepairOrder() {
           Edit <FontAwesomeIcon icon={faPenToSquare} />
         </Link>
       </section>
+      {
+        repair?.jobs.length > 0 &&
+        repair.jobs.map((job, idx) => {
+          
+          const parts = job.parts.map((part, index) => {
+            return <Part key={part.id || index} name={part.name} price={part.price} jobId={job.id} />
+          })
+          return (
+            <React.Fragment key={job.id}>
+              <Job description={job.description} labor={job.labor} jobId={job.id} />
+              {parts}
+            </React.Fragment>
+          )
+        })
+      }
     </main>
   );
 }
