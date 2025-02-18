@@ -86,6 +86,10 @@ export const router = createBrowserRouter([
                         action: deleteRepairOrderAction
                     },
                 ]
+            },
+            {
+                path: "*",
+                element: <h1 className='text-xl text-center my-32'>Not Found</h1>
             }
         ]
     },
