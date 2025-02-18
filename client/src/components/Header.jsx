@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import Logout from "./Logout";
 import { useAuth } from "@hooks/useAuth";
+import UserAvatar from "./UserAvatar";
 
 export default function Header(props) {
    const auth = useAuth()
@@ -20,14 +20,14 @@ export default function Header(props) {
 
   return (
     <header className="p-4 bg-ro-slate-900 flex justify-end sticky top-0 min-w-max text-ro-slate-100 font-semibold">
-      <nav className="flex">
+      <nav className="flex items-center gap-8">
         { links
             .filter(link => link)
             .map(
               (link,i) => <NavLink className={activeLink} to={link.to} key={i}>{link.name}</NavLink>
             )
         }
-        { auth.isAuth && <Logout/> }
+        { auth.isAuth && <UserAvatar /> }
       </nav>
     </header>
   );
