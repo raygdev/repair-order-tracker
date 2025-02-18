@@ -15,9 +15,9 @@ function RepairOrderCard({ repairOrder }) {
   const date = toLocalDateString(created_on)
   const submit = useSubmit()
   return (
-    <li className='rounded block shadow-card'>
+    <li className='rounded block shadow-xl'>
       <div className='text-ro-slate-900 rounded overflow-hidden'>
-          <div className='bg-ro-header text-ro-slate-100 px-3 py-1 flex justify-between'>
+          <div className='bg-ro-header text-ro-slate-100 p-3 flex justify-between'>
             <Link 
               to={`repairorder/${id}`}
               className='hover:text-ro-slate-300 hover:underline'
