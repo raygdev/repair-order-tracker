@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashCan, faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import { toLocalDateString } from '../utils/datesHelpers'
 import { useSubmit } from 'react-router-dom'
+import AlertDeleteAction from './AlertDialogAction'
 const Link = loadable(() => 
   import('react-router-dom').then(module => ({ default: module.Link}))
 )
@@ -25,13 +26,12 @@ function RepairOrderCard({ repairOrder }) {
                 RO {ro_number}
             </Link>
             <div className='flex gap-6'>
-              <button 
-                aria-label='delete repair order'
+              <AlertDeleteAction
+                method={'post'} 
+                action={`repairorder/delete/${id}`} 
+                name={`Repair Order Number ${ro_number}`}
                 className='hover:text-red-400 active:text-red-700'
-                onClick={() => submit(null, {method: 'post', action: `repairorder/delete/${id}`})}
-              >
-                <FontAwesomeIcon aria-hidden icon={faTrashCan} />
-              </button>
+              />
               <Link 
                 aria-label='edit repair order' 
                 to={`editrepairorder/${id}/`}
