@@ -23,7 +23,7 @@ function UserAvatar() {
         auth.user.lastName.substring(0,1).toUpperCase()
     )
     return (
-        <DropdownMenu>
+        <DropdownMenu modal={false}>
             <DropdownMenuTrigger>
                 <span className='sr-only'>Toggle User Menu</span>
             <Avatar>
