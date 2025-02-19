@@ -46,13 +46,12 @@ export async function createRepair(req: Request, res: Response) {
 export async function deleteRepair(req: Request, res: Response) {
   const id = req.params.id as string;
   const userId = req.user!.id;
-
   const repair = await RepairOrders.findById(id).exec();
   if (!repair) {
     throw new NotFoundError();
   }
 
-  if (repair.userId !== userId) {
+  if (repair.userId.toString() !== userId) {
     throw new NotAuthorizedError();
   }
 
@@ -76,7 +75,7 @@ export async function updateRepair(req: Request, res: Response) {
     throw new NotFoundError();
   }
 
-  if (repair.userId !== userId) {
+  if (repair.userId.toString() !== userId) {
     throw new NotAuthorizedError();
   }
 
