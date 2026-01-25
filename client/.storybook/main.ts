@@ -1,25 +1,35 @@
 import type { StorybookConfig } from '@storybook/react-vite';
-import { mergeConfig } from 'vite';
-import viteConfig from '../vite.config'
 
 const config: StorybookConfig = {
   "stories": [
     "../src/**/*.mdx",
-    "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"
+    '../src/**/**/*.stories.(ts|tsx|mdx)',   // deeper in src subfolders
+    '../**/src/**/*.stories.(ts|tsx|mdx)',   // other feature packages with src/...
+    '../**/*.stories.(ts|tsx|mdx)' 
   ],
   "addons": [
     "@chromatic-com/storybook",
     "@storybook/addon-vitest",
     "@storybook/addon-a11y",
     "@storybook/addon-docs",
-    "storybook-addon-remix-react-router"
+    "@storybook/addon-essentials",
+    "@storybook/addon-interactions"
   ],
   "framework": "@storybook/react-vite",
   async viteFinal(config) {
-    return mergeConfig(config, viteConfig)
+    console.log(config)
+    return {
+      ...config,
+      resolve: {
+        ...config.resolve,
+        alias: {
+          ...config.resolve?.alias
+        }
+      }
+    }
   },
   typescript: {
     reactDocgen: 'react-docgen-typescript'
   }
 };
-// export default config;
+export default config;

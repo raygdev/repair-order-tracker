@@ -2,9 +2,14 @@ import defaultTheme  from 'tailwindcss/defaultTheme.js'
 import type { Config } from 'tailwindcss'
 
 const config: Config = {
-    darkMode: ["class"],
+    darkMode: ["class", '.dark'],
     content: [
-    "./src/**/*.{js,jsx,ts,tsx}"
+    './index.html',
+    './src/**/*.{ts,tsx,js,jsx,mdx}',
+    './src/**/**/*.stories.(ts|tsx|mdx)',
+    // include other feature packages and nested src folders
+    '../**/src/**/*.{ts,tsx,js,jsx,mdx}',
+    '../**/*.stories.(ts|tsx|mdx)',
   ],
   theme: {
   	extend: {

@@ -1,4 +1,4 @@
-@reference "tailwindcss/utilities"
+@reference "tailwindcss/utilities";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -113,8 +113,10 @@ a {
 
 
 
-@layer base {
+/* @layer base {
   * {
-    @apply border-border;}
+    @apply border-border;
+  }
   body {
-    @apply bg-background text-foreground;}}
+    @apply bg-background text-foreground;
+  }} */

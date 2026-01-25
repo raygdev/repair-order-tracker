@@ -9,14 +9,21 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
 import { playwright } from '@vitest/browser-playwright';
-const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url));
+const dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
   plugins: [react(), tsconfigPaths(), tailwindcss()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src")
+      "@": path.resolve(dirname, "./src"),
+      "@components": path.resolve(dirname, "./src/components/*"),
+      "@hooks": path.resolve(dirname, "./src/hooks/*"),
+      "@services": path.resolve(dirname, "./src/services/*"),
+      "@pages": path.resolve(dirname, "./src/pages/*"),
+      "@utils": path.resolve(dirname, "./src/utils/*"),
+      "@assets": path.resolve(dirname, "./src/assets/*"),
+      "@features": path.resolve(dirname, "./src/features/*"),
     }
   },
   test: {
