@@ -1,0 +1,53 @@
+import defaultTheme  from 'tailwindcss/defaultTheme.js'
+import type { Config } from 'tailwindcss'
+
+const config: Config = {
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}"
+  ],
+  theme: {
+    extend: {
+      colors: {
+        btn: {
+          primary: '#110372',
+          secondary: '#0455C0',
+          hover: '#1D75EB',
+          disabled: '#6BAAFC'
+        },
+        form: {
+          header: '#0455C0'
+        },
+        status: {
+          completed: '#5CB85C'
+        },
+        ro: {
+          slate: {
+            100: '#EEEFF2',
+            300: '#BBBCC3',
+            500: '#70717B',
+            700: '#373848',
+            900:  '#060820'
+          },
+          'link-primary': '#110372',
+          'link-disable': '#3820E1',
+          'link-hover': '#3e3295',
+          'header': '#373848'
+        }
+      },
+      boxShadow: {
+          card: '0 4px 16px -2px rgba(0,0,0,0.1)',
+          form: '0 4px 16px -2px rgba(0,0,0,0.25)'
+      },
+      backgroundImage: {
+        'vehicle-mobile': "url('/src/assets/vehicle-mobile.png')"
+      }
+    },
+    screens:{
+      'xs':'500px',
+      ...defaultTheme.screens
+    }
+  },
+  plugins: [],
+}
+
+export default config

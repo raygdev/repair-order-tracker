@@ -7,9 +7,19 @@
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-    "module": "nodenext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "target": "esnext",
     "types": [],
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": ["./src/components/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@services/*": ["./src/services/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@assets/*": ["./src/assets/*"]
+    },
     // For nodejs:
     // "lib": ["esnext"],
     // "types": ["node"],
@@ -19,7 +29,7 @@
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
-
+    "esModuleInterop": true,
     // Stricter Typechecking Options
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true,
@@ -40,5 +50,6 @@
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true,
+    "allowJs": true
   }
 }
