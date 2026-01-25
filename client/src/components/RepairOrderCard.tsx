@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashCan, faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import { toLocalDateString } from '../utils/datesHelpers'
 import { useSubmit } from 'react-router-dom'
+import { StatusBadge } from './status/status-badge'
 const Link = loadable(() => 
   import('react-router-dom').then(module => ({ default: module.Link}))
 )
@@ -52,9 +53,7 @@ function RepairOrderCard({ repairOrder }: RepairOrderCardProps) {
               <span className='m-3'>{vehicle?.Model || "VIN"}</span>
             </div>
             <div className='flex flex-col justify-between py-2'>
-              <div className='bg-green-500 flex justify-center rounded px-1'>
-                completed
-              </div>
+              <StatusBadge variant='completed' />
               <span className='text-ro-slate-500'>{date}</span>
             </div>
           </div>
