@@ -1,10 +1,31 @@
-@reference "tailwindcss/utilities";
+@import "tailwindcss";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 a {
     @apply cursor-pointer
+}
+
+@theme {
+      --color-ro-header: #373848;
+      --color-ro-slate-100: #EEEFF2;
+      --color-ro-slate-300: #BBBCC3;
+      --color-ro-slate-500: #70717B;
+      --color-ro-slate-700: #373848;
+      --color-ro-slate-900: #060820;
+      --color-ro-link-primary: #110372;
+      --color-ro-link-disable: #3820E1;
+      --color-ro-link-hover: #3e3295;
+
+      --color-btn-primary: #110372;
+      --color-btn-secondary: #0455C0;
+      --color-btn-hover: #1D75EB;
+      --color-btn-disable: #6BAAFC;
+
+      --color-form-header: #0455C0;
+      --shadow-card: 0 4px 16px -2px rgba(0,0,0,0.1);
+      --shadow-form: 0 4px 16px -2px rgba(0,0,0,0.25);
 }
 
 
@@ -60,7 +81,8 @@ a {
 
         --chart-5: 27 87% 67%;
 
-        --radius: 0.5rem}
+        --radius: 0.5rem
+  }
   .dark {
 
         --background: 0 0% 3.9%;
@@ -113,10 +135,10 @@ a {
 
 
 
-/* @layer base {
+@layer base {
   * {
-    @apply border-border;
+    /* @apply border-border; */
   }
   body {
-    @apply bg-background text-foreground;
-  }} */
+    /* @apply bg-background text-foreground; */
+  }}
