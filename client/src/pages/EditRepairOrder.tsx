@@ -68,7 +68,7 @@ export default function EditRepairOrder() {
               VIN*
               <input
                 className={`p-2 font-normal rounded focus:outline-ro-slate-900 ${
-                  inputs.vin?.isInvalid
+                  inputs?.vin?.isInvalid
                     ? "border-2 border-red-600"
                     : "border-2 border-ro-slate-300"
                 }`}
