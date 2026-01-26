@@ -22,7 +22,7 @@ export default function Login() {
   ];
   return (
     <main className="h-screen flex flex-col w-full justify-center items-center text-ro-slate-900">
-      <div className="w-full px-4 xs:max-w-md md:min-w-max">
+      <div className="w-full px-4 max-w-xl">
         <h3
           className={`text-red-600 text-center text-2xl mb-4 ${
             !message ? "hidden" : ""

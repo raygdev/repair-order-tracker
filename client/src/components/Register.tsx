@@ -14,7 +14,7 @@ export default function Register() {
   ];
   return (
     <main className=" flex w-full flex-col min-h-screen text-ro-slate-900">
-      <div className="w-full xs:max-w-md m-auto px-4">
+      <div className="w-full px-4 m-auto max-w-xl">
         <Form
           className="p-4 min-h-max flex flex-col justify-between rounded shadow-form"
           method="post"
