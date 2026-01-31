@@ -1,22 +1,13 @@
 import { Badge } from "@/components/ui/badge";
 import { Timer, Clock8, CircleCheck, CircleX, MessageSquareQuote, CircleDot  } from "lucide-react";
 import { cva } from "class-variance-authority";
-
+import { Status } from "@features/repair-orders/src/lib/domain/models/job.model";
 export interface StatusBadgeProps {
-    variant: keyof typeof variantText
+    variant: keyof typeof Status
 }
 
-export const variantText =  {
-    approved: 'Approved',
-    declined: 'Declined',
-    "waiting-on-customer": 'Waiting on customer',
-    'waiting-on-parts': 'Waiting on parts',
-    completed: 'Completed',
-    quoted: 'Quoted',
-    "in-progress": 'In Progress'
-}
 
-const colorVariant: Record<keyof typeof variantText, string> = {
+const colorVariant: Record<keyof typeof Status, string> = {
     approved: 'bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-50',
     declined: 'bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-50',
     "waiting-on-customer": 'bg-sky-50 text-sky-700 dark:bg-sky-950 dark:text-sky-50',
@@ -32,7 +23,7 @@ const statusBadgeColors = cva("gap-2", {
     }
 })
 
-const iconVariant: Record<keyof typeof variantText, React.ReactNode> = {
+const iconVariant: Record<keyof typeof Status, React.ReactNode> = {
     approved: <CircleCheck size={16}/>,
     declined: <CircleX size={16}/>,
     "waiting-on-customer": <Clock8 size={16}/>,
@@ -45,7 +36,7 @@ const iconVariant: Record<keyof typeof variantText, React.ReactNode> = {
 export function StatusBadge({ variant }: StatusBadgeProps) {
     return (
         <Badge variant={'destructive'} className={statusBadgeColors({ variant })}>
-            {iconVariant[variant]} {variantText[variant]}
+            {iconVariant[variant]} {Status[variant]}
         </Badge>
     )
 }
