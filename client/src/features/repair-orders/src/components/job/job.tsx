@@ -19,6 +19,7 @@ import { StatusBadge } from '@components/status/status-badge';
 
 import type { Job, Part } from "../../lib/domain/models/job.model";
 import { DropdownMenuItem } from '@radix-ui/react-dropdown-menu';
+import { useSubmit } from 'react-router-dom';
 
 
 export interface JobProps {
@@ -30,6 +31,7 @@ export interface JobProps {
  */
 
 export function Job({ job }: JobProps) {
+
 
     const partsTotal = job.parts?.reduce((a,b) => a + b.price || 0, 0).toFixed(2) || 0
     const totalLabor = (job.labor * 150).toFixed(2)
@@ -47,6 +49,10 @@ export function Job({ job }: JobProps) {
                 </div>
             </div>
             <div>
+                <div className='py-2 pl-2 flex items-center gap-4'>
+                    <span className='text-sm font-bold'>Labor</span>
+                    <span>{job.labor} hours</span>
+                </div>
                 <Table>
                     <TableHeader>
                         <TableRow className={rowBorderStyles}>
@@ -92,6 +98,9 @@ interface ActionProps {
 
 function Actions({ part }: ActionProps) {
 
+    const submit = useSubmit()
+    const submitType = { method: 'delete', encType: 'applicaiton/json' }
+
     const baseItemStyles = "flex items-center gap-2 cursor-pointer hover:bg-gray-50"
     return (
         <DropdownMenu modal={false}>
@@ -104,7 +113,10 @@ function Actions({ part }: ActionProps) {
                     <DropdownMenuItem className={baseItemStyles}>
                         <SquarePen size={16} /> Edit <span className='sr-only'>{part.name}</span>
                     </DropdownMenuItem>
-                    <DropdownMenuItem className={`text-red-600 ${baseItemStyles}`}>
+                    <DropdownMenuItem
+                      onClick={() => submit({ id: part.id }, { method: 'delete', action: `part/${part.id}`, encType: 'application/json'})}
+                      className={`text-red-600 ${baseItemStyles}`}
+                    >
                         <Trash size={16}/> Delete <span className='sr-only'>{part.name}</span>
                     </DropdownMenuItem>
             </DropdownMenuContent>
