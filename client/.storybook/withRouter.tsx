@@ -2,7 +2,7 @@ import {
   createMemoryRouter,
   RouterProvider,
   type RouteObject
-} from 'react-router'
+} from 'react-router-dom'
 
 export function withRouter({
     routes,
