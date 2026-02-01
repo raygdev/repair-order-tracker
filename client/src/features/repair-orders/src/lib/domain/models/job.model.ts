@@ -8,16 +8,16 @@ export const Status =  {
     "in-progress": 'In Progress'
 }
 
-export interface Parts {
+export interface Part {
     price: number,
-    name: string
+    name: string,
+    id: string
 }
 
 export interface Job {
+    id: string
     description: string
     labor: number,
     status: keyof typeof Status,
-    userId: string,
-    repairId:string 
-    parts?: Parts[]
+    parts?: Part[]
 }
