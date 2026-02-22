@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import { Timer, Clock8, CircleCheck, CircleX, MessageSquareQuote, CircleDot  } from "lucide-react";
+import { Timer, Clock8, CircleCheck, MessageSquareQuote, CircleDot, ThumbsUp, ThumbsDown  } from "lucide-react";
 import { cva } from "class-variance-authority";
 import { Status } from "@features/repair-orders/src/lib/domain/models/job.model";
 export interface StatusBadgeProps {
@@ -24,8 +24,8 @@ const statusBadgeColors = cva("gap-2", {
 })
 
 const iconVariant: Record<keyof typeof Status, React.ReactNode> = {
-    approved: <CircleCheck size={16}/>,
-    declined: <CircleX size={16}/>,
+    approved: <ThumbsUp size={16}/>,
+    declined: <ThumbsDown size={16}/>,
     "waiting-on-customer": <Clock8 size={16}/>,
     'waiting-on-parts': <Timer size={16}/>,
     completed: <CircleCheck  size={16}/>,

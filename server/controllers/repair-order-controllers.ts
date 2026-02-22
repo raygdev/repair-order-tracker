@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { ObjectId } from "mongodb";
 import {
   RepairOrderAttributes,
   RepairOrders,
@@ -13,7 +14,7 @@ import { NotAuthorizedError } from "../errors/not-authorized-error";
 
 export async function createRepair(req: Request, res: Response) {
   const userId = req.user!.id;
-  let { ro_number, isWarranty, vin, created_on, notes } =
+  let { ro_number, isWarranty, vin, created_on, notes, status } =
     req.body as RepairOrderAttributes;
 
   if (!created_on) {
@@ -35,7 +36,8 @@ export async function createRepair(req: Request, res: Response) {
     vin,
     created_on,
     notes,
-    userId,
+    userId: new ObjectId(userId),
+    status: status || 'quoted'
   });
 
   await repair.save();
@@ -52,7 +54,7 @@ export async function deleteRepair(req: Request, res: Response) {
     throw new NotFoundError();
   }
 
-  if (repair.userId !== userId) {
+  if (repair.userId.toString() !== userId) {
     throw new NotAuthorizedError();
   }
 
@@ -67,7 +69,7 @@ export async function updateRepair(req: Request, res: Response) {
   const id = req.params.id;
   const userId = req.user!.id;
 
-  const { vin, created_on, notes, ro_number, isWarranty } =
+  const { vin, created_on, notes, ro_number, isWarranty, status } =
     req.body as RepairOrderAttributes;
 
   const repair = await RepairOrders.findById(id).exec();
@@ -76,7 +78,7 @@ export async function updateRepair(req: Request, res: Response) {
     throw new NotFoundError();
   }
 
-  if (repair.userId !== userId) {
+  if (repair.userId.toString() !== userId) {
     throw new NotAuthorizedError();
   }
 
@@ -88,21 +90,32 @@ export async function updateRepair(req: Request, res: Response) {
     repair.set("created_on", created_on);
   }
 
-  repair.set("vin", vin);
-  repair.set("ro_number", ro_number);
-  repair.set("isWarranty", isWarranty);
+  if(status) {
+    repair.set('status', status)
+  }
+
+  if(vin) {
+    let vehicle = await findVehicleByVin(vin);
+
+    if (!vehicle) {
+      // I feel like this should really be handled separately
+      // maybe create an endpoint and use an onblur in the client?
+      vehicle = await getAndCreateVehicleInfo(vin).catch(() =>
+        console.log("Something went wrong with creating the vehicle")
+      );
+    }
+
+    repair.set("vin", vin);
+  }
+
+  if(ro_number) {
+    repair.set("ro_number", ro_number);
+  }
+
+  repair.set("isWarranty", isWarranty ?? false);
 
   await repair.save();
 
-  let vehicle = await findVehicleByVin(vin);
-
-  if (!vehicle) {
-    // I feel like this should really be handled separately
-    // maybe create an endpoint and use an onblur in the client?
-    vehicle = await getAndCreateVehicleInfo(vin).catch(() =>
-      console.log("Something went wrong with creating the vehicle")
-    );
-  }
 
   res.json({
     message: "Success",

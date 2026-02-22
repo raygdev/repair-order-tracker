@@ -6,13 +6,24 @@ import "./part-model";
 // const mongoose = require("mongoose");
 // const { User } = require('./userModel')
 
+const Status =  {
+    approved: 'approved',
+    declined: 'declined',
+    "waiting-on-customer": 'waiting-on-customer',
+    'waiting-on-parts': 'waiting-on-parts',
+    completed: 'completed',
+    quoted: 'quoted',
+    "in-progress": 'in-progress'
+}
+
 export interface RepairOrderAttributes {
   ro_number: number
   isWarranty: boolean
-  userId: string
+  userId: mongoose.Types.ObjectId
   vin: string
   created_on?: Date
   notes?: string
+  status: keyof typeof Status
 }
 
 interface RepairOrderModel extends mongoose.Model<RepairOrderDoc>{
@@ -24,10 +35,11 @@ export interface RepairOrderDoc extends mongoose.Document{
   id: string
   ro_number: number
   isWarranty: boolean
-  userId: string
+  userId: mongoose.Types.ObjectId
   vin: string
   created_on?: Date
   notes?: string
+  status: keyof typeof Status
 }
 
 type Done = (err: mongoose.CallbackError, repiarOrder?: RepairOrderDoc | false | null) => void
@@ -55,6 +67,12 @@ const RepairOrderSchema = new mongoose.Schema({
   },
   created_on: { type: Date, default: new Date() },
   notes: { type: String, default: "" },
+  status: {
+    type: String,
+    required: true,
+    enum: Object.keys(Status),
+    default: Status.quoted
+  }
 },{ 
   toJSON: { 
     virtuals: true,
