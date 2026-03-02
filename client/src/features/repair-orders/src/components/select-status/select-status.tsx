@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import {
   Select,
   SelectTrigger,
@@ -7,7 +8,8 @@ import {
 } from "@/components/ui/select";
 import { StatusBadge } from "@components/status/status-badge";
 import { Status } from "../../lib/domain/models/job.model";
-import { repairOrderActions } from "../../lib/domain/services/repair-order/repair-order.actions";
+import { RepairOrderUpdateUseCase } from "../../lib/use-cases/repair-orders/repair-order-update.use-case";
+import { repairOrderService } from "../../lib/adapters/repiar-order.service";
 
 interface SelectStatusProps {
   status: keyof typeof Status;
@@ -15,12 +17,14 @@ interface SelectStatusProps {
 }
 
 export function StatusBadgeSelect({ status, id }: SelectStatusProps) {
+  const repairUpdateUseCase = useMemo(() => new RepairOrderUpdateUseCase(repairOrderService), [])
   const statuses = Object.keys(Status) as (keyof typeof Status)[];
+
   return (
     <Select
       defaultValue={status}
       onValueChange={(value) =>
-        repairOrderActions.put({
+        repairUpdateUseCase.execute({
           id,
           status: value as keyof typeof Status,
         })
