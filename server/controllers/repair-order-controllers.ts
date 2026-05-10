@@ -5,6 +5,8 @@ import {
   RepairOrders,
   getUserRepairOrders,
 } from "../models/repair-order-model";
+import { Job } from "../models/job-model";
+import { Part } from "../models/part-model";
 import {
   findVehicleByVin,
   getAndCreateVehicleInfo,
@@ -49,7 +51,11 @@ export async function deleteRepair(req: Request, res: Response) {
   const id = req.params.id as string;
   const userId = req.user!.id;
 
-  const repair = await RepairOrders.findById(id).exec();
+  const repair = await RepairOrders.findById(id).populate({
+    path: 'jobs'
+  }).exec();
+
+
   if (!repair) {
     throw new NotFoundError();
   }
@@ -57,6 +63,14 @@ export async function deleteRepair(req: Request, res: Response) {
   if (repair.userId.toString() !== userId) {
     throw new NotAuthorizedError();
   }
+
+  const jobs =  await Job.find({ repairId: repair.id })
+
+  const jobIds = jobs.map(j => j._id)
+
+  await Job.deleteMany({ repairId: repair.id })
+
+  await Part.deleteMany({ jobId: { $in: jobIds }})
 
   await repair.deleteOne();
 
