@@ -32,7 +32,7 @@ interface CardProps {
 export function RepairCard({ repair, placement="home" }: CardProps) {
   const date = toLocalDateString(repair.created_on);
   return (
-    <Card className="shadow-md border-gray-200">
+    <Card className={placement === 'home' ? 'shadow-md border-gray-200' : 'border-none shadow-none'}>
       <CardHeader className="text-slate-600">
         <CardTitle className="flex justify-between items-center">
           {placement === "home" || placement !== 'repair' ? (

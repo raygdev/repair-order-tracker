@@ -12,6 +12,6 @@ export interface RepairOrder {
   ro_number: string,
   notes: string,
   vehicle: Vehicle,
-  job?: Job,
+  jobs?: Job[],
   status: keyof typeof Status
 }
