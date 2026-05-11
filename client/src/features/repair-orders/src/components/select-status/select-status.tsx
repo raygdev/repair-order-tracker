@@ -30,7 +30,7 @@ export function StatusBadgeSelect({ status, id }: SelectStatusProps) {
         })
       }
     >
-      <SelectTrigger className="outline-none border-none shadow-none p-0">
+      <SelectTrigger aria-label="Toggle status selection" className="outline-none border-none shadow-none p-0">
         <div className="pr-4">
           <SelectValue placeholder={<StatusBadge variant={status} />} />
         </div>
