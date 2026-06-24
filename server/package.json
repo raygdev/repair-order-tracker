@@ -7,7 +7,7 @@
     "test": "jest --watchAll --verbose",
     "dev": "ts-node-dev api/index.ts",
     "start": "node index.js",
-    "test:ci": "jest"
+    "test:ci": "jest --verbose"
   },
   "jest": {
     "preset": "ts-jest",
