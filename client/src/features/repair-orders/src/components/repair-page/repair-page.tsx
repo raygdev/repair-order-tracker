@@ -17,11 +17,6 @@ export const RepairOrderPage = () => {
     <>
       <RepairCard placement="repair"  repair={repair}/>
       {
-        repair.jobs && repair.jobs.length === 0 && (
-            <h3>+ Add Job (this is not a button)</h3>
-        )
-      }
-      {
         repair.jobs && repair.jobs.length > 0 && (
             repair.jobs.map(job => {
                 return (
@@ -31,6 +26,9 @@ export const RepairOrderPage = () => {
                 )
             })
         )
+      }
+      {
+        <h3>+ Add Job (this is not a button)</h3>
       }
     </>
   )

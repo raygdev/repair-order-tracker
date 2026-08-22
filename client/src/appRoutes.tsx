@@ -11,6 +11,7 @@ import {
     logoutAction,
     repairOrderLoader
 } from "@utils/actionsAndLoaders";
+import { partDelete } from '@features/repair-orders/src/lib/use-cases/parts/part-delete.use-case.js';
 import type { RouteObject } from 'react-router';
 
 const UserLayout = loadable(() => import("@pages/UserLayout"))
@@ -79,7 +80,17 @@ export const router: RouteObject[] = [
                     {
                         path:'repairorder/:repairId',
                         element: <RepairOrder />,
-                        loader: repairOrderLoader
+                        loader: repairOrderLoader,
+                        children: [
+                            {
+                                path: 'part/delete/:id',
+                                action: async ({ request }) => {
+                                    const { id } = await request.json();
+                                    partDelete.execute(id)
+                                    return null
+                                }
+                            }
+                        ]
                     },
                     {
                         path:'repairorder/delete/:repairId',

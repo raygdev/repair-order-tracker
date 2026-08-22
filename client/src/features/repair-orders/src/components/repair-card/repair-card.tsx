@@ -32,10 +32,10 @@ interface CardProps {
 export function RepairCard({ repair, placement="home" }: CardProps) {
   const date = toLocalDateString(repair.created_on);
   return (
-    <Card className={placement === 'home' ? 'shadow-md border-gray-200' : 'border-none shadow-none'}>
+    <Card className={placement !== 'repair' ? 'shadow-md border-gray-200' : 'border-none shadow-none'}>
       <CardHeader className="text-slate-600">
         <CardTitle className="flex justify-between items-center">
-          {placement === "home" || placement !== 'repair' ? (
+          {placement === "home" ? (
             <Link
               to={`repairorder/${repair.id}`}
               className="text-md text-blue-800 hover:text-blue-500"
@@ -45,7 +45,9 @@ export function RepairCard({ repair, placement="home" }: CardProps) {
           ) : (
             <>
               <p className="text-md text-blue-800">RO {repair.ro_number}</p>
-              <p>{repair.vehicle?.VIN}</p>
+              <p className=' sr-only sm:not-sr-only'>
+                <span className="sr-only">Vehicle Identification Number</span> {repair.vehicle?.VIN}
+              </p>
             </>
           )}
           <div className="flex gap-4">

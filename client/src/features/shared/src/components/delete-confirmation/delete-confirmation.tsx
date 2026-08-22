@@ -66,7 +66,7 @@ export const DeleteConfirmation: FC<DeleteConfirmationPropTypes> = ({
                   { id },
                   {
                     method: "delete",
-                    action: `part/${id}`,
+                    action: `part/delete/${id}`,
                     encType: "application/json",
                   },
                 )

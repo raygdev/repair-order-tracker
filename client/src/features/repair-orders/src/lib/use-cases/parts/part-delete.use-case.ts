@@ -1,4 +1,5 @@
 import { PartsRepositoryPort, BaseUseCase } from "../../domain";
+import { partsService } from "../../adapters/parts.service";
 
 export class PartDeleteUseCase extends BaseUseCase<string, Promise<boolean>> {
   constructor(private repo: PartsRepositoryPort) {
@@ -8,3 +9,5 @@ export class PartDeleteUseCase extends BaseUseCase<string, Promise<boolean>> {
     return this.repo.deletePart(id);
   }
 }
+
+export const partDelete = new PartDeleteUseCase(partsService)

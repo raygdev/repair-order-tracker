@@ -60,9 +60,10 @@ const meta: Meta<typeof RepairOrderPage> = {
               },
             },
             {
-              path: "part/:partId",
+              path: "part/delete/:partId",
               action: async ({ request }) => {
-                console.log(await request.json());
+                const { id } = await request.json();
+                console.log(id);
                 await sleep();
                 return { success: true };
               },
