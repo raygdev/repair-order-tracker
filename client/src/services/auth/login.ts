@@ -17,11 +17,6 @@ export async function login(credentials: Creds) {
     }
     const token = res.data.token
     setToken(token)
-    client.defaults.headers.common['Authorization'] = `Bearer ${token}`
-    client.interceptors.request.use(config => {
-        config.headers.Authorization = `Bearer ${token}`
-        return config
-    })
 
     return res.data
 }
@@ -37,10 +32,6 @@ class AuthService {
         }
         const token = res.data.token
         this.setToken(token)
-        client.interceptors.request.use(config => {
-            config.headers.Authorization = `Bearer ${token}`
-            return config
-        })
         localStorage.setItem('user', JSON.stringify(res.data))
         this.#user = res.data
         this.notifyListeners()

@@ -36,8 +36,9 @@ export const FormModal: FC<FormModalProps> = ({
   setOpen,
   open = true
 }) => {
-  const [ data, setData ] = useState(
-   form.fields.reduce(
+  const [ data, setData ] = useState({
+
+   ...form.fields.reduce(
      (accumulator: {[key:string]: string | boolean}, field) => {
       const fieldValue = field.value ?? field.defaultValue;
       accumulator[field.name] = field.type === "checkbox"
@@ -45,9 +46,9 @@ export const FormModal: FC<FormModalProps> = ({
         : String(fieldValue ?? "")
         return accumulator
      },
-     {}
+     { hiddenId: form.id || ''}
     )
-  )
+})
   const fetcher = useFetcher();
   const isSubmitting = fetcher.state !== "idle";
 

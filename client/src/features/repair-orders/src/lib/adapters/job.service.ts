@@ -15,7 +15,7 @@ class JobService extends JobRepositoryPort {
     }
 
     async createJob(job: CreateJob): Promise<boolean> {
-        const newJob = await this.api.post(`${this.baseUrl}/create`)
+        const newJob = await this.api.post(`${this.baseUrl}/create`, job)
 
         if(newJob.status === 401) {
           this.auth.logout()
@@ -30,7 +30,7 @@ class JobService extends JobRepositoryPort {
     }
 
     async deleteJob(id: string): Promise<boolean> {
-        const res = await this.api.delete(`${this.baseUrl}/jobs/${id}`)
+        const res = await this.api.delete(`${this.baseUrl}/${id}`)
 
         if(res.status === 401) {
             this.auth.logout()
@@ -45,7 +45,7 @@ class JobService extends JobRepositoryPort {
     }
 
     async updateJob(job: Job): Promise<Job> {
-        const updatedJob = await this.api.patch<Job>(`${this.baseUrl}/jobs/${job.id}`)
+        const updatedJob = await this.api.patch<Job>(`${this.baseUrl}/${job.id}`, job)
 
         if(updatedJob.status === 401) {
             this.auth.logout()
@@ -60,3 +60,5 @@ class JobService extends JobRepositoryPort {
     }
 
 }
+
+export const jobService = new JobService(authService, client);

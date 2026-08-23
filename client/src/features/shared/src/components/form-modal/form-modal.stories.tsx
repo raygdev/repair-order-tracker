@@ -66,7 +66,7 @@ const newJobForm: Form = {
   encType: "application/json",
   fields: [
     { label: "Description", name: "description", type: "text", placeHolder: "Describe the repair" },
-    { label: "Labor hours", name: "labor", type: "number", placeHolder: "0.00", step: "0.01" },
+    { label: "Labor hours", name: "labor", type: "number", placeHolder: "0.0", step: "0.1" },
   ],
 };
 
@@ -78,7 +78,7 @@ const existingJobForm: Form = {
   action: "/api/jobs/job-123",
   fields: [
     { label: "Description", name: "description", type: "text", value: "Replace purge valve" },
-    { label: "Labor hours", name: "labor", type: "number", value: "2.50", step: "0.01" },
+    { label: "Labor hours", name: "labor", type: "number", value: "2.5", step: "0.1" },
   ],
 };
 

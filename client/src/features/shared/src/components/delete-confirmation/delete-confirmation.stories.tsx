@@ -12,6 +12,7 @@ function Wrapper() {
       open={open}
       setOpen={setOpen}
       name="Some Part"
+      path='part'
     />
   );
 }

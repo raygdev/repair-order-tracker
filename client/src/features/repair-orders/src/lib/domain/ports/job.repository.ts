@@ -1,7 +1,9 @@
 import type { Job } from "../models/job.model";
 import { BaseUrls } from "../types/base-url";
 
-export interface CreateJob extends Omit<Job, 'id'> {}
+export interface CreateJob extends Omit<Job, 'id'> {
+    repairId: string
+}
 
 export abstract class JobRepositoryPort {
     protected baseUrl = BaseUrls.JobsBaseUrl

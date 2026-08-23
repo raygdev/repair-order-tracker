@@ -12,11 +12,18 @@ import {
     repairOrderLoader
 } from "@utils/actionsAndLoaders";
 import { partDelete } from '@features/repair-orders/src/lib/use-cases/parts/part-delete.use-case.js';
+import { partCreate } from '@features/repair-orders/src/lib/use-cases/parts/part-create.use-case.js';
+import { partUpdate } from '@features/repair-orders/src/lib/use-cases/parts/part-update.use-case.js';
+import { jobCreate } from '@features/repair-orders/src/lib/use-cases/jobs/job-create.use-case.js';
+import { jobUpdate } from '@features/repair-orders/src/lib/use-cases/jobs/job-update.use-case.js';
+import { jobDelete } from '@features/repair-orders/src/lib/use-cases/jobs/job-delete.use-case.js';
 import type { RouteObject } from 'react-router';
+import type { CreatePart, Part, Job, CreateJob } from '@features/repair-orders/src/lib/domain/index.js';
+import { RepairOrderPage } from '@features/repair-orders/src/components/repair-page/repair-page';  
 
 const UserLayout = loadable(() => import("@pages/UserLayout"))
 const  App = loadable( () => import('./App.js'))
-const RepairOrder =  loadable(() => import("@pages/RepairOrder"))
+// const RepairOrderPage =  loadable(() => import('@features/repair-orders/src/components/repair-page/repair-page.tsx'))
 const Home = loadable(() => import("@pages/Home"))
 const Register = loadable(() => import('@components/Register'))
 const User = loadable(() => import('@pages/User'))
@@ -79,17 +86,81 @@ export const router: RouteObject[] = [
                     },
                     {
                         path:'repairorder/:repairId',
-                        element: <RepairOrder />,
+                        element: <RepairOrderPage />,
                         loader: repairOrderLoader,
                         children: [
                             {
                                 path: 'part/delete/:id',
                                 action: async ({ request }) => {
                                     const { id } = await request.json();
-                                    partDelete.execute(id)
+                                    await partDelete.execute(id)
                                     return null
                                 }
-                            }
+                            },
+                            {
+                                path: 'part/create',
+                                action: async ({ request }) => {
+                                    const data = await request.json();
+                                    const part: CreatePart = {
+                                        jobId: data.hiddenId,
+                                        name: data.name,
+                                        price: data.price
+                                    }
+                                     await partCreate.execute(part)
+                                    return null
+                                }
+                            },
+                            {
+                                path: 'part/update/:id',
+                                action: async ({ request, params }) => {
+                                    const { id } = params;
+                                    const data = await request.json();
+                                    const part: Part = {
+                                      id,
+                                      ...data
+                                    }
+                                    await partUpdate.execute(part)
+                                    return null
+                                }
+                            },
+                            {
+                                path: 'job/create',
+                                action: async ({ request, params }) => {
+                                    const { repairId } = params
+                                    const data = await request.json();
+                                    console.log(data)
+                                    console.log("ID",repairId)
+                                    const job: CreateJob = {
+                                        repairId,
+                                        ...data
+                                    }
+                                    await jobCreate.execute(job)
+                                    return null
+                                }
+                            },
+                            {
+                                path: 'job/update/:id',
+                                action: async ({ request, params }) => {
+                                    const { id } = params;
+                                    const data = await request.json();
+                                    console.log(data)
+                                    const job: Job = {
+                                        id,
+                                        ...data
+                                    }
+                                    await jobUpdate.execute(job)
+                                    return null
+                                }
+                            },
+                            {
+                                path: 'job/delete/:id',
+                                action: async ({ request }) => {
+                                    const { id } = await request.json();
+                                    await jobDelete.execute(id)
+                                    return null
+                                }
+                            },
+
                         ]
                     },
                     {

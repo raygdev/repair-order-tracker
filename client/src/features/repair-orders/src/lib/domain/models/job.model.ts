@@ -12,6 +12,7 @@ export interface Part {
     price: number,
     name: string,
     id: string
+    jobId: string
 }
 
 export interface Job {

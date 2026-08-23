@@ -28,8 +28,8 @@ const repairs: RepairOrder[]  = [{
         labor: 2.4,
         status: "approved",
         parts: [
-          { price: 12.45, name: "Purge Valve", id: "1" },
-          { price: 50.47, name: "Intake Gaskets", id: "2" },
+          { price: 12.45, name: "Purge Valve", id: "1", jobId: '1' },
+          { price: 50.47, name: "Intake Gaskets", id: "2", jobId: '1' },
         ],
       }
     ],
@@ -55,6 +55,15 @@ const meta: Meta<typeof RepairOrderPage> = {
               path: "job/:jobId",
               action: async ({ request }) => {
                 console.log(await request.json());
+                redirect("/dashboard/repairorders/123");
+                return null;
+              },
+            },
+            {
+              path: "job/create",
+              action: async ({ request }) => {
+                console.log(await request.json());
+                console.log('create route')
                 redirect("/dashboard/repairorders/123");
                 return null;
               },
