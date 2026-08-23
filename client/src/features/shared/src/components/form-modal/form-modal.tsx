@@ -1,4 +1,4 @@
-import { type FC, type Dispatch, type SetStateAction, useEffect, useState } from 'react';
+import { type FC, type Dispatch, type SetStateAction, useEffect, useRef, useState } from 'react';
 import { useFetcher } from "react-router-dom";
 import { type Form } from '../../lib/domain/models/form';
 import {
@@ -31,32 +31,41 @@ export interface FormModalProps {
     open?: boolean
 }
 
+const getInitialData = (form: Form): {[key: string]: string | boolean} => ({
+  ...form.fields.reduce(
+    (accumulator: {[key: string]: string | boolean}, field) => {
+      const fieldValue = field.value ?? field.defaultValue;
+      accumulator[field.name] = field.type === "checkbox"
+        ? fieldValue === true || fieldValue === "true"
+        : String(fieldValue ?? "")
+      return accumulator
+    },
+    { hiddenId: form.id || '' }
+  )
+})
+
 export const FormModal: FC<FormModalProps> = ({
   form,
   setOpen,
   open = true
 }) => {
-  const [ data, setData ] = useState({
-
-   ...form.fields.reduce(
-     (accumulator: {[key:string]: string | boolean}, field) => {
-      const fieldValue = field.value ?? field.defaultValue;
-      accumulator[field.name] = field.type === "checkbox"
-        ? fieldValue === true || fieldValue === "true"
-        : String(fieldValue ?? "")
-        return accumulator
-     },
-     { hiddenId: form.id || ''}
-    )
-})
+  const [ data, setData ] = useState(() => getInitialData(form));
   const fetcher = useFetcher();
   const isSubmitting = fetcher.state !== "idle";
+  const wasSubmitting = useRef(false);
 
   useEffect(() => {
-    if (fetcher.state === "idle" && fetcher.data?.success) {
+    if (fetcher.state !== "idle") {
+      wasSubmitting.current = true;
+      return;
+    }
+
+    if (wasSubmitting.current && fetcher.data?.success) {
+      setData(getInitialData(form));
       setOpen(false);
     }
-  }, [fetcher.data, fetcher.state, setOpen]);
+    wasSubmitting.current = false;
+  }, [fetcher.data, fetcher.state, form, setOpen]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

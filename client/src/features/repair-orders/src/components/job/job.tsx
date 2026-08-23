@@ -49,6 +49,7 @@ export function Job({ job }: JobProps) {
           {job.description}
         </h2>
         <div className="flex gap-4">
+          {console.log("STATUS", job.status)}
           <StatusBadge variant={job.status} />
           <JobActions job={job} />
         </div>

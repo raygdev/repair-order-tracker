@@ -14,7 +14,8 @@ const colorVariant: Record<keyof typeof Status, string> = {
     "waiting-on-parts": 'bg-sky-50 text-sky-700 dark:bg-sky-950 dark:text-sky-50',
     completed: 'bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-50',
     quoted: 'bg-neutral-50 text-neutral-700 dark:bg-neutral-950 dark:text-neutral-300',
-    "in-progress": 'bg-orange-50 text-orange-700 dark:bg-orange-950 dark:text-orange-300'
+    "in-progress": 'bg-orange-50 text-orange-700 dark:bg-orange-950 dark:text-orange-300',
+    pending: 'bg-orange-50 text-orange-700 dark:bg-orange-950 dark:text-orange-300'
 }
 
 const statusBadgeColors = cva("gap-2", {
@@ -30,7 +31,8 @@ const iconVariant: Record<keyof typeof Status, React.ReactNode> = {
     'waiting-on-parts': <Timer size={16}/>,
     completed: <CircleCheck  size={16}/>,
     quoted: <MessageSquareQuote size={16}/>,
-    "in-progress": <CircleDot size={16} />
+    "in-progress": <CircleDot size={16} />,
+    pending: <Clock8 size={16}/>
 }
 
 export function StatusBadge({ variant }: StatusBadgeProps) {

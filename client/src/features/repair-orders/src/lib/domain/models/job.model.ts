@@ -6,6 +6,7 @@ export const Status =  {
     completed: 'Completed',
     quoted: 'Quoted',
     "in-progress": 'In Progress'
+    
 }
 
 export interface Part {

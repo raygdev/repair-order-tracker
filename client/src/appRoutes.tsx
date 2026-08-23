@@ -94,7 +94,7 @@ export const router: RouteObject[] = [
                                 action: async ({ request }) => {
                                     const { id } = await request.json();
                                     await partDelete.execute(id)
-                                    return null
+                                    return { success: true }
                                 }
                             },
                             {
@@ -107,7 +107,7 @@ export const router: RouteObject[] = [
                                         price: data.price
                                     }
                                      await partCreate.execute(part)
-                                    return null
+                                    return { success: true }
                                 }
                             },
                             {
@@ -120,7 +120,7 @@ export const router: RouteObject[] = [
                                       ...data
                                     }
                                     await partUpdate.execute(part)
-                                    return null
+                                    return { success: true }
                                 }
                             },
                             {
@@ -135,7 +135,7 @@ export const router: RouteObject[] = [
                                         ...data
                                     }
                                     await jobCreate.execute(job)
-                                    return null
+                                    return { success: true }
                                 }
                             },
                             {
@@ -149,7 +149,7 @@ export const router: RouteObject[] = [
                                         ...data
                                     }
                                     await jobUpdate.execute(job)
-                                    return null
+                                    return { success: true }
                                 }
                             },
                             {
@@ -157,7 +157,7 @@ export const router: RouteObject[] = [
                                 action: async ({ request }) => {
                                     const { id } = await request.json();
                                     await jobDelete.execute(id)
-                                    return null
+                                    return { success: true }
                                 }
                             },
 
