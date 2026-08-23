@@ -63,7 +63,7 @@ export function Job({ job }: JobProps) {
             <TableRow className={rowBorderStyles}>
               <TableHead>Part</TableHead>
               <TableHead>Price</TableHead>
-              <TableHead className="hidden sm:block">Qty</TableHead>
+              <TableHead className="hidden sm:table-cell">Qty</TableHead>
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
@@ -79,7 +79,7 @@ export function Job({ job }: JobProps) {
                   </div>
                 </TableCell>
                 <TableCell>${part.price.toFixed(2)}</TableCell>
-                <TableCell className="hidden sm:block">{part.quantity}</TableCell>
+                <TableCell className="hidden sm:table-cell">{part.quantity}</TableCell>
                 <TableCell className="text-right">
                   <PartActions part={part} job={job} />
                 </TableCell>
