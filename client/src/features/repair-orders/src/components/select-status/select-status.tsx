@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useRevalidator } from "react-router";
 import {
   Select,
   SelectTrigger,
@@ -27,19 +28,22 @@ type SelectStatusProps = {
 export function StatusBadgeSelect({ status, id, kind }: SelectStatusProps) {
   const repairOrderStatusUpdateUseCase = useMemo(() => new RepairOrderStatusUpdateUseCase(repairOrderService), [])
   const jobStatusUpdateUseCase = useMemo(() => new JobStatusUpdateUseCase(jobService), [])
+  const { revalidate } = useRevalidator();
 
-  const updateStatus = (value: string) => {
+  const updateStatus = async (value: string) => {
     if (kind === "job") {
-      return jobStatusUpdateUseCase.execute({
+      await jobStatusUpdateUseCase.execute({
         id,
         status: value as keyof typeof JobStatus,
       });
+    } else {
+      await repairOrderStatusUpdateUseCase.execute({
+        id,
+        status: value as keyof typeof RepairOrderStatus,
+      });
     }
 
-    return repairOrderStatusUpdateUseCase.execute({
-      id,
-      status: value as keyof typeof RepairOrderStatus,
-    });
+    revalidate();
   };
 
   return (
