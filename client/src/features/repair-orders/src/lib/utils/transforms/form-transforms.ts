@@ -52,6 +52,13 @@ export const createPartForm = (jobId: string): Form => {
                 placeHolder: 'Part price',
                 step: '0.01',
                 name: 'price'
+            },
+            {
+                label: 'Quantity',
+                type: 'number',
+                defaultValue: 1,
+                step: '1',
+                name: 'quantity'
             }
         ]
     }
@@ -100,6 +107,13 @@ export const editPartsForm = (part: Part): Form => {
                 defaultValue: part.price || 0.00,
                 step: '0.01',
                 name: 'price'
+            },
+             {
+                label: 'Quantity',
+                type: 'number',
+                defaultValue: part.quantity || 1,
+                step: '1',
+                name: 'quantity'
             }
         ]
     } 

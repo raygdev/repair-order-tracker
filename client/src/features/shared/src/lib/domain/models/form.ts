@@ -10,7 +10,7 @@ export interface FormField {
     value?: any,
     placeHolder?: string
     defaultValue?: any
-    step?: `${number}.${number}` | `${number}.${number}${number}` 
+    step?: `${number}` | `${number}.${number}` | `${number}.${number}${number}` 
     options?: FormFieldOption[]
 }
 

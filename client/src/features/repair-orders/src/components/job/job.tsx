@@ -38,7 +38,7 @@ export interface JobProps {
 
 export function Job({ job }: JobProps) {
   const partsTotal =
-    job.parts?.reduce((a, b) => a + b.price || 0, 0).toFixed(2) || 0;
+    job.parts?.reduce((a, b) => a + ((b.price || 0) * b.quantity), 0).toFixed(2) || 0;
   const totalLabor = (job.labor * 150).toFixed(2);
   const totalJob = (+totalLabor + +partsTotal).toFixed(2);
   const rowBorderStyles = "border-gray-300 hover:bg-gray-50";
@@ -63,14 +63,23 @@ export function Job({ job }: JobProps) {
             <TableRow className={rowBorderStyles}>
               <TableHead>Part</TableHead>
               <TableHead>Price</TableHead>
+              <TableHead className="hidden sm:block">Qty</TableHead>
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {job.parts?.map((part) => (
               <TableRow className={rowBorderStyles} key={part.id}>
-                <TableCell>{part.name}</TableCell>
+                <TableCell>
+                  <div className='flex flex-col gap-2'>
+                    {part.name}
+                    <span className="text-xs text-slate-500">
+                      ${(part.price * part.quantity).toFixed(2)}
+                    </span>
+                  </div>
+                </TableCell>
                 <TableCell>${part.price.toFixed(2)}</TableCell>
+                <TableCell className="hidden sm:block">{part.quantity}</TableCell>
                 <TableCell className="text-right">
                   <PartActions part={part} job={job} />
                 </TableCell>
