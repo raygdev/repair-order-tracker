@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useRouteLoaderData } from 'react-router-dom'
 import loadable from '@loadable/component';
 import { useAuth } from '../hooks/useAuth';
 const RepairOrders = loadable(() => import('@components/RepairOrders'))
-// import type { RepairOrder } from '@components/RepairOrders';
 
 export default function User() {
   const { user }  = useAuth()
