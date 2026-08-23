@@ -2,10 +2,10 @@ import type { Decorator, Meta, StoryObj } from "@storybook/react-vite";
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
 import { sleep } from "@features/utils/sleep";
 import type { Form } from "../../lib/domain/models/form";
-import { Status } from "@features/repair-orders/src/lib/domain/models/job.model";
+import { RepairOrderStatus } from "@features/repair-orders/src/lib/domain/models/repair-order.models";
 import { FormModal } from "./form-modal";
 
-const statusOptions = Object.entries(Status).map(([value, label]) => ({ value, label }));
+const statusOptions = Object.entries(RepairOrderStatus).map(([value, label]) => ({ value, label }));
 
 const newRepairOrderForm: Form = {
   title: "Create Repair Order",

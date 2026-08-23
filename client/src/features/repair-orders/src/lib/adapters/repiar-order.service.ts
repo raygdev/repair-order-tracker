@@ -5,6 +5,7 @@ import {
   type RepairOrder,
   type RepairCreate,
   type Repair,
+  type RepairOrderStatusUpdate,
   RepairOrderRepositoryPort
 } from '../domain'
 
@@ -27,6 +28,21 @@ class RepairOrderService extends RepairOrderRepositoryPort{
     }
 
     if (res.status >= 200 || res.status <= 299) {
+      return true;
+    }
+
+    throw new Error("Something went wrong");
+  }
+
+  async updateRepairStatus(update: RepairOrderStatusUpdate) {
+    const res = await this.api.put<RepairOrder, any, RepairOrderStatusUpdate>(`${this.baseUrl}/${update.id}`, update);
+
+    if (res.status === 401) {
+      this.auth.logout();
+      throw new Error("Not Authorized");
+    }
+
+    if (res.status >= 200 && res.status <= 299) {
       return true;
     }
 

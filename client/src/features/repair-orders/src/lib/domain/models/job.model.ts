@@ -1,13 +1,10 @@
-export const Status =  {
+export const JobStatus =  {
     approved: 'Approved',
     declined: 'Declined',
-    "waiting-on-customer": 'Waiting on customer',
-    'waiting-on-parts': 'Waiting on parts',
-    completed: 'Completed',
-    quoted: 'Quoted',
-    "in-progress": 'In Progress'
-    
+    pending: 'Pending'
 }
+
+export type JobStatus = keyof typeof JobStatus
 
 export interface Part {
     price: number,
@@ -20,6 +17,6 @@ export interface Job {
     id: string
     description: string
     labor: number,
-    status: keyof typeof Status,
+    status: JobStatus,
     parts?: Part[]
 }

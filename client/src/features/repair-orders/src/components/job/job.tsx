@@ -17,7 +17,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@components/ui/button";
-import { StatusBadge } from "@components/status/status-badge";
+import { StatusBadgeSelect } from "../select-status/select-status";
 
 import type { Job, Part } from "../../lib/domain/models/job.model";
 import {
@@ -49,7 +49,7 @@ export function Job({ job }: JobProps) {
           {job.description}
         </h2>
         <div className="flex gap-4">
-          <StatusBadge variant={job.status} />
+          <StatusBadgeSelect kind="job" id={job.id} status={job.status} />
           <JobActions job={job} />
         </div>
       </div>

@@ -3,6 +3,7 @@ import { authService } from "@services/auth";
 import {
     type CreateJob,
     type Job,
+    type JobStatusUpdate,
     JobRepositoryPort
 } from '../domain'
 
@@ -46,6 +47,21 @@ class JobService extends JobRepositoryPort {
 
     async updateJob(job: Job): Promise<Job> {
         const updatedJob = await this.api.patch<Job>(`${this.baseUrl}/${job.id}`, job)
+
+        if(updatedJob.status === 401) {
+            this.auth.logout()
+            throw new Error('Not Authorized')
+        }
+
+        if(updatedJob.status === 200) {
+            return updatedJob.data
+        }
+
+        throw new Error('Something went wrong, please try agian!')
+    }
+
+    async updateJobStatus(update: JobStatusUpdate): Promise<Job> {
+        const updatedJob = await this.api.patch<Job>(`${this.baseUrl}/${update.id}`, update)
 
         if(updatedJob.status === 401) {
             this.auth.logout()

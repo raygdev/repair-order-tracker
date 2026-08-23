@@ -1,5 +1,17 @@
 import type { Vehicle } from "@features/shared/src/lib/domain/models/vehicle"
-import type { Job, Status } from "./job.model"
+import type { Job } from "./job.model"
+
+export const RepairOrderStatus = {
+  approved: "Approved",
+  declined: "Declined",
+  "waiting-on-customer": "Waiting on customer",
+  "waiting-on-parts": "Waiting on parts",
+  completed: "Completed",
+  quoted: "Quoted",
+  "in-progress": "In Progress",
+} as const;
+
+export type RepairOrderStatus = keyof typeof RepairOrderStatus;
 
 
 // extend on this type when Jobs become available.
@@ -13,5 +25,5 @@ export interface RepairOrder {
   notes: string,
   vehicle: Vehicle,
   jobs?: Job[],
-  status: keyof typeof Status
+  status: RepairOrderStatus
 }

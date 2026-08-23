@@ -51,7 +51,7 @@ export function RepairCard({ repair, placement="home" }: CardProps) {
             </>
           )}
           <div className="flex gap-4">
-            <StatusBadgeSelect id={repair.id} status={repair.status} />
+            <StatusBadgeSelect kind="repair-order" id={repair.id} status={repair.status} />
           </div>
         </CardTitle>
         <CardDescription></CardDescription>
