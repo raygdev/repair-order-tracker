@@ -1,3 +1,4 @@
+import type { RouteObject } from 'react-router';
 import loadable from '@loadable/component'
 import { AuthProvider } from './provider/useAuthProvider.jsx';
 import { requireAuth } from "@utils/requireAuth"
@@ -11,19 +12,19 @@ import {
     logoutAction,
     repairOrderLoader
 } from "@utils/actionsAndLoaders";
-import { partDelete } from '@features/repair-orders/src/lib/use-cases/parts/part-delete.use-case.js';
-import { partCreate } from '@features/repair-orders/src/lib/use-cases/parts/part-create.use-case.js';
-import { partUpdate } from '@features/repair-orders/src/lib/use-cases/parts/part-update.use-case.js';
-import { jobCreate } from '@features/repair-orders/src/lib/use-cases/jobs/job-create.use-case.js';
-import { jobUpdate } from '@features/repair-orders/src/lib/use-cases/jobs/job-update.use-case.js';
-import { jobDelete } from '@features/repair-orders/src/lib/use-cases/jobs/job-delete.use-case.js';
-import type { RouteObject } from 'react-router';
+import {
+    partDelete,
+    partCreate,
+    partUpdate,
+    jobCreate,
+    jobDelete,
+    jobUpdate
+} from '@features/repair-orders/src/lib/use-cases';
 import type { CreatePart, Part, Job, CreateJob } from '@features/repair-orders/src/lib/domain/index.js';
-import { RepairOrderPage } from '@features/repair-orders/src/components/repair-page/repair-page';  
 
+import { RepairOrderPage } from '@features/repair-orders/src/components/repair-page/repair-page'; 
 const UserLayout = loadable(() => import("@pages/UserLayout"))
 const  App = loadable( () => import('./App.js'))
-// const RepairOrderPage =  loadable(() => import('@features/repair-orders/src/components/repair-page/repair-page.tsx'))
 const Home = loadable(() => import("@pages/Home"))
 const Register = loadable(() => import('@components/Register'))
 const User = loadable(() => import('@pages/User'))

@@ -2,7 +2,6 @@ import loadable from "@loadable/component";
 import { type Vehicle } from "./Vehicle";
 const AddRepairButton = loadable(() => import("./AddRepairButton"));
 const CreateFirstRepair = loadable(() => import("./CreateFirstRepair"));
-const RepairOrderCard = loadable(() => import("./RepairOrderCard"));
 import {
   RepairCard,
   type Repair,
