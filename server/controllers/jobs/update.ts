@@ -5,7 +5,7 @@ import { NotAuthorizedError } from "../../errors/not-authorized-error";
 
 export const updateJob = async (req: Request<{id: string}, {}, Partial<JobDocument>>, res: Response) => {
     const { id } = req.params
-    const { description, labor } = req.body
+    const { description, labor, status } = req.body
 
     const job = await Job.findById(id)
 
@@ -23,6 +23,10 @@ export const updateJob = async (req: Request<{id: string}, {}, Partial<JobDocume
 
     if(labor) {
         job.set('labor', labor)
+    }
+
+    if(status) {
+        job.set('status', status)
     }
 
     await job.save()
