@@ -72,7 +72,7 @@ export function RepairCard({ repair, placement="home" }: CardProps) {
               </p>
             </div>
             <div>
-              <dl className="flex justify-between">
+              <dl className="flex justify-between flex-wrap gap-2">
                 <div className="flex flex-col gap-4">
                   <dt>Year</dt>
                   <dd className="text-gray-500">{repair.vehicle.Year}</dd>
