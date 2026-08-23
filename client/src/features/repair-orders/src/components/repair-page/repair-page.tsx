@@ -14,7 +14,7 @@ export const RepairOrderPage = () => {
   }
 
   return (
-    <>
+    <div className="max-w-5xl mx-auto">
       <RepairCard placement="repair"  repair={repair}/>
       {
         repair.jobs && repair.jobs.length > 0 && (
@@ -30,6 +30,6 @@ export const RepairOrderPage = () => {
       {
         <AddJobButton />
       }
-    </>
+    </div>
   )
 }
