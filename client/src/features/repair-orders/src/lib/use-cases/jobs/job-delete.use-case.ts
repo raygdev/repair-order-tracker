@@ -1,4 +1,5 @@
 import { JobRepositoryPort, BaseUseCase } from "../../domain";
+import { jobService } from "../../adapters/job.service";
 
 export class JobDeleteUseCase extends BaseUseCase<string, Promise<boolean>> {
   constructor(private repo: JobRepositoryPort) {
@@ -8,3 +9,5 @@ export class JobDeleteUseCase extends BaseUseCase<string, Promise<boolean>> {
     return this.repo.deleteJob(id);
   }
 }
+
+export const jobDelete = new JobDeleteUseCase(jobService)

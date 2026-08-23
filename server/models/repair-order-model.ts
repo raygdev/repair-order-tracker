@@ -13,7 +13,7 @@ const Status =  {
     'waiting-on-parts': 'waiting-on-parts',
     completed: 'completed',
     quoted: 'quoted',
-    "in-progress": 'in-progress'
+    "in-progress": 'in-progress',
 }
 
 export interface RepairOrderAttributes {

@@ -1,0 +1,35 @@
+import { useRouteLoaderData, useParams } from "react-router"
+import type { RepairOrder } from "../../lib/domain"
+import { RepairCard } from "../repair-card/repair-card"
+import { Job, AddJobButton } from "../job/job"
+
+export const RepairOrderPage = () => {
+  const params = useParams()
+  const repairs = useRouteLoaderData('root') as RepairOrder[]
+
+  const repair = repairs.find(r => r.id === params.repairId)
+
+  if(!repair) {
+    return <h2>Not Found</h2>
+  }
+
+  return (
+    <div className="max-w-5xl mx-auto">
+      <RepairCard placement="repair"  repair={repair}/>
+      {
+        repair.jobs && repair.jobs.length > 0 && (
+            repair.jobs.map(job => {
+                return (
+                    <div className="pt-6" key={job.id}>
+                      <Job job={job}/>
+                    </div>
+                )
+            })
+        )
+      }
+      {
+        <AddJobButton />
+      }
+    </div>
+  )
+}

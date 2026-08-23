@@ -23,7 +23,5 @@ export const deleteJob = async (req: Request, res: Response) => {
 
     await job.deleteOne()
 
-    await job.save()
-
     res.json( { message: `successfully delete job with id ${id}`})
 }

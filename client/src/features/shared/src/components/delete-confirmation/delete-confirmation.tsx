@@ -18,7 +18,8 @@ type DeleteConfirmationPropTypes = {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   name: string;
-  id: Part["id"];
+  id: string;
+  path: string
 };
 
 export const DeleteConfirmation: FC<DeleteConfirmationPropTypes> = ({
@@ -26,6 +27,7 @@ export const DeleteConfirmation: FC<DeleteConfirmationPropTypes> = ({
   setOpen,
   name,
   id,
+  path
 }) => {
   const fetcher = useFetcher();
 
@@ -66,7 +68,7 @@ export const DeleteConfirmation: FC<DeleteConfirmationPropTypes> = ({
                   { id },
                   {
                     method: "delete",
-                    action: `part/${id}`,
+                    action: `${path}/${id}`,
                     encType: "application/json",
                   },
                 )

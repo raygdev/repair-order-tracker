@@ -5,8 +5,10 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
+  CardFooter,
 } from "@/components/ui/card";
-import { StatusBadgeSelect } from "../select-status/select-status"
+import { Button } from "@components/ui/button";
+import { StatusBadgeSelect } from "../select-status/select-status";
 
 import { toLocalDateString } from "@utils/datesHelpers";
 import type { RepairOrder } from "../../lib/domain/models/repair-order.models";
@@ -18,27 +20,38 @@ export interface OmitRepairFields extends Omit<
 > {}
 
 export interface Repair extends OmitRepairFields {
-  vehicle?: Omit<RepairOrder["vehicle"], "VIN" | "EngineSize">;
+  vehicle?: RepairOrder["vehicle"];
+  notes?: string;
 }
 
 interface CardProps {
   repair: Repair;
+  placement?: "home" | "repair";
 }
 
-export function RepairCard({ repair }: CardProps) {
+export function RepairCard({ repair, placement="home" }: CardProps) {
   const date = toLocalDateString(repair.created_on);
   return (
-    <Card className="shadow-md border-gray-200">
+    <Card className={placement !== 'repair' ? 'shadow-md border-gray-200' : 'border-none shadow-none'}>
       <CardHeader className="text-slate-600">
         <CardTitle className="flex justify-between items-center">
-          <Link
-            to={`repairorder/${repair.id}`}
-            className="text-md text-blue-800 hover:text-blue-500"
-          >
-            RO {repair.ro_number}
-          </Link>
+          {placement === "home" ? (
+            <Link
+              to={`repairorder/${repair.id}`}
+              className="text-md text-blue-800 hover:text-blue-500"
+            >
+              RO {repair.ro_number}
+            </Link>
+          ) : (
+            <>
+              <p className="text-md text-blue-800">RO {repair.ro_number}</p>
+              <p className=' sr-only sm:not-sr-only'>
+                <span className="sr-only">Vehicle Identification Number</span> {repair.vehicle?.VIN}
+              </p>
+            </>
+          )}
           <div className="flex gap-4">
-            <StatusBadgeSelect id={repair.id} status={repair.status} />
+            <StatusBadgeSelect kind="repair-order" id={repair.id} status={repair.status} />
           </div>
         </CardTitle>
         <CardDescription></CardDescription>
@@ -72,11 +85,29 @@ export function RepairCard({ repair }: CardProps) {
                   <dt>Model</dt>
                   <dd className="text-gray-500">{repair.vehicle.Model}</dd>
                 </div>
+                {placement === "repair" && (
+                  <div className="flex flex-col gap-4">
+                    <dt>Engine Size</dt>
+                    <dd className="text-gray-500">
+                      {repair.vehicle.EngineSize} L
+                    </dd>
+                  </div>
+                )}
               </dl>
             </div>
           </div>
         )}
       </CardContent>
+      {placement === "repair" && repair.notes && (
+        <CardFooter>
+          <div className="pt-4">
+            <p className="flex flex-col gap-2">
+              <span>Technician Notes:</span>
+              <span className="text-gray-700">{repair.notes}</span>
+            </p>
+          </div>
+        </CardFooter>
+      )}
     </Card>
   );
 }

@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Ellipsis, Trash, SquarePen } from "lucide-react";
+import { Ellipsis, Trash, SquarePen, Plus } from "lucide-react";
+import { FormModal } from "@features/shared/src/components/form-modal/form-modal";
 import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 import {
   Table,
@@ -16,9 +17,15 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@components/ui/button";
-import { StatusBadge } from "@components/status/status-badge";
+import { StatusBadgeSelect } from "../select-status/select-status";
 
 import type { Job, Part } from "../../lib/domain/models/job.model";
+import {
+  createJobForm,
+  createPartForm,
+  editJobForm,
+  editPartsForm
+} from "../../lib/utils/transforms/form-transforms";
 import { DeleteConfirmation } from "@features/shared/src/components/delete-confirmation/delete-confirmation";
 
 export interface JobProps {
@@ -42,14 +49,8 @@ export function Job({ job }: JobProps) {
           {job.description}
         </h2>
         <div className="flex gap-4">
-          <StatusBadge variant={job.status} />
-          <Button
-            variant="ghost"
-            size="icon"
-            aria-label={`More actions for job: ${job.description}`}
-          >
-            <Ellipsis />
-          </Button>
+          <StatusBadgeSelect kind="job" id={job.id} status={job.status} />
+          <JobActions job={job} />
         </div>
       </div>
       <div>
@@ -69,9 +70,9 @@ export function Job({ job }: JobProps) {
             {job.parts?.map((part) => (
               <TableRow className={rowBorderStyles} key={part.id}>
                 <TableCell>{part.name}</TableCell>
-                <TableCell>${part.price}</TableCell>
+                <TableCell>${part.price.toFixed(2)}</TableCell>
                 <TableCell className="text-right">
-                  <Actions part={part} />
+                  <PartActions part={part} job={job} />
                 </TableCell>
               </TableRow>
             ))}
@@ -92,16 +93,20 @@ export function Job({ job }: JobProps) {
   );
 }
 
-interface ActionProps {
+interface PartActionProps {
   part: Part;
+  job: Job
 }
 
 /**
  * @todo add functionality for edit and delete for a job
  */
 
-function Actions({ part }: ActionProps) {
-  const [open, setOpen] = useState(false);
+function PartActions({ part }: PartActionProps) {
+  const [openDelete, setOpenDelete] = useState(false);
+  const [openEditForm, setOpenEditForm] = useState(false)
+
+  const form = editPartsForm(part);
 
   const baseItemStyles =
     "flex items-center gap-2 cursor-pointer hover:bg-gray-50";
@@ -119,12 +124,15 @@ function Actions({ part }: ActionProps) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="bg-white border-slate-50">
-          <DropdownMenuItem className={baseItemStyles}>
+          <DropdownMenuItem
+            className={baseItemStyles}
+            onClick={() => setOpenEditForm(true)}
+          >
             <SquarePen size={16} /> Edit{" "}
             <span className="sr-only">{part.name}</span>
           </DropdownMenuItem>
           <DropdownMenuItem
-            onClick={() => setOpen(true)}
+            onClick={() => setOpenDelete(true)}
             className={`text-red-600 ${baseItemStyles}`}
           >
             <Trash size={16} /> Delete{" "}
@@ -133,11 +141,96 @@ function Actions({ part }: ActionProps) {
         </DropdownMenuContent>
       </DropdownMenu>
       <DeleteConfirmation
-        open={open}
-        setOpen={setOpen}
+        open={openDelete}
+        setOpen={setOpenDelete}
         id={part.id}
         name={part.name}
+        path="part/delete"
       />
+      <FormModal setOpen={setOpenEditForm} open={openEditForm} form={form} />
     </>
   );
+}
+
+interface JobActionProps {
+  job: Job
+}
+
+function JobActions({ job }: JobActionProps) {
+  const [openDelete, setOpenDelete] = useState(false);
+  const [openCreateForm, setOpenCreateForm] = useState(false)
+  const [openEditForm, setOpenEditForm ] = useState(false)
+
+  const partFrom = createPartForm(job.id)
+  const editForm = editJobForm(job)
+
+  const baseItemStyles =
+    "flex items-center gap-2 cursor-pointer hover:bg-gray-50";
+  return (
+    <>
+      <DropdownMenu modal={false}>
+        <DropdownMenuTrigger asChild>
+          <Button
+            className="cursor-pointer"
+            variant="ghost"
+            size="icon"
+            aria-label={`More actions for ${job.description}`}
+          >
+            <Ellipsis />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="bg-white border-slate-50 p-2 flex flex-col gap-1">
+          <DropdownMenuItem
+            className={baseItemStyles}
+            onClick={() => setOpenCreateForm(true)}
+          >
+            <Plus size={16} /> Add Part{" "}
+            <span className="sr-only">for {job.description}</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className={baseItemStyles}
+            onClick={() => setOpenEditForm(true)}
+          >
+            <SquarePen size={16} /> Edit{" "}
+            <span className="sr-only">{job.description}</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => setOpenDelete(true)}
+            className={`text-red-600 ${baseItemStyles}`}
+          >
+            <Trash size={16} /> Delete{" "}
+            <span className="sr-only">{job.description}</span>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+      <DeleteConfirmation
+        open={openDelete}
+        setOpen={setOpenDelete}
+        id={job.id}
+        name={job.description}
+        path="job/delete"
+      />
+      <FormModal setOpen={setOpenCreateForm} form={partFrom} open={openCreateForm} />
+      <FormModal setOpen={setOpenEditForm} form={editForm} open={openEditForm} />
+    </>
+  );
+}
+
+
+export function AddJobButton() {
+  const [openForm, setOpenForm] = useState(false);
+  const form = createJobForm();
+
+  return (
+    <>
+    <Button
+      onClick={() => setOpenForm(true)}
+      variant='ghost'
+      className="pt-8 text-blue-800"
+    >
+      <Plus /> Add Job
+    </Button>
+    <FormModal form={form} open={openForm} setOpen={setOpenForm}/>
+    </>
+  )
 }

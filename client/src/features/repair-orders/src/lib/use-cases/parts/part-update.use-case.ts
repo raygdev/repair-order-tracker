@@ -3,6 +3,7 @@ import {
  PartsRepositoryPort,
  BaseUseCase
 } from '../../domain'
+import { partsService } from '../../adapters/parts.service'
 
 export class PartUpdateUseCase extends BaseUseCase<
   Part,
@@ -15,3 +16,5 @@ export class PartUpdateUseCase extends BaseUseCase<
     return this.repo.updatePart(part)
   }
 }
+
+export const partUpdate = new PartUpdateUseCase(partsService)

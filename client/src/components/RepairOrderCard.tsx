@@ -53,7 +53,7 @@ function RepairOrderCard({ repairOrder }: RepairOrderCardProps) {
               <span className='m-3'>{vehicle?.Model || "VIN"}</span>
             </div>
             <div className='flex flex-col justify-between py-2'>
-              <StatusBadge variant='completed' />
+              <StatusBadge kind="repair-order" variant='completed' />
               <span className='text-ro-slate-500'>{date}</span>
             </div>
           </div>

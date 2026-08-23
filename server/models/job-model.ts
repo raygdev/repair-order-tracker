@@ -25,7 +25,7 @@ const JobSchema = new mongoose.Schema({
     status: {
       type: String,
       enum: Object.values(Status),
-      default: 'pending'
+      default: Status.pending
     },
     description: {
         type: String,
