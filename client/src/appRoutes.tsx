@@ -104,7 +104,8 @@ export const router: RouteObject[] = [
                                     const part: CreatePart = {
                                         jobId: data.hiddenId,
                                         name: data.name,
-                                        price: data.price
+                                        price: data.price,
+                                        quantity: data.quantity || 1
                                     }
                                      await partCreate.execute(part)
                                     return { success: true }
