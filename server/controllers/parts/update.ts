@@ -4,7 +4,7 @@ import { NotFoundError } from "../../errors/not-found-error";
 
 export const updatePart = async (req: Request<{ id: string }, {}, Partial<PartsDocument>>, res: Response) => {
     const { id } = req.params
-    const { name, price} = req.body
+    const { name, price, quantity } = req.body
 
     const part = await Part.findById(id)
 
@@ -18,6 +18,10 @@ export const updatePart = async (req: Request<{ id: string }, {}, Partial<PartsD
 
     if(price) {
         part.set('price', price)
+    }
+
+    if(quantity) {
+        part.set('quantity', quantity)
     }
 
     await part.save()

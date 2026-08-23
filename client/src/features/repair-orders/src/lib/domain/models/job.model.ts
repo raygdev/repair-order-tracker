@@ -11,6 +11,7 @@ export interface Part {
     name: string,
     id: string
     jobId: string
+    quantity: number
 }
 
 export interface Job {
