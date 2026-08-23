@@ -4,6 +4,7 @@ export interface PartsDocument extends mongoose.Document {
     price: number,
     name: string,
     jobId: mongoose.Types.ObjectId
+    quantity: number
 }
 
 const PartsSchema = new mongoose.Schema({
@@ -20,6 +21,10 @@ const PartsSchema = new mongoose.Schema({
         ref: 'jobs',
         required: true,
         index: true
+    },
+    quantity: {
+        type: Number,
+        default: 1,
     }
 }, {
     toJSON: { virtuals: true },
